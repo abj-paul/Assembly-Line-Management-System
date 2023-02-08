@@ -1,0 +1,18 @@
+* About
+The Assembly Line Management System has the following core features.
+- Automatic Congestion Detection
+- Automated Assembly Line Layout Generation from product design
+- Automated Line Balancing
+- Automated Report Generation
+- User Interaction
+
+* Development
+SPL2 Project, IIT, University of Dhaka
+Abhijit Paul, BSSE1201
+Mashiat Amin Farin, BSSE1202
+
+** Planning
+1. System Requirements Specification
+2. Login System
+3. Assembly Line Layout.
+
