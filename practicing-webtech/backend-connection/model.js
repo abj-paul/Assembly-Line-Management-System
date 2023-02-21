@@ -3,6 +3,15 @@ const mysql = require("mysql2");
 
 let connection = null;
 
+function createDatabase(){
+	if(connection==null) return {"status":"Connect to mysql service first!"};
+	query = "CREATE DATABASE if not exists userdb";
+	connection.query(query, (err, result, fields)=>{
+		if(err) throw err;
+		console.log("Successfully created the database.");
+	});
+}
+
 function connect(){
 	connection = mysql.createConnection({
 		host: 'localhost',
@@ -25,7 +34,7 @@ function testConnection(){
 
 
 function createUserTable(){
-	query = `create table User (
+	query = `create table if not exists User (
 		userid int auto_increment primary key,
 		username varchar(50) NOT null,
 		password varchar(50) NOT null,
@@ -55,25 +64,27 @@ function getDataForUser(userid){
 		console.log(result);
 	});
 	console.log("Successfully fetched data for user "+userid);
+	return result;
 }
 
 function authenticate(name, password){
-	let ok = false;
+	var ok = false;
 	query = "select * from User;";
 	connection.query(query, (err, result, fields) => {
 		if(err) throw err;
 
 		for(let i=0; i<result.length; i++){
 			if (result[i].username==name && result[i].password==password){
-				ok = true;
 				console.log("Valid credentials for user "+result[i].userid);
-				return result[i];
+				//return result[i];
+				ok = true;
+				break;
 			}
 		}
 
-		console.log("Invalid credentials! ");
-		return ok;
+		if(!ok)console.log("Invalid credentials! ");
 	});
+	return ok;
 }
 
-module.exports = { createUserTable, connect, insertData, getDataForUser, authenticate }
+module.exports = { createUserTable, connect, insertData, getDataForUser, authenticate, createDatabase }

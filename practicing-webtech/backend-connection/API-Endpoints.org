@@ -1,0 +1,20 @@
+Run ~npm start~ or ~node index.js~ to start the server. The server runs at port 1201.
+
+* Installation
+1. npm install
+2. sudo apt install mysql-server
+3. Create a user named "abhidb", with password "admin" in the mysql following the tutorial. https://www.youtube.com/watch?v=Wc066x1luNc
+4. Install mysql-workbench following the tutorial. https://www.youtube.com/watch?v=81YOHhIRKK0
+
+* Registration
+POST {"name": "Abhijit Paul", "age": 21, "password": "stu458"}
+returns {"Status":"Successfully registered user Abhijit Paul"}
+* Login
+POST {"name":"Abhijit Paul", "password":"stu458"}
+returns {"Status":true} or {"Status":false}
+* Dashboard
+GET {"userid": 1}
+returns {"name":"Abhijit Paul", "password":"stu458", "age":21, "userid":1}
+* Home
+GET nothing
+returns "This is home"

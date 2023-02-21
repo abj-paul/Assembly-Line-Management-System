@@ -1,18 +1,45 @@
+const model = require("./model.js");
+
+//module.exports = { createUserTable, connect, insertData, getDataForUser, authenticate }
+
 function handleGetRequestToHome(req, res){
 	res.status(200).send("This is home");
 }
-function handleGetRequestToRegistration(req, res){
-	res.status(200).send("This is the endpoint for registration.");
+
+function handlePostRequestToRegistration(req, res){
+	const data = req.body;
+	console.log(data);
+	const name = data["name"];
+	const password = data["password"];
+	const age = data["age"];
+	model.insertData(name, age, password)
+	res.status(200).send({"Status":"Successfully registered user "+name});
+
 }
-function handleGetRequestToLogin(req, res){
-	res.status(200).send("This is the endpoint for login.");
+
+function handlePostRequestToLogin(req, res){
+	const data = req.body;
+	console.log(data);
+	const name = data["name"];
+	const password = data["password"];
+	
+	let result = model.authenticate(name, password)
+	res.status(200).send({"Status":result});
 }
+
 function handleGetRequestToDashboard(req, res){
-	res.status(200).send("This is the endpoint for Dashboard.");
+	const userid = req.params["userid"];
+	const userdata = model.getDataForUser(userid);
+	console.log("Found data for user "+userid+" with data "+ JSON.stringify(userdata));
+	res.status(200).send(JSON.stringify(userdata));
 }
 
 function serverConnectionNotification(port){
 	console.log("My server has started running on port "+port);
 }
 
-module.exports = {handleGetRequestToHome,handleGetRequestToRegistration, handleGetRequestToDashboard, handleGetRequestToLogin, serverConnectionNotification }
+function handleGetRequestFromAdmin(req, res){
+	model.createUserTable();
+}
+
+module.exports = {handleGetRequestToDashboard, serverConnectionNotification, handlePostRequestToLogin, handlePostRequestToRegistration, handleGetRequestToDashboard }

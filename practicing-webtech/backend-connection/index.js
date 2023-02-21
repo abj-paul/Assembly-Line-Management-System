@@ -3,13 +3,13 @@ const model = require('./model.js');
 const express = require('express');
 const app = express();
 
+app.use(express.json());
 
+
+// Preparing database
 model.connect();
-//model.createUserTable();
-//model.insertData("Abhijit Paul", 21, "stu458");
-model.getDataForUser(1);
-model.authenticate("Abhijit Paul", "stu458");
-
+model.createDatabase();
+model.createUserTable();
 
 // Starting server
 const PORT  = 1201; 
@@ -17,7 +17,7 @@ app.listen(PORT, () => controller.serverConnectionNotification(PORT));
 
 
 app.get("/home", (req, res) => controller.handleGetRequestToHome(req,res));
-app.get("/registration", (req, res) => controller.handleGetRequestToRegistration(req,res));
-app.get("/login", (req, res) => controller.handleGetRequestToLogin(req,res));
-app.get("/dashboard", (req, res) => controller.handleGetRequestToDashboard(req,res));
+app.post("/registration", (req, res) => controller.handlePostRequestToRegistration(req,res));
+app.post("/login", (req, res) => controller.handlePostRequestToLogin(req,res));
+app.get("/dashboard/:userid", (req, res) => controller.handleGetRequestToDashboard(req,res));
 
