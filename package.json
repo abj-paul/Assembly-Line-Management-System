@@ -1,0 +1,24 @@
+{
+  "name": "assembly-line-management-system",
+  "version": "1.0.0",
+  "description": "This is a simple assembly line management system to automate detection of congestion, line balancing and dynamic layout updates to meet the production targets.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abj-paul/Assembly-Line-Management-System.git"
+  },
+  "author": "Abhijit Paul, Mashiat Amin Farin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abj-paul/Assembly-Line-Management-System/issues"
+  },
+  "homepage": "https://github.com/abj-paul/Assembly-Line-Management-System#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql2": "^3.1.2",
+    "nodemon": "^2.0.20"
+  }
+}
