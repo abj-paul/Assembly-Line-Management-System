@@ -42,4 +42,4 @@ function handleGetRequestFromAdmin(req, res){
 	model.createUserTable();
 }
 
-module.exports = {handleGetRequestToDashboard, serverConnectionNotification, handlePostRequestToLogin, handlePostRequestToRegistration, handleGetRequestToDashboard }
+module.exports = {handleGetRequestToHome, serverConnectionNotification, handlePostRequestToLogin, handlePostRequestToRegistration, handleGetRequestToDashboard }
