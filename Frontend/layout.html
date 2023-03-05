@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+        <style>
+            .box{
+                background-color: bisque;
+                height: 500px;
+                border: 2px solid black;
+            }
+            .item{
+                background-color: green;
+                height: 50px;
+                border: 3px solid red;
+                margin: auto;
+                margin-bottom: 10px;
+            }
+            .hide{
+                display: none;
+            }
+            .matrices{
+                padding: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="col-sm-4">
+                <div class="box" id="box1">
+                    <p>Resources</p>
+                    <div class="item" id="item1" draggable="true">
+                        <p>Sewing Machine 1</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-8">
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="box" id="box2">
+                            <p>Assembly Line 1</p>
+                            <p class="matrices">Current Efficiency: 0</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-sm-6">
+                        <div class="box" id="box3">
+                            <p>Assembly Line 2</p>
+                            <p class="matrices">Current Efficiency: 0</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <script src="layout.js"></script>
+
+    </body>
+</html>

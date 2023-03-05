@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <title>Admin Dashboard</title>
+    <script src="admin-dashboard.js"> </script>
+
+    <style>
+      .sidebar{
+        background-color: bisque;
+        border-bottom: 4px solid black;
+      }
+
+      #btndownloadAllData{
+        width: 90%;
+        margin-left:5%;
+      }
+    </style>
+
+    </head>
+  <body>
+    <div class="container">
+      <h1> Admin Dashboard </h1>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="sidebar">
+            
+            <div class="p-5 text-center bg-light">
+              <h1 class="mb-3">Register New User</h1>
+            </div>
+
+            <!--<form action="" id="registerUsr">-->
+              <div class="form-group">
+                <label for="userNameId">User Name:</label>
+                <input type="text" class="form-control" id="userNameId" name="username">
+              </div>
+              <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" id="password" name="password">
+              </div>
+              <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" class="form-control" id="age" name="age">
+              </div>
+              <div class="form-group">
+                <label for="generalInfoId">General Info:</label>
+                <input type="text" class="form-control" id="generalInfoId" name="generalInfo">
+              </div>
+              <button type="submit" class="btn btn-default" onclick="registerUser()">Submit</button>
+              <span id="status">Status:</span>
+            <!--</form> -->
+          </div>
+          <div class="sidebar">
+            <div class="p-5 text-center bg-light">
+              <h4 class="mb-3">Admin Access</h4>
+            </div>
+            <a id='downloadData' download='Download.txt' type='text'>
+            <button type="submit" class="btn btn-default" onclick="downloadDatabase()" id="btndownloadAllData">Download All Data</button>
+            </a>
+          </div>
+          <div class="sidebar">
+            <div class="p-5 text-center bg-light">
+              <h1 class="mb-3">Edit User Info:</h1>
+            </div>
+            <form action="">
+              <div class="form-group">
+                <label for="userNameId">User Name:</label>
+                <input type="text" class="form-control" id="userNameId">
+              </div>
+              <div class="form-group">
+                <label for="pwd">Password:</label>
+                <input type="password" class="form-control" id="pwd">
+              </div>
+              <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" class="form-control" id="age">
+              </div>
+              <div class="form-group">
+                <label for="generalInfoId">General Info:</label>
+                <input type="text" class="form-control" id="generalInfoId">
+              </div>
+              <button type="submit" class="btn btn-default">Submit</button>
+            </form> 
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <table class="table table-striped">
+            <tr>
+              <th> User Id </th>
+              <th> User Name </th>
+            </tr>
+            <script> getUserList(); </script>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+  </body>
+</html>

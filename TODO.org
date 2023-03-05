@@ -1,0 +1,36 @@
+* 27 February, 2023
+- [ ] Build an endpoint for Admin
+- [ ] Make functions for assembly line
+- [ ] Build an endpoint for assembly line
+- [ ] Generate Line Matrices
+- [ ] Insert Report info
+- [ ] Make report
+** Temp
+//editUserInfo();
+// Assembly line
+//createResourceTable()
+//registerResource()
+//viewRegisterResource()
+
+//registerAssemblyLine()
+//setLayout()
+//useResource()
+//removeResource()
+//getLayout()
+
+#+begin_src javascript
+  function getUserIdForUser(username){
+      const sql_query = "select userid from user where username='"+username+"';"; 
+      connection.query(sql_query, (err, results, fields)=>{
+	  if(err) throw err;
+	  sharedData["userid"] = results[0].userid;
+      });
+
+      return 1;
+  }
+#+end_src
+
+* Future Task
+- [ ] Deploy the nmf
+- [ ] Make an endpoint for it
+- [ ] Run a js that runs once every second and knocks the python endpoint with an image, asking if its congestion or not.

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    
+        <title>Supervisor Dashboard</title>
+        <script src="pm-dashboard.js"> </script>
+        <style>
+            table{
+                margin-top: 50px;
+            }
+            p{
+                text-align: center;
+                margin-top: 20px;
+                font-size: large;
+                padding-top: 20px;
+                font-weight: bold;
+                color: blueviolet;
+            }
+
+            .subsection{
+                background-color: bisque;
+                border-bottom: 4px solid black;
+                border-right: 2px solid green;
+                margin-top: 10px;
+            }
+
+            button{
+                padding: 10px 20px;
+                margin-left: 43%;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 subsection">
+                    <p>Hourly Production Report</p>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Time of Submission</th>
+                                <th>Report Id</th>
+                                <th>Production Amount</th>
+                                <th>Unit</th>
+                                <th>Comment</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+
+                    <button onclick="getReportList()">Refresh Table</button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 subsection">
+                    <p>Congestion Issues</p>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Time of Submission</th>
+                                <th>Report Id</th>
+                                <th>Production Amount</th>
+                                <th>Unit</th>
+                                <th>Comment</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+
+                    <button onclick="">Refresh Table</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
