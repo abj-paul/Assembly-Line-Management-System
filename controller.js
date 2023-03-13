@@ -54,7 +54,7 @@ function handlePostRequestToAdmin(req, res){
 
 	admin.__getUserData(username, password)
 	    .then((data)=>{
-		res.status(200).send({"authentication":"successful!"});
+		res.status(200).send({"authentication":"successful!", "nextPage":"admin-dashboard.html"});
 	    })
     }
 }

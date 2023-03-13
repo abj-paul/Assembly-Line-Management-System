@@ -7,7 +7,7 @@ function login(){
 
     console.log(username + password + role);
 
-    let url = "192.168.31.249:1401/admin";
+    let url = "http://192.168.31.249:1401/admin";
     let data = {
 	"operation":"login",
 	"username": username,
@@ -33,6 +33,7 @@ fetch(url, {
         })
         .then((data)=>{
             console.log(data.authentication);
+	    window.location.href = data.nextPage;
         })
         .catch((err)=>{
             console.log(err);
