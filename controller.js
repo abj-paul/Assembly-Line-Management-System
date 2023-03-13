@@ -2,6 +2,7 @@ const admin = require("./admin.js");
 const constants = require("./constants.js");
 const report = require("./report.js");
 
+
 function handleGetRequestToHome(req, res){
 
 }
@@ -14,7 +15,7 @@ function handlePostRequestToLogin(req, res){
 
 }
 
-function handleGetRequestToAdmin(req, res){
+function handlePostRequestToAdmin(req, res){
     const body = req.body;
     const operationType = body.operation;
 
@@ -47,6 +48,14 @@ function handleGetRequestToAdmin(req, res){
         .catch((err)=>{
             throw err;
         })
+    } else if(operationType == constants.LOGIN){
+	const username = body.username;
+	const password = body.password;
+
+	admin.__getUserData(username, password)
+	    .then((data)=>{
+		res.status(200).send({"authentication":"successful!"});
+	    })
     }
 }
 
@@ -85,4 +94,4 @@ function handlePostRequestToPM(req, res){
     }
 }
 
-module.exports = {handleGetRequestToHome, handlePostRequestToRegistration, handlePostRequestToLogin, handleGetRequestToAdmin, handlePostRequestToSupervisor, handlePostRequestToPM}
+module.exports = {handleGetRequestToHome, handlePostRequestToRegistration, handlePostRequestToLogin, handlePostRequestToAdmin, handlePostRequestToSupervisor, handlePostRequestToPM}

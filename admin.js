@@ -114,6 +114,20 @@ async function __insertUserData(name, password, age, general_info){
     );
 }
 
+async function __getUserData(name, password){
+    return new Promise((resolve, reject)=>{
+        const sql_query = "select * from user where username='"+name+"';";
+        connection.query(sql_query, (err, results, fields)=>{
+            if(err) {
+                reject(err);
+            }
+            resolve(results);
+        });
+    }
+    );
+}
+
+
 async function __createAdminUser(){
     const adminIdPromise = await __insertUserData("Admin", DEFAULT_ADMIN_PASSWORD, 21, "A daunty young man!");
 
@@ -191,4 +205,4 @@ function __viewAllTableData(){
 }
 
 // Admin login, Register new user, view existing user, delete existing user, edit user data, view his notification
-module.exports = {startDatabase, viewRegisteredUsers, viewNotifications, __viewRegisteredUsers, __insertUserData, __deleteTable, __viewAllTableData, __notify}
+module.exports = {startDatabase, viewRegisteredUsers, viewNotifications, __viewRegisteredUsers, __insertUserData, __deleteTable, __viewAllTableData, __notify, __getUserData}

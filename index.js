@@ -27,7 +27,7 @@ app.listen(PORT, ()=>misc.serverHasStartedNotification(PORT));
 app.get("/home", (req, res) => controller.handleGetRequestToHome(req,res));
 app.post("/registration", (req, res) => controller.handlePostRequestToRegistration(req,res));
 app.post("/login", (req, res) => controller.handlePostRequestToLogin(req,res));
-app.post("/admin", (req, res) => controller.handleGetRequestToAdmin(req,res));
+app.post("/admin", (req, res) => controller.handlePostRequestToAdmin(req,res));
 app.post("/supervisor", (req, res) => controller.handlePostRequestToSupervisor(req,res));
 app.post("/productionManager", (req, res) => controller.handlePostRequestToPM(req,res));
 
