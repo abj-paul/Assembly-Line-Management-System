@@ -1,6 +1,7 @@
 const admin = require("./admin.js");
 const constants = require("./constants.js");
 const report = require("./report.js");
+const editUserData = require("./Model/edit-user-data.js");
 
 
 function handleGetRequestToHome(req, res){
@@ -28,11 +29,12 @@ function handlePostRequestToAdmin(req, res){
         const username = body.username;
         const password = body.password;
         const age = body.age;
+        const role = body.role;
         const generalInfo = body.generalInfo;
 
         console.log("DEBUG------------"+username+password+age+generalInfo);
 
-        admin.__insertUserData(username, password, age, generalInfo)
+        admin.__insertUserData(username, password, age, role, generalInfo)
         .then((data)=>{
             res.status(200).send({"RegisteredUserId":data.insertId});
             admin.__notify(data.insertId, "Your account has been created!");
@@ -54,8 +56,31 @@ function handlePostRequestToAdmin(req, res){
 
 	admin.__getUserData(username, password)
 	    .then((data)=>{
-		res.status(200).send({"authentication":"successful!", "nextPage":"admin-dashboard.html"});
+            console.log(data[0]);
+            
+            if(data==undefined) res.status(200).send({"authentication":"unsuccessful!", "nextPage":"none"});
+            else if(data[0].password==password)
+		        res.status(200).send({"authentication":"successful!", "nextPage":"admin-dashboard.html"});
+            else res.status(200).send({"authentication":"unsuccessful!", "nextPage":"none"});
+
 	    })
+    }else if(operationType == constants.EDIT_USER_INFO){
+        const userid = body.userid;
+        const username = body.username;
+        const password = body.password;
+        const age = body.age;
+        const role = body.role;
+        const general_info = body.generalInfo;
+
+        console.log("DEBUG: Edit user info occuring.");
+
+        editUserData.__connect().then((data)=>{console.log("Model:EditUserInfo.js has connected to database");}).catch((err)=>{console.log(err);});
+
+        editUserData.updateUserData(userid, username, password, age, role, general_info)
+        .then((data)=>{
+            res.status(200).send({"DataUpdateStatus":"Successful!"});
+        })
+        .catch((err)=>{console.log(err);});
     }
 }
 

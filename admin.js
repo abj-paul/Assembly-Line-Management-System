@@ -65,6 +65,7 @@ async function __createUserTable(){
     username varchar(50) NOT NULL,
     password varchar(50) NOT NULL,
     age int,
+    role varchar(50) NOT NULL,
     general_info varchar(300));`;
     
         connection.query(sql_query, (err, results, fields)=>{
@@ -100,9 +101,9 @@ async function __createNotificationTable(){
     
 }
 
-async function __insertUserData(name, password, age, general_info){
+async function __insertUserData(name, password, age, role, general_info){
     return new Promise((resolve, reject)=>{
-        const sql_query = "INSERT into user(username, password, age, general_info) values('"+name+"', '"+password+"',"+age+", '"+general_info+"');";
+        const sql_query = "INSERT into user(username, password, age, role, general_info) values('"+name+"', '"+password+"',"+age+", '"+role+"', '"+general_info+"');";
         connection.query(sql_query, (err, results, fields)=>{
             if(err) {
                 reject(err);
@@ -129,7 +130,7 @@ async function __getUserData(name, password){
 
 
 async function __createAdminUser(){
-    const adminIdPromise = await __insertUserData("Admin", DEFAULT_ADMIN_PASSWORD, 21, "A daunty young man!");
+    const adminIdPromise = await __insertUserData("Mr Rahim", DEFAULT_ADMIN_PASSWORD, 21, "Admin", "A daunty young man!");
 
     //console.log(adminIdPromise.insertId);
     __notify(adminIdPromise.insertId, "Admin account has been created!")
@@ -147,7 +148,7 @@ function __notify(userid, msg){
 
 function __viewRegisteredUsers(){
     return new Promise((resolve, reject)=>{
-        const sql_query = "SELECT userid, username from user;";
+        const sql_query = "SELECT * from user;";
 
         connection.query(sql_query, (err, results, fields)=>{
             if(err) throw err;
@@ -155,7 +156,7 @@ function __viewRegisteredUsers(){
             console.log("Registered Users are:");
             for(let i=0; i<results.length; i++){
                 //console.log(results[i].userid +": "+results[i].username);
-                users.push([results[i].userid, results[i].username]);
+                users.push([results[i].userid, results[i].username, results[i].role, results[i].general_info]);
             }
             resolve(users);
         });

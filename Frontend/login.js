@@ -33,7 +33,7 @@ fetch(url, {
         })
         .then((data)=>{
             console.log(data.authentication);
-	    window.location.href = data.nextPage;
+	        if(data.nextPage!="none") window.location.href = data.nextPage;
         })
         .catch((err)=>{
             console.log(err);
