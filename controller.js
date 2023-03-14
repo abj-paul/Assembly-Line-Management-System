@@ -56,11 +56,10 @@ function handlePostRequestToAdmin(req, res){
 
 	admin.__getUserData(username, password)
 	    .then((data)=>{
-            console.log(data[0]);
             
             if(data==undefined) res.status(200).send({"authentication":"unsuccessful!", "nextPage":"none"});
             else if(data[0].password==password)
-		        res.status(200).send({"authentication":"successful!", "nextPage":"admin-dashboard.html"});
+		        res.status(200).send({"authentication":"successful!", "nextPage":"admin-dashboard.html", "userInfo":data[0]});
             else res.status(200).send({"authentication":"unsuccessful!", "nextPage":"none"});
 
 	    })

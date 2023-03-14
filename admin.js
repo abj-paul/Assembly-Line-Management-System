@@ -130,7 +130,7 @@ async function __getUserData(name, password){
 
 
 async function __createAdminUser(){
-    const adminIdPromise = await __insertUserData("Mr Rahim", DEFAULT_ADMIN_PASSWORD, 21, "Admin", "A daunty young man!");
+    const adminIdPromise = await __insertUserData("Admin", DEFAULT_ADMIN_PASSWORD, 21, "Admin", "A daunty young man!");
 
     //console.log(adminIdPromise.insertId);
     __notify(adminIdPromise.insertId, "Admin account has been created!")

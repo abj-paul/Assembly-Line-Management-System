@@ -33,6 +33,14 @@ fetch(url, {
         })
         .then((data)=>{
             console.log(data.authentication);
+            sessionStorage.setItem("userid", data.userInfo.userid);
+            sessionStorage.setItem("username", data.userInfo.username);
+            sessionStorage.setItem("password", data.userInfo.password);
+            sessionStorage.setItem("age", data.userInfo.age);
+            sessionStorage.setItem("role", data.userInfo.role);
+            sessionStorage.setItem("general_info", data.userInfo.general_info);
+
+            //console.log(data.userInfo);
 	        if(data.nextPage!="none") window.location.href = data.nextPage;
         })
         .catch((err)=>{

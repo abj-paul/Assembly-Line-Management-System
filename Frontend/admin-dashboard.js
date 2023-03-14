@@ -1,4 +1,5 @@
-let currentUserId = 1; 
+let currentUserId = sessionStorage.getItem("userid");
+console.log("Cache: "+currentUserId);
 
 function getUserList(){
 let url = "http://192.168.31.249:1401/admin";
@@ -141,8 +142,12 @@ function getProfileInfo(){
     const general_info = profileInfo.children[3];
     const userId = profileInfo.children[4];
 
-    role.innerText = role.innerText + ": Production Manager";
-    name.innerText = name.innerText + " Abhijit Paul";
+    role.innerText += sessionStorage.getItem("role");
+    name.innerText += sessionStorage.getItem("username");
+    age.innerText += sessionStorage.getItem("age");
+    general_info.innerText += sessionStorage.getItem("general_info");
+
+    userId.innerText += currentUserId;
 }
 
 function editUserInfo(){
@@ -189,4 +194,12 @@ function editUserInfo(){
     .catch((err)=>{
     console.log(err);
     });
+}
+
+function getNotifications(){
+    
+}
+
+function setViewerInfo(){
+    
 }
