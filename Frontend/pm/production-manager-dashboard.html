@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <title>PM Dashboard</title>
+    <script src="production-manager-dashboard.js"> </script>
+    <style>
+ 
+        table tr td {
+            padding: 10px;
+            border-bottom: 1px solid black;
+        }
+        p{
+            text-align: center;
+            margin-top: 20px;
+            font-size: large;
+            padding-top: 20px;
+            font-weight: bold;
+            color: blueviolet;
+        }
+
+        .subsection{
+            background-color: bisque;
+            margin-top: 40px;
+        }
+
+        button{
+            padding: 10px 20px;
+            width: 200px;
+        }
+
+
+      h4{
+        background-color: beige;
+        padding: 10px;
+      }
+      .myRow {
+        padding: 10px;
+        background-color: yellow; 
+        border-bottom: 2px solid black;
+        }
+    img{height: 300px;}
+
+    #profile div div h1 {
+      padding: 2px;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#"> PM Dashboard</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#viewResource">View Resource</a></li>
+                <li><a href="#reports">Reports</a></li>
+                <li><a href="#registerResource">Register Machine</a></li>
+                <li><a href="#profile">Profile</a></li>
+                <li><a href="#startProduction">Start New Production</a></li>
+            </ul>
+            </div>
+        </nav>
+
+    <div class="p-5 text-center bg-light">
+        <h4 class="mb-3">Production Manager Dashboard</h4>
+    </div>
+
+
+    <div class="row" id="registerResource">
+        <div class="p-5 text-center bg-light">
+            <h4 class="mb-3">Register Machine</h4>
+        </div>
+
+        <div class="form-group">
+            <label for="machineType">Type of Machine:</label>
+            <select class="form-control" id="machineType">
+                <option value="sewingMachine">Sewing Machine</option>
+                <option value="assemblyTable">Assembly Table</option>
+                <option value="doubleSewMachine">Double Sew Machine</option>
+            </select>
+        </div> 
+
+        <div class="form-group">
+            <label for="machineModelId">Machine Model:</label>
+            <input type="text" class="form-control" id="machineModelId">
+        </div>
+        <div class="form-group">
+            <label for="perHourProduction">Production Per Hour(Unit-Cloth):</label>
+            <input type="number" class="form-control" id="perHourProduction">
+        </div>
+        <div class="form-group">
+            <label for="otherInfo">Other Information:</label>
+            <input type="text" class="form-control" id="otherInfo">
+        </div>
+
+        <button type="submit" class="btn btn-default" onclick="registerResouce()">Submit</button>
+        <span id="status">Status:</span>
+    </div>
+    
+        <div class="row" id="reports">
+            <div class="p-5 text-center bg-light">
+                <h4 class="mb-3">Reports</h4>
+            </div>
+            <div class="subsection">
+                <p>Hourly Production Report</p>
+                <table class="table table-striped" id="hourlyProductionReportTable">
+                    <tr>
+                        <th> Time of Submission</th>
+                        <th> Report Id </th>
+                        <th> Production Amount </th>
+                        <th> Unit </th>
+                        <th> Comment </th>
+                    </tr>
+                </table>
+                <script>getHourlyProductionReport()</script>
+            </div>
+            <!--
+            <div class="subsection">
+                <p>Congestion Issues</p>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Time of Submission</th>
+                            <th>Report Id</th>
+                            <th>Production Amount</th>
+                            <th>Unit</th>
+                            <th>Comment</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            -->
+        </div>
+
+        <div class="row" id="profile">
+            <div class="p-5 text-center bg-light">
+              <h4 class="mb-3">Profile</h4>
+            </div>
+    
+            <div class="row">
+              <div class="col-sm-7">     
+                  <h3>Role: </h3>             
+                  <div class='myRow'>Name: </div>
+                  <div class='myRow'>Age: </div>
+                  <div class='myRow'>General Info: </div>
+                  <div class='myRow'>Employee Id: </div>
+                  </div>
+              <div class="col-sm-5">
+                <img src="../resource/default_pfp.png">
+              </div>
+            </div>
+    
+            <div class="p-5 bg-light">
+              <h4 class="mb-3">Notifications</h4>
+            </div>
+            <table class="table table-striped" id="notificationTable">
+              <tr>
+                <th> Timestamp </th>
+                <th> Message </th>
+                <th> Action </th> <!--<button>Click</button>-->
+              </tr>
+              <script> getNotifications() </script>
+            </table>
+            <a href="../login.html"><button type="submit" class="btn btn-default">Logout</button></a>
+          </div>
+          <script>getProfileInfo()</script>
+
+          <!--Start New Production-->
+          <div class="row" id="startProduction">
+            <div class="p-5 text-center bg-light">
+                <h4 class="mb-3">Start New Production</h4>
+            </div>
+
+            <div class="form-group">
+                <label for="designFile">Upload Product Design File:</label>
+                <input type="file" class="form-control" id="designFile">
+            </div>
+            <div class="form-group">
+                <label for="totalProductionTarget">Set total Production Target:</label>
+                <input type="number" class="form-control" id="totalProductionTarget">
+            </div>
+    
+            <!--TODO: Populate this assembly line from database-->
+            <div class="form-group">
+                <label for="assemblyLineId">Select Assembly Line:</label>
+                <select class="form-control" id="assemblyLineId">
+                    <option value="1">Assembly Line 1</option>
+                    <option value="2">Assembly Line 2</option>
+                    <option value="3">Assembly Line 3</option>
+                </select>
+            </div> 
+    
+            <button type="submit" class="btn btn-default" onclick="registerTotalProductionTarge()">Submit</button>
+        </div>
+    </div>
+</body>
+</html>

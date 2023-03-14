@@ -7,7 +7,11 @@ function login(){
 
     console.log(username + password + role);
 
-    let url = "http://192.168.31.249:1401/admin";
+    let url = null;
+    if(role=="admin") url = "http://192.168.31.249:1401/admin";
+    else if(role=="productionManager") url = "http://192.168.31.249:1401/productionManager";
+
+    
     let data = {
 	"operation":"login",
 	"username": username,
@@ -39,6 +43,8 @@ fetch(url, {
             sessionStorage.setItem("age", data.userInfo.age);
             sessionStorage.setItem("role", data.userInfo.role);
             sessionStorage.setItem("general_info", data.userInfo.general_info);
+
+            console.log("Login-Cache Data:"+data.userInfo.userid);
 
             //console.log(data.userInfo);
 	        if(data.nextPage!="none") window.location.href = data.nextPage;

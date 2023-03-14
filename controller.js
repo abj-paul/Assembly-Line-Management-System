@@ -38,7 +38,7 @@ function handlePostRequestToAdmin(req, res){
         admin.__insertUserData(username, password, age, role, generalInfo)
         .then((data)=>{
             res.status(200).send({"RegisteredUserId":data.insertId});
-            admin.__notify(data.insertId, "Your account has been created!");
+            notification.__notify(data.insertId, "Your account has been created!");
         })
         .catch((err)=>{
             throw err;
@@ -112,19 +112,5 @@ function handlePostRequestToSupervisor(req, res){
     } 
 }
 
-function handlePostRequestToPM(req, res){
-    const body = req.body;
-    const operationType = body.operation;
 
-    if(operationType==constants.VIEW_HOURLY_PRODUCTION_REPORT){
-        report.__viewProductionReport()
-        .then((data)=>{
-            res.status(200).send({"ProductionReport":data});
-        })
-        .catch((err)=>{
-            throw err;
-        });
-    }
-}
-
-module.exports = {handleGetRequestToHome, handlePostRequestToRegistration, handlePostRequestToLogin, handlePostRequestToAdmin, handlePostRequestToSupervisor, handlePostRequestToPM}
+module.exports = {handleGetRequestToHome, handlePostRequestToRegistration, handlePostRequestToLogin, handlePostRequestToAdmin, handlePostRequestToSupervisor}

@@ -3,6 +3,7 @@ let connection = null;
 const DEFAULT_ADMIN_PASSWORD = "stu458";
 
 const notification = require("./Model/notification.js");
+const machine = require("./Model/machine.js")
 
 function startDatabase(){
     __startDatabase();
@@ -19,6 +20,7 @@ async function __startDatabase(){
     await __createDatabase();
     await __createUserTable();
     await notification.__createNotificationTable();
+    await machine.__createMachineTable();
 
     await __createAdminUser();
 }
@@ -90,6 +92,7 @@ async function __insertUserData(name, password, age, role, general_info){
                 reject(err);
             }
             console.log("Done inserting data for user "+name);
+            notification.__notify(results.insertId, "Your account has been created by Admin");
             resolve(results);
         });
     }
