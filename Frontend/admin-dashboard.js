@@ -197,7 +197,55 @@ function editUserInfo(){
 }
 
 function getNotifications(){
+
+    let url = "http://192.168.31.249:1401/admin";
+    data={
+        "operation":"gn",
+        "userid": currentUserId
+    }
+
+    fetch(url, {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, *cors, same-origin
+        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: "same-origin", // include, *same-origin, omit
+        headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: "follow", // manual, *follow, error
+        referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(data), // body data type must match "Content-Type" header
+    })
+    .then((resolve)=>{
+        console.log("Get Notification Request has been resolved!");
+        return resolve.json()
+    })
+    .then((data)=>{
+        console.log("DEBUG: notifications-"+data);
+        for(let i=0; i<data.notifications.length; i++){
+            let row = document.createElement('tr');
     
+            let cell1 = document.createElement('td');
+            cell1.innerText = data.notifications[i][0];
+            let cell2 = document.createElement('td');
+            cell2.innerText = data.notifications[i][1];
+            let cell3 = document.createElement('td');
+            let btn = document.createElement("button");
+            btn.innerHTML = "Click!"
+            cell3.appendChild(btn);
+
+    
+            row.appendChild(cell1);
+            row.appendChild(cell2);
+            row.appendChild(cell3);
+    
+            document.getElementById("notificationTable").appendChild(row);
+        }
+    })
+    .catch((err)=>{
+    console.log(err);
+    });
 }
 
 function setViewerInfo(){

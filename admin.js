@@ -2,6 +2,8 @@ const mysql = require("mysql2");
 let connection = null;
 const DEFAULT_ADMIN_PASSWORD = "stu458";
 
+const notification = require("./Model/notification.js");
+
 function startDatabase(){
     __startDatabase();
 }
@@ -16,7 +18,7 @@ async function __startDatabase(){
     await __connect();
     await __createDatabase();
     await __createUserTable();
-    await __createNotificationTable();
+    await notification.__createNotificationTable();
 
     await __createAdminUser();
 }
@@ -78,28 +80,7 @@ async function __createUserTable(){
     
 }
 
-async function __createNotificationTable(){
-    return new Promise((resolve, reject)=>{
-        if(connection==null){
-            console.log("Connect to databse first!");
-            reject(false);
-        }
-        
-            const sql_query = `CREATE TABLE if not exists notification(
-        notificationId int auto_increment primary key,
-        userid varchar(50) NOT NULL,
-        timeSent datetime DEFAULT CURRENT_TIMESTAMP,
-        message varchar(300));`; // Find username through relational query
-        
-            connection.query(sql_query, (err, results, fields)=>{
-                if(err) throw err;
-                //console.log(results);
-                console.log("notification Table has been created successfully!");
-                resolve(true);
-            })
-    });
-    
-}
+
 
 async function __insertUserData(name, password, age, role, general_info){
     return new Promise((resolve, reject)=>{
@@ -133,17 +114,8 @@ async function __createAdminUser(){
     const adminIdPromise = await __insertUserData("Admin", DEFAULT_ADMIN_PASSWORD, 21, "Admin", "A daunty young man!");
 
     //console.log(adminIdPromise.insertId);
-    __notify(adminIdPromise.insertId, "Admin account has been created!")
+    notification.__notify(adminIdPromise.insertId, "Admin account has been created!")
     return adminIdPromise.insertId;
-}
-
-function __notify(userid, msg){
-    const sql_query = "INSERT into notification(userid, message) values("+userid+", '"+msg+"');";
-
-    connection.query(sql_query, (err, results, fields)=>{
-        if(err) throw err;
-        console.log("Notification has been sent successfully to user "+userid);
-    })
 }
 
 function __viewRegisteredUsers(){
@@ -163,25 +135,6 @@ function __viewRegisteredUsers(){
     });
 }
 
-
-function __viewNotifications(userid){
-    return new Promise((resolve, reject)=>{
-        const sql_query = "select message from notification where userid="+userid;
-
-        connection.query(sql_query, (err, results, fields)=>{
-            if(err) throw err;
-            resolve(results);
-        });
-    });
-}
-
-function viewNotifications(userid){
-    __viewNotifications(userid)
-    .then((data)=>{
-        console.log("Notifications for user "+userid+":");
-        console.log(data);
-    })
-}
 
 function __deleteTable(tableName){
     const sql_query = "drop table "+tableName;
@@ -206,4 +159,4 @@ function __viewAllTableData(){
 }
 
 // Admin login, Register new user, view existing user, delete existing user, edit user data, view his notification
-module.exports = {startDatabase, viewRegisteredUsers, viewNotifications, __viewRegisteredUsers, __insertUserData, __deleteTable, __viewAllTableData, __notify, __getUserData}
+module.exports = {startDatabase, viewRegisteredUsers, __viewRegisteredUsers, __insertUserData, __deleteTable, __viewAllTableData, __getUserData}

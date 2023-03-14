@@ -2,6 +2,7 @@ const admin = require("./admin.js");
 const constants = require("./constants.js");
 const report = require("./report.js");
 const editUserData = require("./Model/edit-user-data.js");
+const notification = require("./Model/notification.js");
 
 
 function handleGetRequestToHome(req, res){
@@ -80,6 +81,14 @@ function handlePostRequestToAdmin(req, res){
             res.status(200).send({"DataUpdateStatus":"Successful!"});
         })
         .catch((err)=>{console.log(err);});
+    } else if(operationType==constants.GET_NOTIFICATIONS){
+        const userid = body.userid;
+        notification.getNotifications(userid)
+        .then((data)=>{
+            console.log(data);
+            res.status(200).send({"notifications":data});
+        })
+        .catch((err)=>{console.log(err);})
     }
 }
 

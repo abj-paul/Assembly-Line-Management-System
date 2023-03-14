@@ -1,4 +1,5 @@
 const mysql = require("mysql2");
+const notification = require("./notification.js");
 let connection = null;
 
 async function __connect(){
@@ -29,7 +30,8 @@ async function updateUserData(userid, username, password, age, role, general_inf
             connection.query(sql_query, (err, results, fields)=>{
                 if(err) throw err;
                 //console.log(results);
-                console.log("User Table has been updated successfully!");
+                console.log("User Data has been updated successfully!");
+                notification.__notify(userid, "Your account information has been updated by admin.")
                 resolve(true);
             })
     });

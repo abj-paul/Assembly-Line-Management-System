@@ -14,8 +14,8 @@ const report = require("./report.js");
 
 
 admin.startDatabase();
-admin.__deleteTable("user"); 
-admin.__deleteTable("notification");
+//admin.__deleteTable("user"); 
+//admin.__deleteTable("notification");
 report.__connect();
 report.__createProductionReportTable();
 //admin.__deleteTable("productionReport");
