@@ -10,7 +10,7 @@ async function createSession(userdata, endpoint){
 }
 
 function deleteSession(userHash, endpoint){
-    __deleteRowFromTable(userHash, endpoint)
+    session.__deleteRowFromTable(userHash, endpoint)
     .then((result) => {
         console.log("Deleted session "+result);
     }).catch((err) => {

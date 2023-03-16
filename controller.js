@@ -99,6 +99,10 @@ function __serveRequest(req, res){
             res.status(200).send({"notifications":data});
         })
         .catch((err)=>{console.log(err);})
+    }else if(operationType==constants.LOGOUT){
+        const userHash = body.userHash;
+        userHashLib.deleteSession(userHash, constants.ADMIN_ENDPOINT);
+        res.status(200).send({"SessionDelete":true});
     }
 }
 
