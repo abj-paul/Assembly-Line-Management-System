@@ -17,6 +17,7 @@ const pmcontroller = require("./Controller/productionManager.js");
 admin.startDatabase();
 admin.__deleteTable("user"); 
 admin.__deleteTable("notification");
+admin.__deleteTable("machine");
 report.__connect();
 report.__createProductionReportTable();
 //admin.__deleteTable("productionReport");

@@ -162,12 +162,12 @@ function editUserInfo(){
     let url = "http://192.168.31.249:1401/admin";
     data={
         "operation":"eui",
-        "username": "Abhijit Paul",
-        "password": "stu458",
-        "age": 21,
-        "generalInfo": "An absurionist who pursues peace",
-        "role": "Admin",
-        "userid": 1
+        "username": username,
+        "password": password,
+        "age": age,
+        "generalInfo": generalInfo,
+        "role": role,
+        "userid": userid
     }
 
     fetch(url, {
