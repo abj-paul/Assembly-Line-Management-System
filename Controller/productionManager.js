@@ -17,7 +17,7 @@ function handlePostRequestToProductionManager(req, res){
             
             if(data==undefined) res.status(200).send({"authentication":"unsuccessful!", "nextPage":"none"});
             else if(data[0].password==password)
-                res.status(200).send({"authentication":"successful!", "nextPage":"pm/production-manager-dashboard.html", "userInfo":data[0]});
+                res.status(200).send({"authentication":"successful!", "nextPage":"production-manager-dashboard.html", "userInfo":data[0]});
             else res.status(200).send({"authentication":"unsuccessful!", "nextPage":"none"});
 
         })  

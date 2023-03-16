@@ -1,6 +1,8 @@
-//let currentUserId = sessionStorage.getItem("userid"); //TODO: Some error happening here. So we will use default userId instead
-let currentUserId = 2;
+let currentUserId = sessionStorage.getItem("userid"); //TODO: Some error happening here. So we will use default userId instead
 console.log("Current User Id: "+currentUserId);
+
+const LOGIN_PAGE_LINK = "file:///home/abhijit/Assembly-Line-Management-System/Frontend/login.html";
+
 
 function getHourlyProductionReport(){
     let url = "http://192.168.31.249:1401/productionManager";
@@ -164,4 +166,9 @@ function registerResouce(){
 
 function registerTotalProductionTarge(){
     
+}
+
+function logout(){
+    sessionStorage.clear();
+    window.location.href = LOGIN_PAGE_LINK;
 }

@@ -1,6 +1,8 @@
 let currentUserId = sessionStorage.getItem("userid");
 console.log("Cache: "+currentUserId);
 
+const LOGIN_PAGE_LINK = "file:///home/abhijit/Assembly-Line-Management-System/Frontend/login.html";
+
 function getUserList(){
 let url = "http://192.168.31.249:1401/admin";
 let data = {"operation":"vru"};
@@ -250,4 +252,9 @@ function getNotifications(){
 
 function setViewerInfo(){
     
+}
+
+function logout(){
+    sessionStorage.clear();
+    window.location.href = LOGIN_PAGE_LINK;
 }
