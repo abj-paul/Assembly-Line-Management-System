@@ -43,6 +43,8 @@ fetch(url, {
             sessionStorage.setItem("age", data.userInfo.age);
             sessionStorage.setItem("role", data.userInfo.role);
             sessionStorage.setItem("general_info", data.userInfo.general_info);
+            sessionStorage.setItem("userHash", data.userHash);
+
 
             console.log("DEBUG: Login-Cache Data:"+data.userInfo.userid+"=="+sessionStorage.getItem("userid"));
 

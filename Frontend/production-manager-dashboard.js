@@ -1,12 +1,17 @@
-let currentUserId = sessionStorage.getItem("userid"); //TODO: Some error happening here. So we will use default userId instead
+let currentUserId = sessionStorage.getItem("userid");
+let userHash = sessionStorage.getItem("userHash");
 console.log("Current User Id: "+currentUserId);
+console.log("userHash: "+userHash);
 
 const LOGIN_PAGE_LINK = "file:///home/abhijit/Assembly-Line-Management-System/Frontend/login.html";
 
 
 function getHourlyProductionReport(){
     let url = "http://192.168.31.249:1401/productionManager";
-    let data = {"operation":"vhpr"};
+    let data = {
+        "operation":"vhpr",
+        "userHash": userHash
+    };
     fetch(url, {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, *cors, same-origin
@@ -73,10 +78,11 @@ function getProfileInfo(){
 
 function getNotifications(){
 
-    let url = "http://192.168.31.249:1401/admin"; //TODO: /productionManager
+    let url = "http://192.168.31.249:1401/productionManager";
     data={
         "operation":"gn",
-        "userid": currentUserId
+        "userid": currentUserId,
+        "userHash":userHash
     }
 
     fetch(url, {
@@ -134,7 +140,8 @@ function registerResouce(){
         "machineModel": machineModel,
         "machineType": machineType,
         "otherInfo": otherInfo,
-        "perHourProduction": perHourProduction
+        "perHourProduction": perHourProduction,
+        "userHash":userHash
     }
     let url = "http://192.168.31.249:1401/productionManager";
 

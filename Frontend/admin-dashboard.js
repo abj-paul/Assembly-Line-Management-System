@@ -1,11 +1,13 @@
 let currentUserId = sessionStorage.getItem("userid");
+let userHash = sessionStorage.getItem("userHash");
 console.log("Cache: "+currentUserId);
+console.log("userHash: "+userHash);
 
 const LOGIN_PAGE_LINK = "file:///home/abhijit/Assembly-Line-Management-System/Frontend/login.html";
 
 function getUserList(){
 let url = "http://192.168.31.249:1401/admin";
-let data = {"operation":"vru"};
+let data = {"operation":"vru", "userHash": userHash};
 fetch(url, {
     method: "POST", // *GET, POST, PUT, DELETE, etc.
     mode: "cors", // no-cors, *cors, same-origin
@@ -66,7 +68,8 @@ function registerUser(){
         "password": password,
         "age": age,
         "generalInfo": generalInfo,
-        "role": role
+        "role": role,
+        "userHash": userHash
     }
 
     console.log(data);
@@ -104,7 +107,8 @@ function downloadDatabase(){
 
     let url = "http://192.168.31.249:1401/admin";
     let data = {
-        "operation":"gadd"
+        "operation":"gadd",
+        "userHash": userHash
     }
     
     //{"operation":"rnu", "username":username, "password":password, "age":age, "generalInfo":generalInfo};
@@ -169,7 +173,8 @@ function editUserInfo(){
         "age": age,
         "generalInfo": generalInfo,
         "role": role,
-        "userid": userid
+        "userid": userid,
+        "userHash": userHash
     }
 
     fetch(url, {
@@ -203,7 +208,8 @@ function getNotifications(){
     let url = "http://192.168.31.249:1401/admin";
     data={
         "operation":"gn",
-        "userid": currentUserId
+        "userid": currentUserId,
+        "userHash": userHash
     }
 
     fetch(url, {

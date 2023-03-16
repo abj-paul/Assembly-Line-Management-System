@@ -12,12 +12,16 @@ const misc = require("./misc.js");
 const controller = require("./controller.js");
 const report = require("./report.js");
 const pmcontroller = require("./Controller/productionManager.js");
+const session = require("./Model/session.js");
 
 
 admin.startDatabase();
 admin.__deleteTable("user"); 
 admin.__deleteTable("notification");
 admin.__deleteTable("machine");
+//admin.__deleteTable("session");
+
+session.__createSessionTable();
 report.__connect();
 report.__createProductionReportTable();
 //admin.__deleteTable("productionReport");
