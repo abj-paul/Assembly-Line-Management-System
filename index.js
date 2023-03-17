@@ -13,6 +13,8 @@ const controller = require("./controller.js");
 const report = require("./report.js");
 const pmcontroller = require("./Controller/productionManager.js");
 const session = require("./Model/session.js");
+const assemblyLine = require("./Model/assembly-line-layoud.model.js");
+const layoutController = require("./Controller/assembly-line-layout.controller.js");
 
 
 admin.startDatabase();
@@ -24,16 +26,17 @@ admin.__deleteTable("machine");
 session.__createSessionTable();
 report.__connect();
 report.__createProductionReportTable();
+assemblyLine.__createAssemblyLineTable();
+assemblyLine.__createAssemblyLineLayoutTable();
 //admin.__deleteTable("productionReport");
 
 
 app.listen(PORT, ()=>misc.serverHasStartedNotification(PORT));
-app.get("/home", (req, res) => controller.handleGetRequestToHome(req,res));
-app.post("/registration", (req, res) => controller.handlePostRequestToRegistration(req,res));
-//app.post("/login", (req, res) => controller.handlePostRequestToLogin(req,res));
 app.post("/admin", (req, res) => controller.handlePostRequestToAdmin(req,res));
 app.post("/supervisor", (req, res) => controller.handlePostRequestToSupervisor(req,res));
 app.post("/productionManager", (req, res) => pmcontroller.handlePostRequestToProductionManager(req,res));
+app.post("/layout", (req, res) => layoutController.handlePostRequestToLayoutViaPM(req,res));
+
 
 //app.get("/dashboard/:userid", (req, res) => controller.handleGetRequestToDashboard(req,res));
 

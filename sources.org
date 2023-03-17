@@ -1,0 +1,1 @@
+[[https://dba.stackexchange.com/questions/252554/storing-arrays-in-mysql][Storing Arrays in SQL]]

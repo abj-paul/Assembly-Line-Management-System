@@ -1,23 +1,10 @@
 const admin = require("./admin.js");
 const constants = require("./constants.js");
-const report = require("./report.js");
 const editUserData = require("./Model/edit-user-data.js");
 const notification = require("./Model/notification.js");
 const session = require("./Model/session.js");
 const userHashLib = require("./Controller/userHash.js"); 
 
-
-function handleGetRequestToHome(req, res){
-
-}
-
-function handlePostRequestToRegistration(req, res){
-
-}
-
-function handlePostRequestToLogin(req, res){
-
-}
 
 function handlePostRequestToAdmin(req, res){
     const body = req.body;
@@ -106,26 +93,6 @@ function __serveRequest(req, res){
     }
 }
 
-function handlePostRequestToSupervisor(req, res){
-    const body = req.body;
-    const operationType = body.operation;
-
-    if(operationType==constants.SUBMIT_HOURLY_PRODUCTION_REPORT){
-        const userid = body.userid;
-        const unit = body.unit;
-        const productionAmount = body.productionAmount;
-        const comment = body.comment;
-
-        report.__insertProductionReportData(userid, unit, productionAmount, comment)
-        .then((data)=>{
-            res.status(200).send({"ReportId":data.insertId});
-        })
-        .catch((err)=>{
-            throw err;
-        });
-    } 
-}
-
 async function login(req, res){
     const body = req.body;
     const username = body.username;
@@ -145,4 +112,4 @@ async function login(req, res){
 }
 
 
-module.exports = {handleGetRequestToHome, handlePostRequestToRegistration, handlePostRequestToLogin, handlePostRequestToAdmin, handlePostRequestToSupervisor}
+module.exports = { handlePostRequestToAdmin}

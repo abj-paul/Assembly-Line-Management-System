@@ -5,6 +5,8 @@ const machine = require("../Model/machine.js");
 const session = require("../Model/session.js");
 const userHashLib = require("../Controller/userHash.js");
 const notification = require("../Model/notification.js");
+const assemblyLine = require("../Model/assembly-line-layoud.model.js");
+
 
 function handlePostRequestToProductionManager(req, res){
     const body = req.body;
@@ -66,6 +68,14 @@ function __serveRequest(req, res){
         const userHash = body.userHash;
         userHashLib.deleteSession(userHash, constants.PM_ENDPOINT);
         res.status(200).send({"SessionDelete":true});
+    }else if(constants.REGISTER_ASSEMBLY_LINE){
+        const name = body.name;
+        const capacity = body.capacity;
+        const otherInfo = body.otherInfo;
+        assemblyLine.registerAssemblyLine(name, capacity, otherInfo)
+        .then((data)=>{
+            res.status(200).send({"RegisteredAssemblyLineId":data.insertId});
+        });
     }
 }
 
