@@ -18,9 +18,9 @@ const layoutController = require("./Controller/assembly-line-layout.controller.j
 
 
 admin.startDatabase();
-admin.__deleteTable("user"); 
-admin.__deleteTable("notification");
-admin.__deleteTable("machine");
+//admin.__deleteTable("user"); 
+//admin.__deleteTable("notification");
+//admin.__deleteTable("machine");
 //admin.__deleteTable("session");
 
 session.__createSessionTable();
