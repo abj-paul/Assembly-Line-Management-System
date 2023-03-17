@@ -6,6 +6,6 @@
 
 * TODO
 - [X] Drag & Drop
-- Update line efficieny, capacity and show hourly production in machines
-- Save Layout
-- View Layout
+- [X] Update line efficieny, capacity and show hourly production in machines
+- [X] Save Layout
+- [ ] Load/View Layout

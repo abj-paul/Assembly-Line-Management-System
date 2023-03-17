@@ -185,3 +185,63 @@ function drop(e){
     document.getElementById("currentProduction").innerText = "Current Production: "+currentProductionReached;
 
 }
+
+function goBack(){
+    window.location.href = "file:///home/abhijit/Assembly-Line-Management-System/Frontend/production-manager-dashboard.html";
+}
+
+function saveLayout(){
+    /*
+    {
+	"operation": "sall",
+	"assemblyLineId": 1,
+	"layoutArr": [{"machineId": 1, "position": 5, "otherInfo": "None"},{"machineId": 2,         "position": 0, "otherInfo": "None"}]
+    }
+    */
+    let boxes = document.getElementsByClassName("box");
+    for(let i=1; i<boxes.length; i++)
+        __saveSingleAssemblyLineLayout(boxes[i].id);
+    //window.location.href = "file:///home/abhijit/Assembly-Line-Management-System/Frontend/production-manager-dashboard.html";
+
+}
+
+function __saveSingleAssemblyLineLayout(boxId){
+    let machineList = document.getElementById(boxId);
+    let layoutArr = []
+    for(let i=0; i<machineList.length; i++){
+        let index = machineList[i].id;
+        layoutArr.push({"machineId":machines[index], "position":i, otherInfo:"None"});
+    }
+
+    let assemblyLineId = boxId[3];
+
+    let data = {
+        "operation": "sall",
+        "assemblyLineId": assemblyLineId,
+        "layoutArr": layoutArr,
+        "userHash": userHash
+    };
+    let url = "http://192.168.31.249:1401/layout";
+
+    fetch(url, {
+        method: "POST", 
+        mode: "cors", 
+        cache: "no-cache", 
+        credentials: "same-origin", 
+        headers: {
+        "Content-Type": "application/json",
+        },
+        redirect: "follow", 
+        referrerPolicy: "no-referrer",
+        body: JSON.stringify(data), 
+    })
+        .then((resolve)=>{
+            console.log("Get Machine List Request has been resolved!");
+            return resolve.json()
+        })
+        .then((data)=>{
+            console.log(data);
+        })
+        .catch((err)=>{console.log(err);});
+
+}
