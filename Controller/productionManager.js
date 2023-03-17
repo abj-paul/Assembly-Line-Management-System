@@ -68,7 +68,7 @@ function __serveRequest(req, res){
         const userHash = body.userHash;
         userHashLib.deleteSession(userHash, constants.PM_ENDPOINT);
         res.status(200).send({"SessionDelete":true});
-    }else if(constants.REGISTER_ASSEMBLY_LINE){
+    }else if(operationType == constants.REGISTER_ASSEMBLY_LINE){
         const name = body.name;
         const capacity = body.capacity;
         const otherInfo = body.otherInfo;
@@ -76,6 +76,11 @@ function __serveRequest(req, res){
         .then((data)=>{
             res.status(200).send({"RegisteredAssemblyLineId":data.insertId});
         });
+    }else if(operationType == constants.GET_ASSEMBLY_LINE_LIST){
+        assemblyLine.getAssemblyLineList()
+        .then((data)=>{
+            res.status(200).send({"AssemblyLineList": data});
+        })
     }
 }
 

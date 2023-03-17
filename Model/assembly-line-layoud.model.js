@@ -116,12 +116,20 @@ async function getAssemblyLineLayout(assemblyLineId){
             if(err) {
                 reject(err);
             }
-            /*
-            let machines = []
-            for(let i=0; i<results.length; i++){
-                machines.push([results[i].machineModel, results[i].machineType, results[i].otherInfo, results[i].perHourProduction])
-            }*/
-            //console.log("DEBUG: Layout="+results);
+
+            resolve(results);
+        });
+    }
+    );
+}
+
+async function getAssemblyLineList(){
+    return new Promise((resolve, reject)=>{
+        const sql_query = " SELECT * FROM assemblyLine";
+        connection.query(sql_query, (err, results, fields)=>{
+            if(err) {
+                reject(err);
+            }
             resolve(results);
         });
     }
@@ -150,4 +158,4 @@ async function assignLC(assemblyLineId, LCUserId){
 
 }
 
-module.exports = { registerAssemblyLine, __createAssemblyLineTable, __createAssemblyLineLayoutTable, saveAssemblyLineLayout, getAssemblyLineLayout}
+module.exports = { registerAssemblyLine, __createAssemblyLineTable, __createAssemblyLineLayoutTable, saveAssemblyLineLayout, getAssemblyLineLayout, getAssemblyLineList}

@@ -211,3 +211,48 @@ function logout(){
         });
 
 }
+
+function registerAssemblyLine(){
+    const name = document.getElementById("nameAssemblyLine").value;
+    const otherInfo = document.getElementById("otherInfo").value;
+    const capacity = document.getElementById("capacity").value;
+
+    let data = {
+        "operation": "ral",
+        "name": name,
+        "capacity": capacity,
+        "otherInfo": otherInfo,
+        "userHash":userHash
+    }
+    let url = "http://192.168.31.249:1401/productionManager";
+
+
+    fetch(url, {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, *cors, same-origin
+        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: "same-origin", // include, *same-origin, omit
+        headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: "follow", // manual, *follow, error
+        referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(data), // body data type must match "Content-Type" header
+    })
+        .then((resolve)=>{
+            console.log("Assembly Line Register Request has been resolved!");
+            return resolve.json()
+        })
+        .then((data)=>{
+            console.log(data);
+            document.getElementById("assemblyLineRegistrationStatus").innerText = "Status: Assembly Line Registration Successful."
+        })
+        .catch((err)=>{
+        console.log(err);
+        });
+}
+
+function populateAssemblyLineList(){
+    
+}
