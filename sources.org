@@ -1,1 +1,11 @@
 [[https://dba.stackexchange.com/questions/252554/storing-arrays-in-mysql][Storing Arrays in SQL]]
+
+[[https://stackoverflow.com/questions/8563240/how-to-get-all-checked-checkboxes][get list of selected checkboxes using js]]
+
+[[https://stackoverflow.com/questions/38083241/sessionstorage-into-array-and-print-all-values-in-the-array][Save array in localStorage cache]]
+
+* TODO
+- [X] Drag & Drop
+- Update line efficieny, capacity and show hourly production in machines
+- Save Layout
+- View Layout

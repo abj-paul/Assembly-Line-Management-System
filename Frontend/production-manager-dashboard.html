@@ -102,7 +102,7 @@
         </div>
 
         <button type="submit" class="btn btn-default" onclick="registerResouce()">Submit</button>
-        <span id="status">Status:</span>
+        <span id="resourceRegistrationStatus">Status:</span>
     </div>
     
         <div class="row" id="reports">
@@ -215,18 +215,16 @@
             </div>
     
             <!--TODO: Populate this assembly line from database-->
-            <div class="form-group">
-                <label for="assemblyLineId">Select Assembly Line:</label>
-                <select class="form-control" id="assemblyLineId">
-                    <option value="1">Select Assembly Line</option>
-                    <!--populate list-->
-                </select>
+            <div id="assemblyLinesForProduction">
+                <h5> Select Assembly Lines for production: </h5>
             </div> 
             <script>populateAssemblyLineList()</script>
     
-            <button type="submit" class="btn btn-default" onclick="registerTotalProductionTarge()">Submit</button>
+            <!--<button type="submit" class="btn btn-default" onclick="registerTotalProductionTarget()">Submit</button>-->
 
-            <a href="layout.html"><button class="btn btn-default">Set Assembly Line Layout</button></a>
+            <button class="btn btn-default" onclick="loadLayoutPage()">Set Assembly Line Layout</button>
+            <button class="btn btn-default" onclick="saveProductionRegistrationInDatabase()">Finalize</button>
+
         </div>
     </div>
 </body>

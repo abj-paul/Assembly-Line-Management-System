@@ -3,6 +3,9 @@ let userHash = sessionStorage.getItem("userHash");
 console.log("Current User Id: "+currentUserId);
 console.log("userHash: "+userHash);
 
+let assemblyLines = null;
+
+
 const LOGIN_PAGE_LINK = "file:///home/abhijit/Assembly-Line-Management-System/Frontend/login.html";
 
 
@@ -165,14 +168,11 @@ function registerResouce(){
         })
         .then((data)=>{
             console.log(data);
+            document.getElementById("resourceRegistrationStatus").innerText = "Status: Successfully machine "+data.MachineId;
         })
         .catch((err)=>{
         console.log(err);
         });
-}
-
-function registerTotalProductionTarge(){
-    
 }
 
 function logout(){
@@ -254,7 +254,6 @@ function registerAssemblyLine(){
 }
 
 function populateAssemblyLineList(){
-    let assemblyLines = null;
 
     let data = {
         "operation":"gallist",
@@ -284,11 +283,28 @@ function populateAssemblyLineList(){
             console.log(data);
             assemblyLines = data.AssemblyLineList;
 
+            // <input type="checkbox" name="assemblyLine" value="1" /> <label>Select Assembly Line</label>
             for(let i=0; i<assemblyLines.length; i++){
-                let option = document.createElement("option");
-                option.innerHTML = assemblyLines[i].name;
-                option.value = assemblyLines[i].assemblyLineId;
-                document.getElementById("assemblyLineId").appendChild(option);
+
+                let div = document.createElement("div");
+                div.setAttribute("class", "form-check");
+
+                let label = document.createElement("label");
+                label.innerHTML = assemblyLines[i].name;
+                label.setAttribute("class", "form-check-label");
+                label.setAttribute("for", "checkbox"+i);
+
+                let checkbox = document.createElement("input");
+                checkbox.setAttribute("type", "checkbox"); 
+                checkbox.setAttribute("name", "assemblyLineCheckbox");
+                checkbox.setAttribute("value", assemblyLines[i].assemblyLineId);
+                checkbox.setAttribute("class", "form-check-input");
+                checkbox.setAttribute("id", "checkbox"+i);
+
+                div.appendChild(checkbox);
+                div.appendChild(label);
+
+                document.getElementById("assemblyLinesForProduction").appendChild(div);
             }
         })
         .catch((err)=>{
@@ -296,4 +312,29 @@ function populateAssemblyLineList(){
         });
 
     
+}
+
+function __registerTotalProductionTarget(){
+    var checkboxes = document.getElementsByName("assemblyLineCheckbox");
+    var checkboxesChecked = [];
+    for (var i=0; i<checkboxes.length; i++) {
+       if (checkboxes[i].checked) {
+          checkboxesChecked.push({"name": checkboxes[i].nextSibling.innerText, "id": checkboxes[i].value, "capacity": assemblyLines[i].capacity});
+       }
+    }
+
+    sessionStorage.setItem("selectedAssemblyLines", JSON.stringify(checkboxesChecked));
+    //console.log(JSON.parse(sessionStorage.getItem("selectedAssemblyLines")));
+
+    let totalProductionTarget = document.getElementById("totalProductionTarget").value;
+    sessionStorage.setItem("totalProductionTarget", totalProductionTarget);
+}
+
+function loadLayoutPage(){
+    __registerTotalProductionTarget();
+    window.location.href = "layout.html";
+}
+
+function saveProductionRegistrationInDatabase(){
+
 }

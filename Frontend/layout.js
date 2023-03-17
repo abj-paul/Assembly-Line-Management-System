@@ -1,26 +1,125 @@
-createResources();
-const items = document.getElementsByClassName("item");
-const boxes = document.getElementsByClassName("box");
+const userHash = sessionStorage.getItem("userHash");
+const targetProduction = sessionStorage.getItem("totalProductionTarget");
+let machines = null;
+const assemblyLines = JSON.parse(sessionStorage.getItem("selectedAssemblyLines"));
 
-const itemObjects = []
-let boxObjects = []
 
-for(let i=0; i<items.length; i++){
-    items[i].addEventListener("dragstart", dragStart);
-    itemObjects.push([items[i], {"efficiency": 10}]);
+let currentProductionReached = 0;
+let lineProduction = [];
+
+function renderResource(){
+    document.getElementById("targetProduction").innerText = "Target Production: "+ targetProduction;
+
+    let data = {
+        "operation":"gml",
+        "userHash":userHash
+    }
+    let url = "http://192.168.31.249:1401/productionManager";
+
+
+    fetch(url, {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, *cors, same-origin
+        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: "same-origin", // include, *same-origin, omit
+        headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: "follow", // manual, *follow, error
+        referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(data), // body data type must match "Content-Type" header
+    })
+        .then((resolve)=>{
+            console.log("Get Machine List Request has been resolved!");
+            return resolve.json()
+        })
+        .then((data)=>{
+            console.log(data);
+            machines = data.MachineList;
+
+            for(let i=0; i<machines.length; i++){
+                /*
+                <div class="item" id="item1" draggable="true">
+                    <p>Sewing Machine 1</p>
+                </div>
+                */
+                const div = document.createElement("div");
+                div.setAttribute("class", "item");
+                div.setAttribute("draggable", "true");
+                div.setAttribute("id", i);
+                div.addEventListener("dragstart", dragStart);
+            
+                const p = document.createElement("p");
+                p.innerHTML = machines[i][0] + " <br> Type: " + machines[i][1] + " <br> Hourly Production: "+machines[i][3];
+                div.appendChild(p);
+            
+                document.getElementById("resourceBox").appendChild(div)
+            }
+
+            const margin = 11;
+            let newHeight = (document.getElementById("1").offsetHeight+margin) * (machines.length+1);
+            document.getElementById("resourceBox").style.height = newHeight+"px" ;
+
+            __renderAssemblyLine();
+        })
+        .catch((err)=>{console.log(err);});
+
 }
 
-for(let i=0; i<boxes.length; i++){
-    boxes[i].addEventListener("dragenter", dragEnter);
-    boxes[i].addEventListener("dragover", dragOver);
-    boxes[i].addEventListener("dragleave", dragLeave);
-    boxes[i].addEventListener("drop", drop);
-    boxObjects.push([boxes[i], {"efficiency":0}]);
+function __renderAssemblyLine(){
+    let div = document.getElementById("resourceBox");
+    div.setAttribute("draggable", "true");
+    div.addEventListener("dragenter", dragEnter);
+    div.addEventListener("dragover", dragOver);
+    div.addEventListener("dragleave", dragLeave);
+    div.addEventListener("drop", drop);
+    
+    for(let i=0; i<assemblyLines.length; i++){
+        lineProduction.push(0); //initial production
+
+        /*
+        <div class="col-sm-6">
+            <div class="box" id="box2">
+                <div class="matrices">
+                    <p>Assembly Line 1</p>
+                    <p>Current Efficiency: 0</p>
+                </div>
+            </div>
+        </div>
+        */
+
+
+        let div0 = document.createElement("div");
+        div0.setAttribute("class", "col-sm-"+12/assemblyLines.length);
+        div0.setAttribute("draggable", "true");
+        div0.addEventListener("dragenter", dragEnter);
+        div0.addEventListener("dragover", dragOver);
+        div0.addEventListener("dragleave", dragLeave);
+        div0.addEventListener("drop", drop);
+
+        let div1 = document.createElement("div");
+        div1.setAttribute("class","box");
+        div1.setAttribute("id","box"+i);
+        let div2 = document.createElement("div");
+        div2.setAttribute("class", "matrices");
+
+        let p1 = document.createElement("p");
+        p1.innerText = assemblyLines[i].name;
+        let p2 = document.createElement("p");
+        p2.innerText = "Current Production: "+lineProduction[i];
+        let p3 = document.createElement("p");
+        p3.innerText = "Capacity : "+assemblyLines[i].capacity;
+
+        div2.appendChild(p1);
+        div2.appendChild(p2);
+        div2.appendChild(p3);
+        div1.appendChild(div2);
+        div0.appendChild(div1)
+    
+        document.getElementById("assemblyLineGUIPortion").appendChild(div0);
+    }
 }
-
-//console.log(itemValues[0][1].efficiency);
-
-
 function dragStart(e){
     e.dataTransfer.setData("text/plain", e.target.id);
     console.log("Drag Started!");
@@ -29,7 +128,6 @@ function dragStart(e){
         e.target.classList.add("hide");
     },0);
 }
-
 
 function dragEnter(e){
     e.preventDefault();
@@ -48,46 +146,42 @@ function drop(e){
     item.classList.remove("hide");
     item.parentNode.removeChild(item);
     e.target.appendChild(item);
-    
+
+    // Finding Destination Box
+    let boxObjects = document.getElementsByClassName("box");
+    let destBox = null;
     for(let i=0; i<boxObjects.length; i++){
-        if(boxObjects[i][0].id == e.target.id){
-            let newItemEfficiency = 0;
-
-            for(let j=0; j<itemObjects.length; j++){
-                if(itemObjects[j][0].id == itemId){
-                    newItemEfficiency = itemObjects[j][1].efficiency;
-                    break;
-                }
+        let boxItems = boxObjects[i].children;
+        for(let j=0; j<boxItems.length; j++){
+            if(boxItems[j]==item){
+                destBox = boxObjects[i];
+                break;
             }
-
-            const sourceBoxIndex = sourceBox.id.charAt(3)-1;
-            if(sourceBoxIndex!=0) {
-                boxObjects[sourceBoxIndex][1].efficiency -= newItemEfficiency;
-                document.getElementsByClassName("matrices")[sourceBoxIndex-1].innerText = "Current Efficiency: "+boxObjects[sourceBoxIndex][1].efficiency;
-            }
-
-            if(i==0) break;
-            boxObjects[i][1].efficiency += newItemEfficiency;
-            document.getElementsByClassName("matrices")[i-1].innerText = "Current Efficiency: "+boxObjects[i][1].efficiency;
-            break;
         }
+        if(destBox!=null) break;
+    }
+    if(destBox==null) destBox = document.getElementById("resourceBox");
+
+
+    // Update Values
+    const itemProductionAmount = machines[item.id][3];
+    if(sourceBox.id!="resourceBox") {
+        let index = sourceBox.id[3];
+        lineProduction[index] -= itemProductionAmount;
+        sourceBox.children[0].children[1].innerHTML = "Current Production: "+lineProduction[index];
+        sourceBox.children[0].children[2].innerHTML = "Capacity: "+ (assemblyLines[index].capacity - sourceBox.children.length + 1);
+        currentProductionReached-=itemProductionAmount;
     }
 
-}
+    if(destBox.id!="resourceBox"){
+        let index = destBox.id[3];
+        lineProduction[index] += itemProductionAmount;
+        destBox.children[0].children[1].innerHTML = "Current Production: "+lineProduction[index];
+        destBox.children[0].children[2].innerHTML = "Capacity: "+ (assemblyLines[index].capacity - destBox.children.length + 1);
 
-// Misc
-function createResources(){
-
-    for(let index=0; index<5; index++){
-        const div = document.createElement("div");
-        div.setAttribute("class", "item");
-        div.setAttribute("draggable", "true");
-        div.setAttribute("id", "item"+index);
-    
-        const p = document.createElement("p");
-        p.innerText = "Sewing Machine "+index;
-        div.appendChild(p);
-    
-        document.getElementById("box1").appendChild(div)
+        currentProductionReached += itemProductionAmount;
     }
+
+    document.getElementById("currentProduction").innerText = "Current Production: "+currentProductionReached;
+
 }

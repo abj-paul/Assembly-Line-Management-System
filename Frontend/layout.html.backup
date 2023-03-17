@@ -6,21 +6,17 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-        <script src="layout.js"></script>
 
         <style>
-            #targetProduction {
-                margin-top: 100px;
-
-            }
             .box{
+                margin-top: 100px;
                 background-color: bisque;
-                height: 900px;
+                height: 500px;
                 border: 2px solid black;
             }
             .item{
                 background-color: gainsboro;
-                height: 60px;
+                height: 50px;
                 border: 1px solid groove;
                 margin: auto;
                 margin-bottom: 10px;
@@ -30,12 +26,10 @@
             }
             .matrices{
                 padding: 10px;
-                background-color: cadetblue;
-                margin-bottom: 10px;
             }
 
-            p{
-                text-align: center;
+            #box1 p {
+                margin-bottom: 50px;
             }
         </style>
     </head>
@@ -54,25 +48,36 @@
                 </div>
             </nav>
 
-            <h1 id="targetProduction"> Target Production :  </h1>
-            <h1 id="currentProduction"> Current Production :  </h1>
-
-
             <div class="col-sm-4">
-                <div class="box" id="resourceBox">
-                    <div class="matrices">
-                        <p>Resources</p>
-                    </div>
+                <div class="box" id="box1">
+                    <p>Resources</p>
+                    <!--<div class="item" id="item1" draggable="true">
+                        <p>Sewing Machine 1</p>
+                    </div>-->
                 </div>
             </div>
 
             <div class="col-sm-8">
 
-                <div class="row" id="assemblyLineGUIPortion">
-
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="box" id="box2">
+                            <p>Assembly Line 1</p>
+                            <p class="matrices">Current Efficiency: 0</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-sm-6">
+                        <div class="box" id="box3">
+                            <p>Assembly Line 2</p>
+                            <p class="matrices">Current Efficiency: 0</p>
+                        </div>
+                    </div>
                 </div>
-                <script>renderResource()</script>
+
+            </div>
         </div>
+        <script src="layout.js">renderResource()</script>
 
     </body>
 </html>
