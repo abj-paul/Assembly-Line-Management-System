@@ -2,12 +2,12 @@ createResources();
 const items = document.getElementsByClassName("item");
 const boxes = document.getElementsByClassName("box");
 
-const itemValues = []
-let efficiencyValues = []
+const itemObjects = []
+let boxObjects = []
 
 for(let i=0; i<items.length; i++){
     items[i].addEventListener("dragstart", dragStart);
-    itemValues.push([items[i].id, {"efficiency": (i+1)*2}]);
+    itemObjects.push([items[i], {"efficiency": 10}]);
 }
 
 for(let i=0; i<boxes.length; i++){
@@ -15,8 +15,7 @@ for(let i=0; i<boxes.length; i++){
     boxes[i].addEventListener("dragover", dragOver);
     boxes[i].addEventListener("dragleave", dragLeave);
     boxes[i].addEventListener("drop", drop);
-    efficiencyValues.push([boxes[i].id, 0]);
-
+    boxObjects.push([boxes[i], {"efficiency":0}]);
 }
 
 //console.log(itemValues[0][1].efficiency);
@@ -24,7 +23,8 @@ for(let i=0; i<boxes.length; i++){
 
 function dragStart(e){
     e.dataTransfer.setData("text/plain", e.target.id);
-    console.log("Drag Started!"+e.target.id);
+    console.log("Drag Started!");
+    //console.log(e.target.parentElement.id);
     setTimeout(()=>{
         e.target.classList.add("hide");
     },0);
@@ -38,30 +38,41 @@ function dragOver(e){
     e.preventDefault();
 }
 function dragLeave(e){}
+
 function drop(e){
     const itemId = e.dataTransfer.getData("text/plain");
     const item = document.getElementById(itemId);
+    const sourceBox = item.parentElement;
+    
 
     item.classList.remove("hide");
+    item.parentNode.removeChild(item);
     e.target.appendChild(item);
     
-    
-    let boxIndex = 0;
-    for(let i=0; i<efficiencyValues.length; i++){
-        if(efficiencyValues[i][0]==e.target.id) {
-            for(let j=0; j<itemValues.length; j++){
-                if(itemValues[j][0]==itemId){
-                    efficiencyValues[i][1] += itemValues[j][1].efficiency;
+    for(let i=0; i<boxObjects.length; i++){
+        if(boxObjects[i][0].id == e.target.id){
+            let newItemEfficiency = 0;
+
+            for(let j=0; j<itemObjects.length; j++){
+                if(itemObjects[j][0].id == itemId){
+                    newItemEfficiency = itemObjects[j][1].efficiency;
                     break;
                 }
             }
-            boxIndex = i;
+
+            const sourceBoxIndex = sourceBox.id.charAt(3)-1;
+            if(sourceBoxIndex!=0) {
+                boxObjects[sourceBoxIndex][1].efficiency -= newItemEfficiency;
+                document.getElementsByClassName("matrices")[sourceBoxIndex-1].innerText = "Current Efficiency: "+boxObjects[sourceBoxIndex][1].efficiency;
+            }
+
+            if(i==0) break;
+            boxObjects[i][1].efficiency += newItemEfficiency;
+            document.getElementsByClassName("matrices")[i-1].innerText = "Current Efficiency: "+boxObjects[i][1].efficiency;
             break;
         }
     }
 
-    
-    document.getElementsByClassName("matrices")[boxIndex].innerText = "Current Efficiency: "+efficiencyValues[boxIndex][1];
 }
 
 // Misc

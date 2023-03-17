@@ -1,3 +1,4 @@
  1. App crashes (throw err): Solution - It is not a bug rather a feature of development. We want error to occur everytime something does not go as expected.
- 2. Middleware
- 3. logout
+ 2. Register Assembly Line (e.g. name, capacity, general info)
+ 3. Load resource list
+ 4. Subtract on movement
