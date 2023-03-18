@@ -15,26 +15,34 @@ const pmcontroller = require("./Controller/productionManager.js");
 const session = require("./Model/session.js");
 const assemblyLine = require("./Model/assembly-line-layoud.model.js");
 const layoutController = require("./Controller/assembly-line-layout.controller.js");
+const machine = require("./Model/machine.js");
+const lineChiefController = require("./Controller/line-chief.controller.js");
+const supervisorController = require("./Controller/supervisor.controller.js");
 
 
 admin.startDatabase();
 //admin.__deleteTable("user"); 
 //admin.__deleteTable("notification");
+//admin.__deleteTable("assemblyLineLayout");
 //admin.__deleteTable("machine");
+//admin.__deleteTable("assemblyLine");
 //admin.__deleteTable("session");
+//admin.__deleteTable("productionReport");
+
 
 session.__createSessionTable();
 report.__connect();
 report.__createProductionReportTable();
+machine.__createMachineTable();
 assemblyLine.__createAssemblyLineTable();
 assemblyLine.__createAssemblyLineLayoutTable();
-//admin.__deleteTable("productionReport");
 
 
 app.listen(PORT, ()=>misc.serverHasStartedNotification(PORT));
 app.post("/admin", (req, res) => controller.handlePostRequestToAdmin(req,res));
-app.post("/supervisor", (req, res) => controller.handlePostRequestToSupervisor(req,res));
+app.post("/supervisor", (req, res) => supervisorController.handlePostRequestToSupervisor(req,res));
 app.post("/productionManager", (req, res) => pmcontroller.handlePostRequestToProductionManager(req,res));
+app.post("/lineChief", (req, res) => lineChiefController.handlePostRequestToLineChief(req,res));
 app.post("/layout", (req, res) => layoutController.handlePostRequestToLayoutViaPM(req,res));
 
 

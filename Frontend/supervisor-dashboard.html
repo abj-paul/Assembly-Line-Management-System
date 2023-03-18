@@ -10,6 +10,20 @@
         <title>Supervisor Dashboard</title>
         <script src="supervisor-dashboard.js"> </script>
         <style>
+               h4{
+        background-color: beige;
+        padding: 10px;
+      }
+      .myRow {
+        padding: 10px;
+        background-color: yellow; 
+        border-bottom: 2px solid black;
+        }
+    img{height: 300px;}
+
+    #profile div div h1 {
+      padding: 2px;
+    }
             p{
                 text-align: center;
                 margin-top: 20px;
@@ -33,7 +47,23 @@
     </head>
     <body>
         <div class="container">
-            <div class="row">
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#"> Supervisor Dashboard</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#reports">Reports</a></li>
+                    <li><a href="#profile">Profile</a></li>
+                </ul>
+                </div>
+            </nav>
+
+            <div class="p-5 text-center bg-light">
+                <h4 class="mb-3">Production Manager Dashboard</h4>
+            </div>
+
+            <div class="row" id="reports">
                 <div class="col-sm-4 subsection">
                     <p>Hourly Target Report</p>
                     <div class="form-group">
@@ -106,6 +136,40 @@
                     <button onclick="">Submit Congestion Issue</button>
                 </div>
             </div>
+
+            <!--Profile-->
+        <div class="row" id="profile">
+            <div class="p-5 text-center bg-light">
+              <h4 class="mb-3">Profile</h4>
+            </div>
+    
+            <div class="row">
+              <div class="col-sm-7">     
+                  <h3>Role: </h3>             
+                  <div class='myRow'>Name: </div>
+                  <div class='myRow'>Age: </div>
+                  <div class='myRow'>General Info: </div>
+                  <div class='myRow'>Employee Id: </div>
+                  </div>
+              <div class="col-sm-5">
+                <img src="../resource/default_pfp.png">
+              </div>
+            </div>
+    
+            <div class="p-5 bg-light">
+              <h4 class="mb-3">Notifications</h4>
+            </div>
+            <table class="table table-striped" id="notificationTable">
+              <tr>
+                <th> Timestamp </th>
+                <th> Message </th>
+                <th> Action </th> <!--<button>Click</button>-->
+              </tr>
+              <script> getNotifications() </script>
+            </table>
+            <button type="submit" class="btn btn-default" onclick="logout()">Logout</button>
+          </div>
+          <script>getProfileInfo()</script>
         </div>
     </body>
 </html>

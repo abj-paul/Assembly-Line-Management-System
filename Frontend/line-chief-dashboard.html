@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <title>Line Chief Dashboard</title>
+        <script src="line-chief-dashboard.js"> </script>
+    <style>
+ 
+        table tr td {
+            padding: 10px;
+            border-bottom: 1px solid black;
+        }
+        .report{
+            text-align: center;
+            margin-top: 20px;
+            font-size: large;
+            padding-top: 20px;
+            font-weight: bold;
+            color: blueviolet;
+        }
+
+        .subsection{
+            background-color: bisque;
+            margin-top: 40px;
+        }
+
+        button{
+            padding: 10px 20px;
+            width: 200px;
+        }
+
+
+      h4{
+        background-color: beige;
+        padding: 10px;
+      }
+      .myRow {
+        padding: 10px;
+        background-color: yellow; 
+        border-bottom: 2px solid black;
+        }
+    img{height: 300px;}
+
+    #profile div div h1 {
+      padding: 2px;
+    }
+
+    .box{
+        background-color: bisque;
+        height: 200px;
+        border: 2px solid black;
+        width: 30%;
+        margin: auto;
+    }
+    .item{
+        background-color: gainsboro;
+        height: 60px;
+        border: 1px solid groove;
+        margin: auto;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#"> LC Dashboard</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#viewLayout">Layout</a></li>
+                <li><a href="#reports">Reports</a></li>
+                <li><a href="#viewResource">Resources Available</a></li>
+                <li><a href="#profile">Profile</a></li>
+                <li><a href="#Congestion">Congestion</a></li>
+            </ul>
+            </div>
+        </nav>
+
+    <div class="p-5 text-center bg-light">
+        <h4 class="mb-3">Line Chief Dashboard</h4>
+    </div>
+
+
+    <!--View Layout-->
+    <div class="row" id="viewLayout">
+        <div class="p-5 text-center bg-light">
+            <h4 class="mb-3">Layout</h4>
+        </div>
+        <div class="box">
+
+        </div>
+        <script>getAssemblyLineLayout()</script>
+    </div>
+    
+    <!--View Reports-->
+    <div class="row" id="reports">
+        <div class="p-5 text-center bg-light">
+            <h4 class="mb-3">Reports</h4>
+        </div>
+        <div class="subsection">
+            <p class="report">Hourly Production Report</p>
+            <table class="table table-striped" id="hourlyProductionReportTable">
+                <tr>
+                    <th> Time of Submission</th>
+                    <th> Report Id </th>
+                    <th> Production Amount </th>
+                    <th> Unit </th>
+                    <th> Comment </th>
+                </tr>
+            </table>
+            <script>getHourlyProductionReport()</script>
+        </div>
+            <div class="subsection">
+                <p class="report">Congestion Issues</p>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Time of Submission</th>
+                            <th>Report Id</th>
+                            <th>Production Amount</th>
+                            <th>Unit</th>
+                            <th>Comment</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!--Profile-->
+        <div class="row" id="profile">
+            <div class="p-5 text-center bg-light">
+              <h4 class="mb-3">Profile</h4>
+            </div>
+    
+            <div class="row">
+              <div class="col-sm-7">     
+                  <h3>Role: </h3>             
+                  <div class='myRow'>Name: </div>
+                  <div class='myRow'>Age: </div>
+                  <div class='myRow'>General Info: </div>
+                  <div class='myRow'>Employee Id: </div>
+                  </div>
+              <div class="col-sm-5">
+                <img src="../resource/default_pfp.png">
+              </div>
+            </div>
+    
+            <div class="p-5 bg-light">
+              <h4 class="mb-3">Notifications</h4>
+            </div>
+            <table class="table table-striped" id="notificationTable">
+              <tr>
+                <th> Timestamp </th>
+                <th> Message </th>
+                <th> Action </th> <!--<button>Click</button>-->
+              </tr>
+              <script> getNotifications() </script>
+            </table>
+            <button type="submit" class="btn btn-default" onclick="logout()">Logout</button>
+          </div>
+          <script>getProfileInfo()</script>
+
+
+
+
+          <!--Congestion-->
+          <div class="row" id="congestion">
+            <div class="p-5 text-center bg-light">
+                <h4 class="mb-3">Congestion</h4>
+            </div>  
+
+        </div>
+    </div>
+</body>
+</html>

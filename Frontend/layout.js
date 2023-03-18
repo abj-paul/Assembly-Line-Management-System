@@ -47,7 +47,7 @@ function renderResource(){
                 const div = document.createElement("div");
                 div.setAttribute("class", "item");
                 div.setAttribute("draggable", "true");
-                div.setAttribute("id", i);
+                div.setAttribute("id", machines[i][4]);
                 div.addEventListener("dragstart", dragStart);
             
                 const p = document.createElement("p");
@@ -190,7 +190,7 @@ function goBack(){
     window.location.href = "file:///home/abhijit/Assembly-Line-Management-System/Frontend/production-manager-dashboard.html";
 }
 
-function saveLayout(){
+async function saveLayout(){
     /*
     {
 	"operation": "sall",
@@ -200,28 +200,31 @@ function saveLayout(){
     */
     let boxes = document.getElementsByClassName("box");
     for(let i=1; i<boxes.length; i++)
-        __saveSingleAssemblyLineLayout(boxes[i].id);
+        await __saveSingleAssemblyLineLayout(boxes[i].id);
     //window.location.href = "file:///home/abhijit/Assembly-Line-Management-System/Frontend/production-manager-dashboard.html";
 
 }
 
-function __saveSingleAssemblyLineLayout(boxId){
-    let machineList = document.getElementById(boxId);
+async function __saveSingleAssemblyLineLayout(boxId){
+    let machineList = document.getElementById(boxId).children;
     let layoutArr = []
-    for(let i=0; i<machineList.length; i++){
+    for(let i=1; i<machineList.length; i++){
         let index = machineList[i].id;
-        layoutArr.push({"machineId":machines[index], "position":i, otherInfo:"None"});
+        layoutArr.push({"machineId": index, "position":i, otherInfo:"None"});
     }
 
-    let assemblyLineId = boxId[3];
+    let assemblyLineId = assemblyLines[boxId[3]].id;
 
     let data = {
         "operation": "sall",
         "assemblyLineId": assemblyLineId,
         "layoutArr": layoutArr,
-        "userHash": userHash
+        "userHash": userHash,
+        "LCUserId": sessionStorage.getItem("assignedLCId")
     };
     let url = "http://192.168.31.249:1401/layout";
+
+    console.log(data);
 
     fetch(url, {
         method: "POST", 

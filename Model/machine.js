@@ -67,7 +67,7 @@ async function getMachineList(machineModel, machineType, otherInfo){
             }
             let machines = []
             for(let i=0; i<results.length; i++){
-                machines.push([results[i].machineModel, results[i].machineType, results[i].otherInfo, results[i].perHourProduction])
+                machines.push([results[i].machineModel, results[i].machineType, results[i].otherInfo, results[i].perHourProduction, results[i].machineId])
             }
             resolve(machines);
         });

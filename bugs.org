@@ -1,4 +1,28 @@
  1. App crashes (throw err): Solution - It is not a bug rather a feature of development. We want error to occur everytime something does not go as expected.
- 2. Register Assembly Line (e.g. name, capacity, general info)
- 3. Load resource list
- 4. Subtract on movement
+ 2. Layout: Total production should include sum of bottleneck of all lines.
+ 3. Select LC for each assembly line
+ 4. Add "action" column in notification table
+* Todo
+** LC Workflow
+1. [X] Make backend for layout view
+2. [X] Make Frontend for layout view
+3. [X] Register LC
+4. [X] Assign LC
+5. [ ] Save total target in some table (e.g. assembly line, production, hourly report)
+6. [X] Notify LC on assignment
+7. [X] Notify LC on layout set
+8. [X] LC Access Control
+9. [ ] LC Views notification on layout change and clicks it to see the layout
+10. [ ] Request Resource form, this will need a separate table
+11. [ ] Set Production Target for each machine
+** Congestion
+- [ ] Congestion table
+- [ ] API that requests for congestion check after 10s and updates the table
+- [ ] API that returns 1 or 0
+- [ ] On load, the congestion layout view will have borders in it for congestion.
+- [ ] Bordered items should be clickable. On click, a notificaiton will be sent to supervisor.
+** Supervisor
+- [ ] Login & Access Control
+- [ ] Click notification on congestion (Lead the supervisor the layout view)
+- [ ] There will be a form below. Insert reason for congestion.
+- [ ] Connect the other two forms to backend if possible.

@@ -1,3 +1,8 @@
+const userHash = sessionStorage.getItem("userHash");
+let currentUserId = sessionStorage.getItem("userid");
+const LOGIN_PAGE_LINK = "file:///home/abhijit/Assembly-Line-Management-System/Frontend/login.html";
+
+
 function setHourlyProductionAmount(){
     const userid = 4;//document.getElementById("userid").value;
     const productionAmount = document.getElementById("hourlyTargetId").value;
@@ -10,7 +15,8 @@ function setHourlyProductionAmount(){
         "userid": userid,
         "unit": unit,
         "productionAmount": productionAmount,
-        "comment": comment
+        "comment": comment,
+        "userHash": userHash
     };
     fetch(url, {
         method: "POST", // *GET, POST, PUT, DELETE, etc.

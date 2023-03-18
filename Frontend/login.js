@@ -10,6 +10,9 @@ function login(){
     let url = null;
     if(role=="admin") url = "http://192.168.31.249:1401/admin";
     else if(role=="productionManager") url = "http://192.168.31.249:1401/productionManager";
+    else if(role=="lineChief") url = "http://192.168.31.249:1401/lineChief";
+    else if(role=="supervisor") url = "http://192.168.31.249:1401/supervisor";
+
 
     
     let data = {

@@ -332,6 +332,8 @@ function __registerTotalProductionTarget(){
 
 function loadLayoutPage(){
     __registerTotalProductionTarget();
+    const assignedLCId = document.getElementById("assignedLCId").value;
+    sessionStorage.setItem("assignedLCId", assignedLCId);
     window.location.href = "layout.html";
 }
 

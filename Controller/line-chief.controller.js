@@ -7,13 +7,14 @@ const userHashLib = require("../Controller/userHash.js");
 const notification = require("../Model/notification.js");
 const assemblyLine = require("../Model/assembly-line-layoud.model.js");
 
-function handlePostRequestToSupervisor(req, res){
+
+function handlePostRequestToLineChief(req, res){
     const body = req.body;
     const userHash = body.userHash;
     const operationType = body.operation;
 
     if(operationType!=constants.LOGIN){
-       session.__checkUserHashValidity(userHash, constants.SUPERVISOR_ENDPOINT)
+       session.__checkUserHashValidity(userHash, constants.LC_ENDPOINT)
         .then((data)=>{
             //console.log("Access Control - "+data);
             if(data==constants.VALID_USER_HASH) __serveRequest(req,res);
@@ -24,11 +25,9 @@ function handlePostRequestToSupervisor(req, res){
     else __serveRequest(req, res);
 }
 
-
 function __serveRequest(req, res){
     const body = req.body;
     const operationType = body.operation;
-
 
     if(operationType==constants.LOGIN) login(req, res);
     else if(operationType==constants.VIEW_HOURLY_PRODUCTION_REPORT){
@@ -38,6 +37,11 @@ function __serveRequest(req, res){
         })
         .catch((err)=>{
             throw err;
+        });
+    }else if(operationType==constants.GET_MACHINE_LIST){
+        machine.getMachineList()
+        .then((data)=>{
+            res.status(200).send({"MachineList":data});
         })
     } else if(operationType==constants.GET_NOTIFICATIONS){
         const userid = body.userid;
@@ -51,21 +55,12 @@ function __serveRequest(req, res){
         const userHash = body.userHash;
         userHashLib.deleteSession(userHash, constants.LC_ENDPOINT);
         res.status(200).send({"SessionDelete":true});
-    }
-    else if(operationType==constants.SUBMIT_HOURLY_PRODUCTION_REPORT){
-        const userid = body.userid;
-        const unit = body.unit;
-        const productionAmount = body.productionAmount;
-        const comment = body.comment;
-
-        report.__insertProductionReportData(userid, unit, productionAmount, comment)
+    }else if(operationType == constants.GET_ASSEMBLY_LINE_LIST){
+        assemblyLine.getAssemblyLineList()
         .then((data)=>{
-            res.status(200).send({"ReportId":data.insertId});
+            res.status(200).send({"AssemblyLineList": data});
         })
-        .catch((err)=>{
-            throw err;
-        });
-    } 
+    }
 }
 
 async function login(req, res){
@@ -77,13 +72,14 @@ async function login(req, res){
 
     if(data==undefined) res.status(200).send({"authentication":"unsuccessful!", "nextPage":"none"});
     else if(data[0].password==password){
-        const x = await userHashLib.createSession(username+password, constants.SUPERVISOR_ENDPOINT);
+        const x = await userHashLib.createSession(username+password, constants.LC_ENDPOINT);
 
         console.log("DEbug: hash="+x);
-        res.status(200).send({"userHash": x, "authentication":"successful!", "nextPage":"supervisor-dashboard.html", "userInfo":data[0]});
+        res.status(200).send({"userHash": x, "authentication":"successful!", "nextPage":"line-chief-dashboard.html", "userInfo":data[0]});
     }
     else res.status(200).send({"authentication":"unsuccessful!", "nextPage":"none"});
  
 }
 
-module.exports = {handlePostRequestToSupervisor}
+
+module.exports = {handlePostRequestToLineChief}

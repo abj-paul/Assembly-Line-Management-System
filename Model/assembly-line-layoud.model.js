@@ -58,7 +58,8 @@ async function __createAssemblyLineLayoutTable(){
     machineId int NOT NULL,
     position int NOT NULL,
     otherInfo varchar(300),
-    CONSTRAINT fk_layout FOREIGN KEY (assemblyLineId) REFERENCES assemblyLine(assemblyLineId)  
+    CONSTRAINT fk_layout FOREIGN KEY (assemblyLineId) REFERENCES assemblyLine(assemblyLineId),
+    CONSTRAINT fk_machine FOREIGN KEY (machineId) REFERENCES machine(machineId)  
     );`;
     
         connection.query(sql_query, (err, results, fields)=>{
@@ -111,7 +112,7 @@ async function saveAssemblyLineLayout(assemblyLineId, layoutArr){ // [{machineId
 
 async function getAssemblyLineLayout(assemblyLineId){
     return new Promise((resolve, reject)=>{
-        const sql_query = " SELECT * FROM assemblyLine t1,assemblyLineLayout t2 where t1.assemblyLineId=t2.assemblyLineId and t1.assemblyLineId = "+assemblyLineId+";";
+        const sql_query = " SELECT * FROM assemblyLine t1,assemblyLineLayout t2, machine t3 where t1.assemblyLineId=t2.assemblyLineId and t2.machineId=t3.machineId and t1.assemblyLineId = "+assemblyLineId+";";
         connection.query(sql_query, (err, results, fields)=>{
             if(err) {
                 reject(err);
@@ -155,7 +156,22 @@ async function __deleteOldLayout(assemblyLineId){
 }
 
 async function assignLC(assemblyLineId, LCUserId){
-
+    return new Promise((resolve, reject)=>{
+        if(connection==null){
+            console.log("Connect to databse first!");
+            reject(false);
+        }
+        
+            const sql_query = "UPDATE assemblyLine SET LCUserId="+LCUserId+" WHERE assemblyLineId="+assemblyLineId; 
+        
+            connection.query(sql_query, (err, results, fields)=>{
+                if(err) throw err;
+                //console.log(results);
+                console.log(LCUserId + " LC has been assigned successfully!");
+                notification.__notify(LCUserId, "Production Manager has assigned you to assembly Line "+assemblyLineId);
+                resolve(true);
+            })
+    });
 }
 
-module.exports = { registerAssemblyLine, __createAssemblyLineTable, __createAssemblyLineLayoutTable, saveAssemblyLineLayout, getAssemblyLineLayout, getAssemblyLineList}
+module.exports = { registerAssemblyLine, __createAssemblyLineTable, __createAssemblyLineLayoutTable, saveAssemblyLineLayout, getAssemblyLineLayout, getAssemblyLineList, assignLC}
