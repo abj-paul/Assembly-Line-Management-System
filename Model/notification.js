@@ -57,9 +57,11 @@ async function __createNotificationTable(){
         
             const sql_query = `CREATE TABLE if not exists notification(
         notificationId int auto_increment primary key,
-        userid varchar(50) NOT NULL,
+        userid int NOT NULL,
         timeSent datetime DEFAULT CURRENT_TIMESTAMP,
-        message varchar(300));`; // Find username through relational query
+        message varchar(300),
+        CONSTRAINT fk_user_notification FOREIGN KEY (userid) REFERENCES user(userid)
+        );`; // Find username through relational query
         
             connection.query(sql_query, (err, results, fields)=>{
                 if(err) throw err;

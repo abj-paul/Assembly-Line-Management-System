@@ -34,3 +34,4 @@
 - [ ] Deploy the nmf
 - [ ] Make an endpoint for it
 - [ ] Run a js that runs once every second and knocks the python endpoint with an image, asking if its congestion or not.
+

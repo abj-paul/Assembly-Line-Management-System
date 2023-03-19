@@ -31,7 +31,9 @@ async function __createAssemblyLineTable(){
     name varchar(300) NOT NULL,
     capacity int NOT NULL,
     LCUserId int,
-    otherInfo varchar(300));`;
+    otherInfo varchar(300),
+    CONSTRAINT fk_machine FOREIGN KEY (LCUserId) REFERENCES user(userid)  
+    );`;
     
         connection.query(sql_query, (err, results, fields)=>{
             if(err) throw err;
@@ -56,10 +58,13 @@ async function __createAssemblyLineLayoutTable(){
     recordId int auto_increment primary key,
     assemblyLineId int NOT NULL,
     machineId int NOT NULL,
+    productionId int,
     position int NOT NULL,
+    hourlyTarget int,
     otherInfo varchar(300),
-    CONSTRAINT fk_layout FOREIGN KEY (assemblyLineId) REFERENCES assemblyLine(assemblyLineId),
-    CONSTRAINT fk_machine FOREIGN KEY (machineId) REFERENCES machine(machineId)  
+    CONSTRAINT fk_assemblyline_layout FOREIGN KEY (assemblyLineId) REFERENCES assemblyLine(assemblyLineId),
+    CONSTRAINT fk_machine_layout FOREIGN KEY (machineId) REFERENCES machine(machineId),
+    CONSTRAINT fk_production_layout FOREIGN KEY (productionId) REFERENCES production(productionId)
     );`;
     
         connection.query(sql_query, (err, results, fields)=>{
@@ -162,7 +167,7 @@ async function assignLC(assemblyLineId, LCUserId){
             reject(false);
         }
         
-            const sql_query = "UPDATE assemblyLine SET LCUserId="+LCUserId+" WHERE assemblyLineId="+assemblyLineId; 
+            const sql_query = "UPDATE assemblyLine SET LCUserId ="+LCUserId+" WHERE assemblyLineId="+assemblyLineId; 
         
             connection.query(sql_query, (err, results, fields)=>{
                 if(err) throw err;

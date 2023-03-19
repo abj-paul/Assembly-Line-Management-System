@@ -1,5 +1,5 @@
 const constants = require("../constants.js");
-const report = require("../report.js")
+const report = require("../Model/hourly-production-report.model.js")
 const admin = require("../admin.js");
 const machine = require("../Model/machine.js");
 const session = require("../Model/session.js");

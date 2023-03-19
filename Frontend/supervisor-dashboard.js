@@ -79,3 +79,18 @@ function setHourlyProductionAmount(){
             });
     
     }
+    function getProfileInfo(){
+        const profileInfo = document.getElementById("profile").children[1].children[0];//.div.div.h1
+        const role = profileInfo.children[0];  
+        const name = profileInfo.children[1];
+        const age = profileInfo.children[2];
+        const general_info = profileInfo.children[3];
+        const userId = profileInfo.children[4];
+    
+        role.innerText += sessionStorage.getItem("role");
+        name.innerText += sessionStorage.getItem("username");
+        age.innerText += sessionStorage.getItem("age");
+        general_info.innerText += sessionStorage.getItem("general_info");
+    
+        userId.innerText += currentUserId;
+    }

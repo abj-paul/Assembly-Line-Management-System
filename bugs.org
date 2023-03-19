@@ -14,7 +14,14 @@
 - [X] Add user (delete mechanic)
 - [X] Line chief dont get assembly line layout notification
 - [X] Notification on report submission
+** DB Changes
+1. Assembly Line Layout, hourly production report, quality report: ProductionId
+2. Assembly Line Layout: Hourly Target
+3. Update Image filepath for each profile
 * Todo
+- Finalize Production
+- Monitor Congestion
+- Submit report
 ** LC Workflow
 1. [X] Make backend for layout view
 2. [X] Make Frontend for layout view
@@ -24,7 +31,7 @@
 6. [X] Notify LC on assignment
 7. [X] Notify LC on layout set
 8. [X] LC Access Control
-9. [ ] LC Views notification on layout change and clicks it to see the layout
+9. [X] LC Views notification on layout change and clicks it to see the layout
 10. [ ] Request Resource form, this will need a separate table
 11. [ ] Set Production Target for each machine
 ** Congestion
@@ -34,7 +41,18 @@
 - [ ] On load, the congestion layout view will have borders in it for congestion.
 - [ ] Bordered items should be clickable. On click, a notificaiton will be sent to supervisor.
 ** Supervisor
-- [ ] Login & Access Control
+- [X] Login & Access Control
 - [ ] Click notification on congestion (Lead the supervisor the layout view)
 - [ ] There will be a form below. Insert reason for congestion.
 - [ ] Connect the other two forms to backend if possible.
+
+* Entities
+User (ID, name, password, designation, age, general info)
+Notification (notification ID, sender ID, receiver ID, time sent, message)
+Assembly line (line ID, line chef ID, no of machine, Matrices, Line efficiency, Resource Utilization Index, ~Possible Bottleneck points~)
+Assembly line layout (layout ID, line ID, types of machines and table, size of product, required types of work)
+Congestion (congestion id, report id, congestion time, congestion reason)
+Resources ( machine ID, ~line ID~, machine model, machine type, machine hourly production, other info)
+Quality report (report ID, rejected product, rejected workstation,rejection reason)
+Production report (report ID, hourly count, number of rejected product, hourly production, number of accepted product etc)
+Design file (product ID, line ID, Product, Types of Tasks, Sizes of the Cutting Pieces, Size of the Final Product, Number of Products)

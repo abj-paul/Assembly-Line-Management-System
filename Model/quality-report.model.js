@@ -1,4 +1,3 @@
-const admin = require("./admin.js");
 const mysql = require("mysql2");
 
 let connection = null;
@@ -20,34 +19,39 @@ async function __connect(){
     });
 }
 
-async function __createProductionReportTable(){
+async function __createQualityReportTable(){
     return new Promise((resolve, reject)=>{
         if(connection==null){
             console.log("Connect to databse first!");
             reject(false);
         }
         
-            const sql_query = `CREATE TABLE if not exists productionReport(
-        reportId int auto_increment primary key,
+            const sql_query = `CREATE TABLE if not exists qualityReport(
+        qualityReportId int auto_increment primary key,
         userid int NOT NULL,
-        productionAmount int NOT NULL,
+        productionId int,
+        defectedProductCount int NOT NULL,
+        goodProductCount int NOT NULL,
         unit varchar(50) NOT NULL,
         timeSent datetime DEFAULT CURRENT_TIMESTAMP,
-        comment varchar(300));`; // Find username through relational query
+        comment varchar(300),
+        CONSTRAINT fk_production FOREIGN KEY (productionId) REFERENCES production(productionId),
+        CONSTRAINT fk_user FOREIGN KEY (userid) REFERENCES user(userid)
+        );`; // Find username through relational query
         
             connection.query(sql_query, (err, results, fields)=>{
                 if(err) throw err;
                 //console.log(results);
-                console.log("productionReport Table has been created successfully!");
+                console.log("qualityReport Table has been created successfully!");
                 resolve(true);
             })
     });
     
 }
 
-async function __insertProductionReportData(userid, unit, productionAmount, comment){
+async function __insertQualityReportData(userid, unit, defectedProductCount,goodProductCount, comment){
     return new Promise((resolve, reject)=>{
-        const sql_query = "INSERT into productionReport(userid, unit, productionAmount, comment) values('"+userid+"', '"+unit+"',"+productionAmount+", '"+comment+"');";
+        const sql_query = "INSERT into qualityReport(userid, unit, defectedProductCount,goodProductCount, comment) values("+userid+", '"+unit+"',"+defectedProductCount+","+goodProductCount+",'"+comment+"');";
         connection.query(sql_query, (err, results, fields)=>{
             if(err) {
                 reject(err);
@@ -59,21 +63,16 @@ async function __insertProductionReportData(userid, unit, productionAmount, comm
     );
 }
 
-function __viewProductionReport(){
+function __viewAllQualitynReport(){
     return new Promise((resolve, reject)=>{
-        const sql_query = "SELECT *  from productionReport;";
+        const sql_query = "SELECT *  from qualityReport;";
 
         connection.query(sql_query, (err, results, fields)=>{
             if(err) throw err;
-            let reports = [];
-            for(let i=0; i<results.length; i++){
-                //console.log(results[i].userid +": "+results[i].username);
-                reports.push([results[i].reportId, results[i].timeSent, results[i].productionAmount, results[i].unit, results[i].comment]);
-            }
-            resolve(reports);
+            resolve(results);
         });
     });
 }
 
 
-module.exports = {__createProductionReportTable, __insertProductionReportData, __viewProductionReport, __connect}
+module.exports = {__createQualityReportTable, __insertQualityReportData, __viewAllQualitynReport, __connect}
