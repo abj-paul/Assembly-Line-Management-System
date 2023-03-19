@@ -60,6 +60,9 @@ function __serveRequest(req, res){
 
         report.__insertProductionReportData(userid, unit, productionAmount, comment)
         .then((data)=>{
+            notification.__notify(3, "Hourly production report has been submitted");
+            notification.__notify(4, "Hourly production report has been submitted");
+
             res.status(200).send({"ReportId":data.insertId});
         })
         .catch((err)=>{

@@ -2,6 +2,18 @@
  2. Layout: Total production should include sum of bottleneck of all lines.
  3. Select LC for each assembly line
  4. Add "action" column in notification table
+ 5. View resources feature
+
+* Bugs
+- [X] link production report with PM
+- [X] Logout function in supervisor
+- [X] Frontend Access Control
+  #+begin_src text
+  if(!validHash) redirect "login pls!"
+  #+end_src
+- [X] Add user (delete mechanic)
+- [X] Line chief dont get assembly line layout notification
+- [X] Notification on report submission
 * Todo
 ** LC Workflow
 1. [X] Make backend for layout view

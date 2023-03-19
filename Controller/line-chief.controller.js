@@ -60,6 +60,8 @@ function __serveRequest(req, res){
         .then((data)=>{
             res.status(200).send({"AssemblyLineList": data});
         })
+    }else if(operationType == constants.PING){
+        res.status(200).send({"Access": "OK"});
     }
 }
 
