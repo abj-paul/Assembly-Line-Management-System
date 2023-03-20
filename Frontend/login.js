@@ -40,6 +40,7 @@ fetch(url, {
         })
         .then((data)=>{
             console.log(data.authentication);
+            document.getElementById("loginStatus").innerHTML = "Status: "+data.authentication;
             sessionStorage.setItem("userid", data.userInfo.userid);
             sessionStorage.setItem("username", data.userInfo.username);
             sessionStorage.setItem("password", data.userInfo.password);
