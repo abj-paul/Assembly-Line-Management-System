@@ -1,3 +1,4 @@
+const ip_addr = "http://10.100.110.25:1401/";
 
 function login(){
     const username = document.getElementById("username").value;
@@ -8,10 +9,10 @@ function login(){
     console.log(username + password + role);
 
     let url = null;
-    if(role=="admin") url = "http://192.168.31.249:1401/admin";
-    else if(role=="productionManager") url = "http://192.168.31.249:1401/productionManager";
-    else if(role=="lineChief") url = "http://192.168.31.249:1401/lineChief";
-    else if(role=="supervisor") url = "http://192.168.31.249:1401/supervisor";
+    if(role=="admin") url = ip_addr + "admin";
+    else if(role=="productionManager") url = ip_addr + "productionManager";
+    else if(role=="lineChief") url = ip_addr + "lineChief";
+    else if(role=="supervisor") url = ip_addr + "supervisor";
 
 
     

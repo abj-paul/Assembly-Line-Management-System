@@ -1,3 +1,5 @@
+const ip_addr = "http://127.0.0.1:1401/";
+
 const userHash = sessionStorage.getItem("userHash");
 const targetProduction = sessionStorage.getItem("totalProductionTarget");
 let machines = null;
@@ -14,7 +16,7 @@ function renderResource(){
         "operation":"gml",
         "userHash":userHash
     }
-    let url = "http://192.168.31.249:1401/productionManager";
+    let url = ip_addr + "productionManager";
 
 
     fetch(url, {
@@ -187,7 +189,7 @@ function drop(e){
 }
 
 function goBack(){
-    window.location.href = "file:///home/abhijit/Assembly-Line-Management-System/Frontend/production-manager-dashboard.html";
+    window.location.href = "file:///home/iit/Assembly-Line-Management-System/Frontend/production-manager-dashboard.html";
 }
 
 async function saveLayout(){
@@ -222,7 +224,7 @@ async function __saveSingleAssemblyLineLayout(boxId){
         "userHash": userHash,
         "LCUserId": sessionStorage.getItem("assignedLCId")
     };
-    let url = "http://192.168.31.249:1401/layout";
+    let url = ip_addr + "layout";
 
     console.log(data);
 

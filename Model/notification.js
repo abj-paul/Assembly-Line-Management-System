@@ -11,7 +11,7 @@ async function __connect(){
             });
         
             connection.connect();
-            console.log("yay, Report.js have connected to database!");
+            console.log("yay, notification.js have connected to database!");
             resolve(true);
     });
 }

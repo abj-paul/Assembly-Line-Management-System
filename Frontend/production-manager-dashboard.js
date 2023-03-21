@@ -1,3 +1,4 @@
+const ip_addr = "http://10.100.110.25:1401/";
 let currentUserId = sessionStorage.getItem("userid");
 let userHash = sessionStorage.getItem("userHash");
 console.log("Current User Id: "+currentUserId);
@@ -6,11 +7,11 @@ console.log("userHash: "+userHash);
 let assemblyLines = null;
 
 
-const LOGIN_PAGE_LINK = "file:///home/abhijit/Assembly-Line-Management-System/Frontend/login.html";
+const LOGIN_PAGE_LINK = "file:///home/iit/Assembly-Line-Management-System/Frontend/login.html";
 
 
 function getHourlyProductionReport(){
-    let url = "http://192.168.31.249:1401/productionManager";
+    let url = ip_addr + "productionManager";
     let data = {
         "operation":"vhpr",
         "userHash": userHash
@@ -81,7 +82,7 @@ function getProfileInfo(){
 
 function getNotifications(){
 
-    let url = "http://192.168.31.249:1401/productionManager";
+    let url = ip_addr + "productionManager";
     data={
         "operation":"gn",
         "userid": currentUserId,
@@ -146,7 +147,7 @@ function registerResouce(){
         "perHourProduction": perHourProduction,
         "userHash":userHash
     }
-    let url = "http://192.168.31.249:1401/productionManager";
+    let url = ip_addr + "productionManager";
 
 
     fetch(url, {
@@ -182,7 +183,7 @@ function logout(){
         "operation": "logout",
         "userHash": userHash
     }
-    let url = "http://192.168.31.249:1401/productionManager";
+    let url = ip_addr + "productionManager";
 
 
     fetch(url, {
@@ -224,7 +225,7 @@ function registerAssemblyLine(){
         "otherInfo": otherInfo,
         "userHash":userHash
     }
-    let url = "http://192.168.31.249:1401/productionManager";
+    let url = ip_addr + "productionManager";
 
 
     fetch(url, {
@@ -259,7 +260,7 @@ function populateAssemblyLineList(){
         "operation":"gallist",
         "userHash":userHash
     }
-    let url = "http://192.168.31.249:1401/productionManager";
+    let url = ip_addr + "productionManager";
 
 
     fetch(url, {

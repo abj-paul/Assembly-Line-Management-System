@@ -1,12 +1,13 @@
+const ip_addr = "http://10.100.110.25:1401/";
 let currentUserId = sessionStorage.getItem("userid");
 let userHash = sessionStorage.getItem("userHash");
 console.log("Cache: "+currentUserId);
 console.log("userHash: "+userHash);
 
-const LOGIN_PAGE_LINK = "file:///home/abhijit/Assembly-Line-Management-System/Frontend/login.html";
+const LOGIN_PAGE_LINK = "file:///home/iit/Assembly-Line-Management-System/Frontend/login.html";
 
 function getUserList(){
-let url = "http://192.168.31.249:1401/admin";
+let url = ip_addr + "admin";
 let data = {"operation":"vru", "userHash": userHash};
 fetch(url, {
     method: "POST", // *GET, POST, PUT, DELETE, etc.
@@ -61,7 +62,7 @@ function registerUser(){
     const role = document.getElementById("role").value;
 
 
-    let url = "http://192.168.31.249:1401/admin";
+    let url = ip_addr + "admin";
     let data = {
         "operation":"rnu",
         "username": username,
@@ -105,7 +106,7 @@ function registerUser(){
 function downloadDatabase(){
     var csv = 'a,b,c\n1,2,3\n';
 
-    let url = "http://192.168.31.249:1401/admin";
+    let url = ip_addr + "admin";
     let data = {
         "operation":"gadd",
         "userHash": userHash
@@ -165,7 +166,7 @@ function editUserInfo(){
     const role = document.getElementById("erole").value;
 
     //console.log(userid, username, password, age, generalInfo, role);
-    let url = "http://192.168.31.249:1401/admin";
+    let url = ip_addr + "admin";
     data={
         "operation":"eui",
         "username": username,
@@ -205,7 +206,7 @@ function editUserInfo(){
 
 function getNotifications(){
 
-    let url = "http://192.168.31.249:1401/admin";
+    let url = ip_addr + "admin";
     data={
         "operation":"gn",
         "userid": currentUserId,
@@ -265,7 +266,7 @@ function logout(){
         "operation": "logout",
         "userHash": userHash
     }
-    let url = "http://192.168.31.249:1401/admin";
+    let url = ip_addr + "admin";
 
 
     fetch(url, {

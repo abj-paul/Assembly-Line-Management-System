@@ -1,6 +1,7 @@
+const ip_addr = "http://127.0.0.1:1401/";
 const userHash = sessionStorage.getItem("userHash");
 let currentUserId = sessionStorage.getItem("userid");
-const LOGIN_PAGE_LINK = "file:///home/abhijit/Assembly-Line-Management-System/Frontend/login.html";
+const LOGIN_PAGE_LINK = "file:///home/iit/Assembly-Line-Management-System/Frontend/login.html";
 
 
 function setHourlyProductionAmount(){
@@ -9,7 +10,7 @@ function setHourlyProductionAmount(){
     const unit = document.getElementById("hourlyProductionUnitId").value;
     const comment = document.getElementById("commentOnHourlyProductionId").value;
 
-    let url = "http://192.168.31.249:1401/supervisor";
+    let url = ip_addr + "supervisor";
     let data = {
         "operation":"shpr",
         "userid": userid,
@@ -50,7 +51,7 @@ function setHourlyProductionAmount(){
             "operation": "logout",
             "userHash": userHash
         }
-        let url = "http://192.168.31.249:1401/supervisor";
+        let url = ip_addr + "supervisor";
     
     
         fetch(url, {

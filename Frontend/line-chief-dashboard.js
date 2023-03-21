@@ -1,14 +1,15 @@
+const ip_addr = "http://127.0.0.1:1401/";
 const userHash = sessionStorage.getItem("userHash");
 let currentUserId = sessionStorage.getItem("userid");
 
 let assignedAssemblyLine = {"assemblyLineId": 1};
 let assemblyLineLayout = null;
 
-const LOGIN_PAGE_LINK = "file:///home/abhijit/Assembly-Line-Management-System/Frontend/login.html";
+const LOGIN_PAGE_LINK = "file:///home/iit/Assembly-Line-Management-System/Frontend/login.html";
 
 
 function getAssemblyLineLayout(assemlyLineId){
-    let url = "http://192.168.31.249:1401/layout";
+    let url = ip_addr + "layout";
     let data = {
         "operation":"gall",
         "userHash": userHash,
@@ -60,7 +61,7 @@ function getAssemblyLineLayout(assemlyLineId){
 
 function getHourlyProductionReport(){
     
-    let url = "http://192.168.31.249:1401/lineChief"; //TODO : FIX IT
+    let url = ip_addr + "lineChief"; //TODO : FIX IT
     let data = {
         "operation":"vhpr",
         "userHash": userHash
@@ -133,7 +134,7 @@ function getProfileInfo(){
     
 function getNotifications(){
 
-    let url = "http://192.168.31.249:1401/lineChief";
+    let url = ip_addr + "lineChief";
     data={
         "operation":"gn",
         "userid": currentUserId,
@@ -192,7 +193,7 @@ function logout(){
         "operation": "logout",
         "userHash": userHash
     }
-    let url = "http://192.168.31.249:1401/lineChief";
+    let url = ip_addr + "lineChief";
 
 
     fetch(url, {
