@@ -89,7 +89,7 @@ function __serveRequest(req, res){
 
         production.startNewProduction(productName, totalProductionTarget, designFileId)
         .then((data)=>{
-            res.status(200).send({"ProductionId": data});
+            res.status(200).send({"ProductionId": data.insertId});
             console.log("Started production for "+productName);
         })
         .catch((err)=>{console.log(err);})

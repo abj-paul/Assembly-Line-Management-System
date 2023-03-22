@@ -43,9 +43,9 @@ async function __createProductionTable(){
     
 }
 
-async function startNewProduction(productName, totalProductionTarget, designFileId){
+async function startNewProduction(productName, totalProductionTarget){
     return new Promise((resolve, reject)=>{
-        const sql_query = "INSERT into production(productName, totalProductionTarget, designFileId) values('"+productName+"',"+totalProductionTarget+",'"+ designFileId +"');";
+        const sql_query = "INSERT into production(productName, totalProductionTarget) values('"+productName+"',"+totalProductionTarget+");";
         connection.query(sql_query, (err, results, fields)=>{
             if(err) {
                 reject(err);
