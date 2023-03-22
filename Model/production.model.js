@@ -30,7 +30,7 @@ async function __createProductionTable(){
     productionId int auto_increment primary key,
     timeSent datetime DEFAULT CURRENT_TIMESTAMP,
     totalProductionTarget int NOT NULL,
-    productName varchar(300),
+    productName varchar(300) NOT NULL,
     viewerInfo varchar(300));`;
     
         connection.query(sql_query, (err, results, fields)=>{
@@ -43,13 +43,14 @@ async function __createProductionTable(){
     
 }
 
-async function startNewProduction(productName, totalProductionTarget){
+async function startNewProduction(productName, totalProductionTarget, designFileId){
     return new Promise((resolve, reject)=>{
-        const sql_query = "INSERT into machine(productName, totalProductionTarget, designFileId) values('"+productName+"',"+totalProductionTarget+");";
+        const sql_query = "INSERT into production(productName, totalProductionTarget, designFileId) values('"+productName+"',"+totalProductionTarget+",'"+ designFileId +"');";
         connection.query(sql_query, (err, results, fields)=>{
             if(err) {
                 reject(err);
             }
+            console.log("DEBUG: Start new production, after insertion:\n"+results);
             notification.__notify(2, "New Production for the product ");
             resolve(results);
         });

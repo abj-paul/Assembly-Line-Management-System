@@ -16,3 +16,6 @@ Mashiat Amin Farin, BSSE1202
 2. Login System
 3. Assembly Line Layout.
 
+** ER Diagram
+[[file:er-Page-1.drawio.png]]
+
