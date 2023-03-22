@@ -6,6 +6,7 @@ const session = require("../Model/session.js");
 const userHashLib = require("../Controller/userHash.js");
 const notification = require("../Model/notification.js");
 const assemblyLine = require("../Model/assembly-line-layoud.model.js");
+const production = require("../Model/production.model.js");
 
 
 function handlePostRequestToProductionManager(req, res){
@@ -81,6 +82,17 @@ function __serveRequest(req, res){
         .then((data)=>{
             res.status(200).send({"AssemblyLineList": data});
         })
+    }else if(operationType == constants.START_NEW_PRODUCTION){
+        const productName = body.productName;
+        const totalProductionTarget = body.totalProductionTarget;
+        const designFileId = body.designFileId;
+
+        production.startNewProduction(productName, totalProductionTarget, designFileId)
+        .then((data)=>{
+            res.status(200).send({"ProductionId": data});
+            console.log("Started production for "+productName);
+        })
+        .catch((err)=>{console.log(err);})
     }
 }
 
