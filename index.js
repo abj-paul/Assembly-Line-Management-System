@@ -33,7 +33,6 @@ admin.__deleteTable("machine");
 admin.__deleteTable("session");
 */
 
-
 session.__createSessionTable();
 machine.__createMachineTable();
 report.__connect();
