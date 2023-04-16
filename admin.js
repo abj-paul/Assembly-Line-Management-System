@@ -22,7 +22,7 @@ async function __startDatabase(){
     await notification.__createNotificationTable();
     await machine.__createMachineTable();
 
-    //await __createAdminUser();
+    await __createAdminUser();
 }
 
 async function __connect(){

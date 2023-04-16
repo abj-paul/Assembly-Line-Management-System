@@ -22,7 +22,6 @@ const session = require("./Model/session.js");
 
 
 admin.startDatabase();
-
 /*
 admin.__deleteTable("notification");
 admin.__deleteTable("assemblyLineLayout");
