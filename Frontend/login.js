@@ -1,4 +1,4 @@
-const ip_addr = "http://10.100.110.25:1401/";
+const ip_addr = "http://127.0.0.1:1401/";
 
 function login(){
     const username = document.getElementById("username").value;

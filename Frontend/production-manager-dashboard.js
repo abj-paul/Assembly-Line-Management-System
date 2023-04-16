@@ -1,4 +1,4 @@
-const ip_addr = "http://10.100.110.25:1401/";
+const ip_addr = "http://127.0.0.1:1401/";
 let currentUserId = sessionStorage.getItem("userid");
 let userHash = sessionStorage.getItem("userHash");
 console.log("Current User Id: "+currentUserId);
