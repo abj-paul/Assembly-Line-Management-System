@@ -35,3 +35,18 @@
 - [ ] Make an endpoint for it
 - [ ] Run a js that runs once every second and knocks the python endpoint with an image, asking if its congestion or not.
 
+* Backend
+get photo from camera
+send photo to model 
+return result 
+
+client --> get info for workstation id = 3 
+backend --> return boolean result from an array that stores the result
+Array: Update it every minute
+      - send get request to fastAPI to return array of congestion states, given machineId list 
+FastAPI: accept an array, return correspoing result array 
+
+Processing: Fast API Accepts the array. 
+            loads image for each machine. (The folders are renamed with machine Id.)
+            sends the image to nmf code one by one 
+

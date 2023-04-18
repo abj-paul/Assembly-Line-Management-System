@@ -4,7 +4,7 @@ let userHash = sessionStorage.getItem("userHash");
 console.log("Cache: "+currentUserId);
 console.log("userHash: "+userHash);
 
-const LOGIN_PAGE_LINK = "file:///home/iit/Assembly-Line-Management-System/Frontend/login.html";
+const LOGIN_PAGE_LINK = "file:///home/abhijit/Assembly-Line-Management-System/Frontend/login.html";
 
 function getUserList(){
 let url = ip_addr + "admin";
