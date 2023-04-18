@@ -89,4 +89,3 @@ async function getAllCongestionStatus(){
     );
 }
 
-module.exports = { __createDesignTable, uploadProductDesign, getProductDesign}

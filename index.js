@@ -19,6 +19,7 @@ const lineChiefController = require("./Controller/line-chief.controller.js");
 const supervisorController = require("./Controller/supervisor.controller.js");
 const production = require("./Model/production.model.js");
 const session = require("./Model/session.js");
+const fastAPIConnection = require("./Model/congestion.algorithm.js");
 
 
 admin.startDatabase();
@@ -52,7 +53,8 @@ app.post("/layout", (req, res) => layoutController.handlePostRequestToLayoutViaP
 
 
 //app.get("/dashboard/:userid", (req, res) => controller.handleGetRequestToDashboard(req,res));
-
+//wait(7000)
+fastAPIConnection.testFastAPIConnection()
 
 function testAdmin(){
     admin.viewRegisteredUsers();
@@ -60,3 +62,10 @@ function testAdmin(){
 }
 
 
+function wait(ms){
+    var start = new Date().getTime();
+    var end = start;
+    while(end < start + ms) {
+      end = new Date().getTime();
+   }
+ }

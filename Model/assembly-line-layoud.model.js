@@ -56,16 +56,20 @@ async function __createAssemblyLineLayoutTable(){
     
         const sql_query = `CREATE TABLE if not exists assemblyLineLayout(
     recordId int auto_increment primary key,
-    assemblyLineId int NOT NULL,
-    machineId int NOT NULL,
+    assemblyLineId int,
+    machineId int ,
     productionId int,
-    position int NOT NULL,
+    position int ,
     hourlyTarget int,
-    otherInfo varchar(300),
-    CONSTRAINT fk_assemblyline_layout FOREIGN KEY (assemblyLineId) REFERENCES assemblyLine(assemblyLineId),
+    otherInfo varchar(300)
+    );`;
+
+    /*
+    3 NOT NULL
+     CONSTRAINT fk_assemblyline_layout FOREIGN KEY (assemblyLineId) REFERENCES assemblyLine(assemblyLineId),
     CONSTRAINT fk_machine_layout FOREIGN KEY (machineId) REFERENCES machine(machineId),
     CONSTRAINT fk_production_layout FOREIGN KEY (productionId) REFERENCES production(productionId)
-    );`;
+    */
     
         connection.query(sql_query, (err, results, fields)=>{
             if(err) throw err;
@@ -179,4 +183,4 @@ async function assignLC(assemblyLineId, LCUserId){
     });
 }
 
-module.exports = { registerAssemblyLine, __createAssemblyLineTable, __createAssemblyLineLayoutTable, saveAssemblyLineLayout, getAssemblyLineLayout, getAssemblyLineList, assignLC}
+module.exports = { registerAssemblyLine, __createAssemblyLineTable, __createAssemblyLineLayoutTable, __saveAssemblyLineLayoutEntry, saveAssemblyLineLayout, getAssemblyLineLayout, getAssemblyLineList, assignLC}
