@@ -6,8 +6,12 @@ const fetch = require("node-fetch");
 const ip_addr = "http://127.0.0.1:8000/";
 let congestion_statuses = []
 
-// Get congestion status for machines from fastAPI
 async function getCongestionStatusForWorkstations(){
+    return congestion_statuses;
+}
+
+// Get congestion status for machines from fastAPI
+async function updateCongestionStatusForWorkstations(){
 
     // Get workstation list from assembly line layout
     await databaseService.getDBConnection();
@@ -59,7 +63,8 @@ function testFastAPIConnection(){
     assemblyLineLayout.__saveAssemblyLineLayoutEntry(1,5,8,"machin5 otherinfo");
 
     getCongestionStatusForWorkstations();
+    console.log("DEBUG: Congestion Status -"+congestion_statuses)
 }
 
 
-module.exports = {getCongestionStatusForWorkstations, testFastAPIConnection}
+module.exports = {getCongestionStatusForWorkstations, testFastAPIConnection, updateCongestionStatusForWorkstations}
