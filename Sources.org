@@ -4,6 +4,7 @@
 
 [[https://stackoverflow.com/questions/38083241/sessionstorage-into-array-and-print-all-values-in-the-array][Save array in localStorage cache]]
 
+[[https://stackoverflow.com/questions/49451624/angular-how-to-use-multiple-router-outlets][Multiple router outlet in angular]]
 * TODO
 - [X] Drag & Drop
 - [X] Update line efficieny, capacity and show hourly production in machines
