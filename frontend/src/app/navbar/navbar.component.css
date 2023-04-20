@@ -1,0 +1,41 @@
+.sidebar{
+    background: rgb(221, 221, 221);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 225px;
+    height: 100%;
+    padding: 20px 0;
+}
+
+.sidebarItems{
+    padding: 10px 20px;
+    border-bottom: 1px solid black;
+    color: black;
+    background: rgb(209, 232, 245);
+    margin-bottom: 5px;
+    font-size: 12px;
+}
+
+.sidebarLogo{
+    border-bottom: 1px groove black;
+}
+.selected{
+    background: rgb(8, 12, 14);
+    color: wheat;
+}
+
+li {
+    list-style-type : none;
+    margin-left: -50px;
+}
+.footer{
+    position: absolute;
+    bottom: 0px;
+    text-align: center;
+}
+
+.navImg{
+    width: 34px;
+    display: inline;
+}

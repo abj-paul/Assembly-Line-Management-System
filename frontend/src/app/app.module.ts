@@ -1,0 +1,46 @@
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { InvalidCredentialComponent } from './home/invalid-credential/invalid-credential.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { ProfileComponent } from './profile/profile.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { PmDashboardComponent } from './pm-dashboard/pm-dashboard.component';
+import { LcDashboardComponent } from './lc-dashboard/lc-dashboard.component';
+import { SupervisorDashboardComponent } from './supervisor-dashboard/supervisor-dashboard.component';
+import { DownloadDataComponent } from './admin-dashboard/download-data/download-data.component';
+import { UsersInfoComponent } from './admin-dashboard/users-info/users-info.component';
+import { RegisterUserComponent } from './admin-dashboard/register-user/register-user.component';
+import { ViewerComponent } from './viewer/viewer.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    LoginComponent,
+    InvalidCredentialComponent,
+    NavbarComponent,
+    ProfileComponent,
+    AdminDashboardComponent,
+    PmDashboardComponent,
+    LcDashboardComponent,
+    SupervisorDashboardComponent,
+    DownloadDataComponent,
+    UsersInfoComponent,
+    RegisterUserComponent,
+    ViewerComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }

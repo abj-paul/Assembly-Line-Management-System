@@ -1,0 +1,21 @@
+
+<div class="sidebar">
+  <div class="sidebarLogo">
+    <img src="../../assets/alms-profile.png" width="200px">
+  </div>
+
+  <ul *ngFor="let navItem of navItems; let i = index" [attr.data-index]="i">
+    <a [routerLink]="[navItem.routerLink]" class="nav-item nav-link">
+      <li (click)="makeSelected(i)" class="sidebarItems">
+        <img src="../../favicon.ico" class="navImg">
+        {{navItem.itemName}}
+      </li>
+    </a>
+  </ul>
+
+  <div class="footer">
+    <p>@Abhijit Paul <br>
+    @Mashiat Amin Farin</p>
+  </div>
+</div>
+

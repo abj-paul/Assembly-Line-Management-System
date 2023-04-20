@@ -1,0 +1,29 @@
+
+.loginBody{
+    padding: 50px;
+    margin: auto;
+    width: 30%;
+    text-align: center;
+    margin-top: 50px;
+
+    background-image: url("../../assets/login-bg.jpg");
+    height: 50%;
+}
+
+.img{
+    width: 300px;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+input{
+    padding: 10px;
+    margin-bottom: 20px;
+}
+button{
+    margin: auto;
+}
+
+.dropDown{
+    margin-bottom: 20px;
+}

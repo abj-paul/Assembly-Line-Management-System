@@ -1,0 +1,26 @@
+  <div class="container loginBody">
+    <img src="../../assets/alms-profile.png" class="img">
+    <form>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Enter Username" name="username" [(ngModel)]="username">
+      </div>
+      <div class="form-group">
+          <input type="password" class="form-control" placeholder="Enter Password" name="password" [(ngModel)]="password">
+      </div>
+
+      <div class="form-group dropDown">
+        <select class="form-control bootstrap-select" [(ngModel)]="role" name="role">
+          <option value="admin" selected="selected">Select Role</option>
+          <option value="admin">Admin</option>
+          <option value="productionManager">Production Manager</option>
+          <option value="lineChief">Line Chief</option>
+          <option value="supervisor">Supervisor</option>
+        </select>
+      </div>     
+
+      <button type="submit" class="btn btn-primary" (click)="authenticate()">Login</button>
+
+      <span class="badge badge-secondary">{{loginStatus}}</span>
+    </form>  
+  </div>
+

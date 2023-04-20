@@ -1,0 +1,18 @@
+<div class="row" id="profile">
+    <div class="p-5 text-center bg-light">
+      <h4 class="mb-3">Profile</h4>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-7">     
+          <h3>Role: </h3>             
+          <div class='myRow'>Name: {{user.username}}</div>
+          <div class='myRow'>Age: {{user.age}}</div>
+          <div class='myRow'>General Info: {{user.general_info}}</div>
+          <div class='myRow'>Employee Id: {{user.userid}}</div>
+          </div>
+      <div class="col-sm-5">
+        <img src="resource/default_pfp.png">
+      </div>
+    </div>
+    <button class="btn btn-primary" (click)="logout()">Logout</button>
