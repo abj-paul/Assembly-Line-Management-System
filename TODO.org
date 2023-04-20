@@ -50,3 +50,15 @@ Processing: Fast API Accepts the array.
             loads image for each machine. (The folders are renamed with machine Id.)
             sends the image to nmf code one by one 
 
+* TODO
+- [X] Find a proper dataset, if none exists, make one. [clothstackdetectionvariablestack.mp4]
+- [X] Train
+- [X] Make some folders 
+- [X] Validate request
+- [ ] Update array every one minute
+
+- [ ] congestion reason, video upload , view image of congestion 
+
+* Boundary cases 
+- [ ] notification is clickable 
+- [ ] 

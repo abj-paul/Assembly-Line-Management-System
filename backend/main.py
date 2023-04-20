@@ -1,7 +1,8 @@
 from fastapi import FastAPI
-import random
-
 from LineRequest import LineRequest
+from LineRequest import LineResponse
+from camera import *
+from nmf import *
 
 app = FastAPI()
 
@@ -9,11 +10,19 @@ app = FastAPI()
 async def line_congestion_status(machine_id):
     return True 
 
-@app.post("/congestion_status/line/", response_model=list)
-async def line_congestion_status(lineRequest:LineRequest):
+@app.post("/congestion/create_workstation")
+async def createWorkstationFolder(machineId: int):
+    createFolderForWorkstation(machineId)
+    getLatestImageForWorkstation(machineId)
+    return "Successful"
+
+@app.post("/congestion_status/line/", response_model=list[int])
+def line_congestion_status(lineRequest:LineRequest):
     arr = []
+    print(lineRequest)
     for machineId in lineRequest.machine_list:
-        randCongestionValue = random.randint(0,2)
-        if randCongestionValue==0 or randCongestionValue==1: arr.append(True)
-        else: arr.append(False)
+        createFolderForWorkstation(machineId)
+        img_path = getLatestImageForWorkstation(machineId)
+
+        arr.append(getCongestionStatusForImage(img_path))
     return arr
