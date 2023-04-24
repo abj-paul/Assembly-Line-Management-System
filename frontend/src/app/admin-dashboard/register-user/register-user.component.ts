@@ -13,9 +13,26 @@ export class RegisterUserComponent {
   password: string = "";
   status : string = "";
 
+  url : string = "";
+
   constructor(private accessControlService : AccessControlService, private constantsService: ConstantsService){}
 
+  onSelectFile(event: Event) {
+    console.log(event);
+    const target= event.target as HTMLInputElement;
+    if(target.files){
+      var reader= new FileReader();
+      reader.readAsDataURL(target.files[0]);
+      reader.onload=(event:any) =>{
+        this.url=event.target.result;
+        console.log("DEBUG: "+event.target.result);
+      }
+    }
+  }
+
   registerUser():void{
+    console.log("Picture: "+this.user.pic);
+
     let url = this.constantsService.SERVER_IP_ADDRESS + "admin";
     let data = {
         "operation":"rnu",

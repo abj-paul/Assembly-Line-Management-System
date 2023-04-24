@@ -17,6 +17,12 @@ import { DownloadDataComponent } from './admin-dashboard/download-data/download-
 import { UsersInfoComponent } from './admin-dashboard/users-info/users-info.component';
 import { RegisterUserComponent } from './admin-dashboard/register-user/register-user.component';
 import { ViewerComponent } from './viewer/viewer.component';
+import { HeaderComponent } from './header/header.component';
+import { ProductionComponent } from './pm-dashboard/production/production.component';
+import { ResourceComponent } from './pm-dashboard/resource/resource.component';
+import { ReportsComponent } from './pm-dashboard/reports/reports.component';
+import { AssemblyLineComponent } from './pm-dashboard/assembly-line/assembly-line.component';
+import { RegisterAssemblyLineComponent } from './pm-dashboard/resource/register-assembly-line/register-assembly-line.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +39,13 @@ import { ViewerComponent } from './viewer/viewer.component';
     DownloadDataComponent,
     UsersInfoComponent,
     RegisterUserComponent,
-    ViewerComponent
+    ViewerComponent,
+    HeaderComponent,
+    ProductionComponent,
+    ResourceComponent,
+    ReportsComponent,
+    AssemblyLineComponent,
+    RegisterAssemblyLineComponent
   ],
   imports: [
     BrowserModule,

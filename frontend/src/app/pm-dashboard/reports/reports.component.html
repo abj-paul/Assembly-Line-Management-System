@@ -1,0 +1,42 @@
+<div class="row" id="reports">
+    <div class="p-5 text-center bg-light">
+        <h4 class="mb-3">Reports</h4>
+    </div>
+    <div class="subsection">
+        <p>Hourly Production Report</p>
+        <table class="table table-striped" id="hourlyProductionReportTable">
+            <tr>
+                <th> Time of Submission</th>
+                <th> Report Id </th>
+                <th> Production Amount </th>
+                <th> Unit </th>
+                <th> Comment </th>
+            </tr>
+
+            <tr *ngFor="let report of hourlyProductionReports; let i = index" [attr.data-index]="i">
+                <td>{{report[1]}}</td>
+                <td>{{report[0]}}</td>
+                <td>{{report[2]}}</td>
+                <td>{{report[3]}}</td>
+                <td>{{report[4]}}</td>
+            </tr>
+        </table>
+    </div>
+    <!--
+    <div class="subsection">
+        <p>Congestion Issues</p>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Time of Submission</th>
+                    <th>Report Id</th>
+                    <th>Production Amount</th>
+                    <th>Unit</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    -->
+</div>

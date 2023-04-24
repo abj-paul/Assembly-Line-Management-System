@@ -57,17 +57,20 @@ export class LoginComponent {
           sessionStorage.setItem("general_info", data.userInfo.general_info);
           sessionStorage.setItem("userHash", data.userHash);
           */
+         console.log("IMAGE AFTER LOGIN: "+data.userInfo.pic);
          this.accessControlService.setUser({
           "userid": <string>data.userInfo.userid,
           "username": <string>data.userInfo.username,
           "age": <number>data.userInfo.age,
           "role": <string>data.userInfo.role,
           "general_info": <string>data.userInfo.general_info,
-          "userHash": <string>data.userHash
+          "userHash": <string>data.userHash,
+          "pic": <string>data.userInfo.pic
          });
 
         if(data.nextPage!="none") {
           if(data.nextPage=="admin-dashboard.html") this.router.navigate(["admin-dashboard"])
+          else if(data.nextPage=="production-manager-dashboard.html") this.router.navigate(["pm-dashboard"])
         }
       })
       .catch((err)=>{

@@ -1,0 +1,23 @@
+
+table tr td {
+    padding: 10px;
+    border-bottom: 1px solid black;
+}
+p{
+    text-align: center;
+    margin-top: 20px;
+    font-size: large;
+    padding-top: 20px;
+    font-weight: bold;
+    color: blueviolet;
+}
+
+.subsection{
+    background-color: bisque;
+    margin-top: 40px;
+}
+
+button{
+    padding: 10px 20px;
+    width: 200px;
+}

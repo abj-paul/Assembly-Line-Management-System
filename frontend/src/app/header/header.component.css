@@ -1,0 +1,22 @@
+.header{
+    background-color: azure;
+    height: 50px;
+}
+
+.header img{
+    height: 50px;
+    float: right;
+    display: inline;
+    margin-right: 10px;
+    border-radius: 50px;
+}
+
+
+.header select{
+    float: right;
+    display: inline;
+}
+
+.dropdown {
+    float: right;
+}

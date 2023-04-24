@@ -37,11 +37,12 @@ function __serveRequest(req, res){
         const password = body.password;
         const age = body.age;
         const role = body.role;
+	const pic = body.pic;
         const generalInfo = body.generalInfo;
 
         console.log("DEBUG------------"+username+password+age+generalInfo);
 
-        admin.__insertUserData(username, password, age, role, generalInfo)
+        admin.__insertUserData(username, password, age, role, pic, generalInfo)
         .then((data)=>{
             res.status(200).send({"RegisteredUserId":data.insertId});
             notification.__notify(data.insertId, "Your account has been created!");

@@ -5,4 +5,5 @@ export class User{
     role: string = "";
     general_info: string = ""
     userHash: string = "";
+    pic: string = "";
 }

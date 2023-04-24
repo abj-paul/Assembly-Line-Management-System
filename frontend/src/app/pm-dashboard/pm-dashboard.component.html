@@ -1,1 +1,13 @@
-<p>pm-dashboard works!</p>
+<app-header></app-header>
+
+<div class="container">
+    <div class="row"> <!--*ngIf="haveAccess==true"-->
+        <div class="col-sm-3">
+            <app-navbar></app-navbar>
+        </div>
+        <div class="col-sm-9">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
+

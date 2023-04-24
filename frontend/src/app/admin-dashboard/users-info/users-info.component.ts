@@ -57,7 +57,8 @@ export class UsersInfoComponent implements OnInit {
             "age": <number> data.Status[i][4],
             "role": <string> data.Status[i][2],
             "general_info": <string> data.Status[i][3],
-            "userHash": "none"
+            "userHash": "none",
+            "pic": data.Status[i][5]
           });
 
       }

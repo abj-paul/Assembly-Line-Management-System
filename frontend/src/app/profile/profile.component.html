@@ -10,9 +10,18 @@
           <div class='myRow'>Age: {{user.age}}</div>
           <div class='myRow'>General Info: {{user.general_info}}</div>
           <div class='myRow'>Employee Id: {{user.userid}}</div>
-          </div>
+        </div>
       <div class="col-sm-5">
-        <img src="resource/default_pfp.png">
+        <img [src]="user.pic">
       </div>
     </div>
-    <button class="btn btn-primary" (click)="logout()">Logout</button>
+
+<p>Notifications:</p>
+<table class="table table-striped" id="notificationTable">
+  <tr>
+    <th> Timestamp </th>
+    <th> Message </th>
+    <th> Action </th> <!--<button>Click</button>-->
+  </tr>
+  <script> getNotifications() </script>
+</table>

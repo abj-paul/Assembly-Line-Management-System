@@ -7,6 +7,11 @@ import { UsersInfoComponent } from './admin-dashboard/users-info/users-info.comp
 import { HomeComponent } from './home/home.component';
 import { InvalidCredentialComponent } from './home/invalid-credential/invalid-credential.component';
 import { LoginComponent } from './login/login.component';
+import { AssemblyLineComponent } from './pm-dashboard/assembly-line/assembly-line.component';
+import { PmDashboardComponent } from './pm-dashboard/pm-dashboard.component';
+import { ProductionComponent } from './pm-dashboard/production/production.component';
+import { ReportsComponent } from './pm-dashboard/reports/reports.component';
+import { ResourceComponent } from './pm-dashboard/resource/resource.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ViewerComponent } from './viewer/viewer.component';
 
@@ -20,6 +25,13 @@ const routes: Routes = [
     {path: "user", component: UsersInfoComponent},
     {path: "system-data", component: DownloadDataComponent},
     {path: "register-user", component: RegisterUserComponent}
+  ]},
+  {path: "pm-dashboard", component: PmDashboardComponent, children: [
+    {path: "profile", component: ProfileComponent},
+    {path: "production", component: ProductionComponent},
+    {path: "resources", component: ResourceComponent},
+    {path: "reports", component: ReportsComponent},
+    {path: "assembly-line", component: AssemblyLineComponent}
   ]},
   {path: "assembly-line", component: ViewerComponent}
 ];

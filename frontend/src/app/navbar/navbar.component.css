@@ -6,6 +6,7 @@
     width: 225px;
     height: 100%;
     padding: 20px 0;
+    margin-left: 5px;
 }
 
 .sidebarItems{
@@ -18,8 +19,14 @@
 }
 
 .sidebarLogo{
-    border-bottom: 1px groove black;
+    margin-bottom: 10px;
 }
+
+.sidebarLogo img {
+    width: 130px;
+    margin-left: 45px;
+}
+
 .selected{
     background: rgb(8, 12, 14);
     color: wheat;
@@ -27,12 +34,18 @@
 
 li {
     list-style-type : none;
-    margin-left: -50px;
+    margin-left: -31px;
 }
 .footer{
     position: absolute;
     bottom: 0px;
     text-align: center;
+}
+.footer button{
+    width: 200px;
+    margin-left: 11px;
+    height: 50px;
+    margin-bottom: 20px;
 }
 
 .navImg{

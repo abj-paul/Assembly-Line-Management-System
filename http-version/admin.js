@@ -70,6 +70,7 @@ async function __createUserTable(){
     password varchar(50) NOT NULL,
     age int,
     role varchar(50) NOT NULL,
+    pic varchar(1000),
     general_info varchar(300));`;
     
         connection.query(sql_query, (err, results, fields)=>{
@@ -84,16 +85,17 @@ async function __createUserTable(){
 
 
 
-async function __insertUserData(name, password, age, role, general_info){
+async function __insertUserData(name, password, age, role, pic, general_info){
     return new Promise((resolve, reject)=>{
-        const sql_query = "INSERT into user(username, password, age, role, general_info) values('"+name+"', '"+password+"',"+age+", '"+role+"', '"+general_info+"');";
+        const sql_query = "INSERT into user(username, password, age, role, pic, general_info) values('"+name+"', '"+password+"',"+age+", '"+role+"', '"+pic+"', '"+general_info+"');";
         connection.query(sql_query, (err, results, fields)=>{
             if(err) {
                 reject(err);
-            }
-            console.log("Done inserting data for user "+name);
-            notification.__notify(results.insertId, "Your account has been created by Admin");
-            resolve(results);
+            }else{
+		console.log("Done inserting data for user "+name);
+		notification.__notify(results.insertId, "Your account has been created by Admin");
+		resolve(results);
+	    }
         });
     }
     );
@@ -114,7 +116,7 @@ async function __getUserData(name, password){
 
 
 async function __createAdminUser(){
-    const adminIdPromise = await __insertUserData("Admin", DEFAULT_ADMIN_PASSWORD, 21, "Admin", "A daunty young man!");
+    const adminIdPromise = await __insertUserData("Admin", DEFAULT_ADMIN_PASSWORD, 21, "Admin", "none", "A daunty young man!");
 
     //console.log(adminIdPromise.insertId);
     //notification.__notify(adminIdPromise.insertId, "Admin account has been created!")
