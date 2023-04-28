@@ -17,7 +17,7 @@ export class ReportsComponent implements OnInit {
   }
 
   getHourlyProductionReport(): void{
-    let url = this.constantsService.SERVER_IP_ADDRESS + "productionManager";
+    let url = this.constantsService.SERVER_IP_ADDRESS + this.accessControlService.getUser().role;
     let data = {
         "operation":"vhpr",
         "userHash": this.accessControlService.getUser().userHash

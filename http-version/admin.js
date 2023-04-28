@@ -22,7 +22,7 @@ async function __startDatabase(){
     await notification.__createNotificationTable();
     await machine.__createMachineTable();
 
-    await __createAdminUser();
+    //await __createAdminUser();
 }
 
 async function __connect(){
@@ -70,8 +70,9 @@ async function __createUserTable(){
     password varchar(50) NOT NULL,
     age int,
     role varchar(50) NOT NULL,
-    pic varchar(1000),
-    general_info varchar(300));`;
+    pic LONGBLOB,
+    general_info varchar(300))
+    ;`;
     
         connection.query(sql_query, (err, results, fields)=>{
             if(err) throw err;
@@ -92,7 +93,7 @@ async function __insertUserData(name, password, age, role, pic, general_info){
             if(err) {
                 reject(err);
             }else{
-		console.log("Done inserting data for user "+name);
+		console.log("Done registering data for user "+name+". His image data is +"+pic);
 		notification.__notify(results.insertId, "Your account has been created by Admin");
 		resolve(results);
 	    }
@@ -133,9 +134,21 @@ function __viewRegisteredUsers(){
             console.log("Registered Users are:");
             for(let i=0; i<results.length; i++){
                 //console.log(results[i].userid +": "+results[i].username);
-                users.push([results[i].userid, results[i].username, results[i].role, results[i].general_info]);
+                users.push([results[i].userid, results[i].username, results[i].role, results[i].general_info, results[i].age, results[i].pic]);
             }
             resolve(users);
+        });
+    });
+}
+
+function __deleteEntry(userid){
+    return new Promise((resolve, reject)=>{
+        const sql_query = "DELETE from user where userid="+userid;
+
+        connection.query(sql_query, (err, results, fields)=>{
+            if(err) throw err;
+	    console.log(userid+" userid has been deleted!");
+            resolve(true);
         });
     });
 }
@@ -164,4 +177,4 @@ function __viewAllTableData(){
 }
 
 // Admin login, Register new user, view existing user, delete existing user, edit user data, view his notification
-module.exports = {startDatabase, viewRegisteredUsers, __viewRegisteredUsers, __insertUserData, __deleteTable, __viewAllTableData, __getUserData}
+module.exports = {startDatabase, viewRegisteredUsers, __viewRegisteredUsers, __insertUserData, __deleteTable, __viewAllTableData, __getUserData, __deleteEntry , __createAdminUser}

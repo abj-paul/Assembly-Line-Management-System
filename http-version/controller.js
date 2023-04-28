@@ -91,6 +91,13 @@ function __serveRequest(req, res){
         const userHash = body.userHash;
         userHashLib.deleteSession(userHash, constants.ADMIN_ENDPOINT);
         res.status(200).send({"SessionDelete":true});
+    }else if(operationType==constants.DELETE_USER){
+	const userid = body.userid;
+	admin.__deleteEntry(userid)
+	    .then((data)=>{
+		if(data==true) res.status(200).send({"Status": "Delete successful"});
+		else res.send({"Status": "Delete unsuccessful"});
+	    });
     }
 }
 

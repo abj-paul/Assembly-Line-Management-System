@@ -11,9 +11,13 @@ import { ConstantsService } from '../services/constants.service';
 })
 export class ProfileComponent implements OnInit{
   user : User = new User();
+  notifications: any[] = [];
+  imageURL : any ;
+
   constructor(private accessControlService: AccessControlService, private router : Router, private constantsService : ConstantsService){}
   ngOnInit(): void {
     this.user = this.accessControlService.getUser();
+    this.getNotifications();
   }
 
   getNotifications():void{
@@ -41,28 +45,10 @@ export class ProfileComponent implements OnInit{
     })
     .then((data)=>{
         console.log("DEBUG: notifications-"+data);
-        for(let i=0; i<data.notifications.length; i++){
-            let row = document.createElement('tr');
-    
-            let cell1 = document.createElement('td');
-            cell1.innerText = data.notifications[i][0];
-            let cell2 = document.createElement('td');
-            cell2.innerText = data.notifications[i][1];
-            let cell3 = document.createElement('td');
-            let btn = document.createElement("button");
-            btn.innerHTML = "Click!"
-            cell3.appendChild(btn);
-
-    
-            row.appendChild(cell1);
-            row.appendChild(cell2);
-            row.appendChild(cell3);
-    
-            (<HTMLElement>document.getElementById("notificationTable")).appendChild(row);
-        }
+        this.notifications = data.notifications;
     })
     .catch((err)=>{
-    console.log(err);
+      console.log(err);
     });
 }
 

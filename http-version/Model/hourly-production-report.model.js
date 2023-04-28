@@ -36,6 +36,7 @@ async function __createProductionReportTable(){
         comment varchar(300),
         CONSTRAINT fk_production FOREIGN KEY (productionId) REFERENCES production(productionId),
         CONSTRAINT fk_user FOREIGN KEY (userid) REFERENCES user(userid)
+        ON DELETE CASCADE
         );`; // Find username through relational query
         
             connection.query(sql_query, (err, results, fields)=>{

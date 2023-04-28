@@ -33,6 +33,7 @@ async function __createAssemblyLineTable(){
     LCUserId int,
     otherInfo varchar(300),
     CONSTRAINT fk_machine FOREIGN KEY (LCUserId) REFERENCES user(userid)  
+        ON DELETE CASCADE
     );`;
     
         connection.query(sql_query, (err, results, fields)=>{

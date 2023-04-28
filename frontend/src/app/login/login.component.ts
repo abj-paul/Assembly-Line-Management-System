@@ -48,7 +48,7 @@ export class LoginComponent {
       .then((data)=>{
           console.log(data.authentication);
           this.loginStatus = "Status: "+ data.authentication;
-          /*
+          
           sessionStorage.setItem("userid", data.userInfo.userid);
           sessionStorage.setItem("username", data.userInfo.username);
           sessionStorage.setItem("password", data.userInfo.password);
@@ -56,21 +56,24 @@ export class LoginComponent {
           sessionStorage.setItem("role", data.userInfo.role);
           sessionStorage.setItem("general_info", data.userInfo.general_info);
           sessionStorage.setItem("userHash", data.userHash);
-          */
+          
          console.log("IMAGE AFTER LOGIN: "+data.userInfo.pic);
          this.accessControlService.setUser({
-          "userid": <string>data.userInfo.userid,
+          "userid": <number>data.userInfo.userid,
           "username": <string>data.userInfo.username,
           "age": <number>data.userInfo.age,
           "role": <string>data.userInfo.role,
           "general_info": <string>data.userInfo.general_info,
           "userHash": <string>data.userHash,
-          "pic": <string>data.userInfo.pic
+          "pic" : data.userInfo.pic
          });
 
+        console.log("DEBUG-Login: image - "+data.userInfo.pic);
         if(data.nextPage!="none") {
           if(data.nextPage=="admin-dashboard.html") this.router.navigate(["admin-dashboard"])
           else if(data.nextPage=="production-manager-dashboard.html") this.router.navigate(["pm-dashboard"])
+          else if(data.nextPage=="supervisor-dashboard.html") this.router.navigate(["supervisor-dashboard"])
+          else if(data.nextPage=="line-chief-dashboard.html") this.router.navigate(["lc-dashboard"])
         }
       })
       .catch((err)=>{

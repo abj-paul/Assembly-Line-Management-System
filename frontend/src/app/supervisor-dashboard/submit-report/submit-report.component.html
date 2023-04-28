@@ -1,0 +1,73 @@
+<div class="row" id="reports">
+    <div class="col-sm-4 subsection">
+        <p>Hourly Target Report</p>
+        <div class="form-group">
+            <label for="hourlyTargetId">Hourly Target Reached So Far:</label>
+            <input class="form-control" type="number" name="hourlyTarget" id="hourlyTargetId">
+        </div>
+
+        <div class="form-group">
+            <label for="hourlyProductionUnitId">Unit of Production:</label>
+            <input class="form-control" type="text" name="hourlyProductionUnit" id="hourlyProductionUnitId" placeholder="(e.g. Number of Completed Garments)">
+        </div>
+
+        <div class="form-group subs">
+            <label for="commentOnHourlyProductionId">Comments: </label>
+            <input class="form-control" type="text" name="commentOnHourlyProduction" id="commentOnHourlyProductionId">
+        </div>
+
+        <button onclick="setHourlyProductionAmount()">Submit Production Count</button>
+    </div>
+
+    <div class="col-sm-4 subsection">
+        <p>Quality Report</p>
+        <div class="form-group">
+            <label for="qualityTotalProductId">Units of Product Checked:</label>
+            <input class="form-control" type="number" name="qualityTotalProduct" id="qualityTotalProductId">
+        </div>
+
+        <div class="form-group">
+            <label for="qualityDefectedProductId">Units of Defected Products Found:</label>
+            <input class="form-control" type="number" name="qualityDefectedProduct" id="qualityDefectedProductId">
+        </div>
+
+        <div class="form-group">
+            <label for="qualityUnitId">Unit of Production:</label>
+            <input class="form-control" type="text" name="qualityUnit" id="qualityUnitId" placeholder="(e.g. Number of Completed Garments)">
+        </div>
+
+
+        <div class="form-group subs">
+            <label for="commentOnQualityInspectionId">Comments: </label>
+            <input class="form-control" type="text" name="commentOnQualityInspection" id="commentOnQualityInspectionId">
+        </div>
+
+        <button onclick="">Submit Quality Inspection Result</button>
+    </div>
+
+    <div class="col-sm-4 subsection">
+        <p>Assembly Line Report</p>
+        <div class="form-group">
+            <label for="almNumId">Assembly Line Number:</label>
+            <input class="form-control" type="number" name="almNum" id="almNumId">
+        </div>
+
+        <div class="form-group">
+            <label for="congestionIssueDescriptionId">Congestion Issue Description:</label>
+            <input class="form-control" type="text" name="congestionIssueDescription" id="congestionIssueDescriptionId">
+        </div>
+
+        <div class="form-group">
+            <label for="wrokstationNumId">Workstation Number:</label>
+            <input class="form-control" type="number" name="wrokstationNum" id="wrokstationNumId" placeholder="(e.g. Number of Completed Garments)">
+        </div>
+
+
+        <div class="form-group subs">
+            <label for="commentOnCongestionId">Comments: </label>
+            <input class="form-control" type="text" name="commentOnCongestion" id="commentOnCongestionId">
+        </div>
+
+        <button onclick="">Submit Congestion Issue</button>
+    </div>
+</div>

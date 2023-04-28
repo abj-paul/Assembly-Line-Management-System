@@ -1,0 +1,19 @@
+p{
+    text-align: center;
+    margin-top: 20px;
+    font-size: large;
+    padding-top: 20px;
+    font-weight: bold;
+    color: blueviolet;
+}
+
+.subsection{
+    background-color: bisque;
+    border-bottom: 4px solid black;
+    height: 500px;
+    border-right: 2px solid green;
+}
+
+button{
+    padding: 10px 20px;
+}

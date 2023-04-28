@@ -6,14 +6,30 @@
         <th> User Id </th>
         <th> User Name </th>
         <th> Position </th>
+        <th> Password </th>
         <th> General Info </th>
+        <th class="actionColumn"> Action </th>
     </tr>
 
-    <tr *ngFor="let user of userList">
-        <td>{{user.userid}}</td>
-        <td>{{user.username}}</td>
-        <td>{{user.role}}</td>
-        <td>{{user.general_info}}</td>
+    <tr *ngFor="let user of userList; let i = index" [attr.data-index]="i">
+        <td *ngIf="isUpdating(user)==false">{{user.userid}}</td>
+        <td *ngIf="isUpdating(user)==false">{{user.username}}</td>
+        <td *ngIf="isUpdating(user)==false">{{user.role}}</td>
+        <td *ngIf="isUpdating(user)==false"> <i>hidden</i> </td>
+        <td *ngIf="isUpdating(user)==false">{{user.general_info}}</td>
+        <td *ngIf="processHappening==false" class="actionColumn">
+            <button (click)="editInfo(user)"> Edit </button>
+            <button (click)="deleteInfo(user)"> Delete </button>
+        </td>
+
+        <td *ngIf="isUpdating(user)==true"><input type="number" name="userid" [(ngModel)]="userid" placeholder={{userInProcess.userid}}></td>
+        <td *ngIf="isUpdating(user)==true"><input type="text" name="username" [(ngModel)]="username" placeholder={{userInProcess.username}}></td>
+        <td *ngIf="isUpdating(user)==true"><input type="text" name="role" [(ngModel)]="role" placeholder={{userInProcess.role}}></td>
+        <td *ngIf="isUpdating(user)==true"><input type="text" name="password" [(ngModel)]="password" placeholder="Enter new password"></td> 
+        <td *ngIf="isUpdating(user)==true"><input type="text" name="general_info" [(ngModel)]="general_info" placeholder={{userInProcess.general_info}}></td> 
+        <td *ngIf="processHappening==true" class="actionColumn">
+            <button (click)="confirmChange()"> Confirm </button>
+        </td>
     </tr>
 </table>
 

@@ -22,26 +22,9 @@ const session = require("./Model/session.js");
 const fastAPIConnection = require("./Model/congestion.algorithm.js");
 
 
-admin.startDatabase();
-/*
-admin.__deleteTable("notification");
-admin.__deleteTable("assemblyLineLayout");
-admin.__deleteTable("assemblyLine");
-admin.__deleteTable("productionReport");
-admin.__deleteTable("user"); 
-admin.__deleteTable("machine");
-admin.__deleteTable("session");
-*/
 
-session.__createSessionTable();
-machine.__createMachineTable();
-report.__connect();
-production.__createProductionTable();
-assemblyLine.__createAssemblyLineTable();
-assemblyLine.__createAssemblyLineLayoutTable();
-report.__createProductionReportTable();
-
-
+normal_start_database();
+//clearDatabases();
 
 
 app.listen(PORT, ()=>misc.serverHasStartedNotification(PORT));
@@ -54,7 +37,7 @@ app.post("/layout", (req, res) => layoutController.handlePostRequestToLayoutViaP
 
 //app.get("/dashboard/:userid", (req, res) => controller.handleGetRequestToDashboard(req,res));
 //wait(7000)
-fastAPIConnection.testFastAPIConnection()
+//fastAPIConnection.testFastAPIConnection()
 
 function testAdmin(){
     admin.viewRegisteredUsers();
@@ -73,3 +56,40 @@ function wait(ms){
       end = new Date().getTime();
    }
  }
+
+
+async function clearDatabases(){
+    admin.startDatabase();
+
+await admin.__deleteTable("notification");
+await admin.__deleteTable("assemblyLineLayout");
+await admin.__deleteTable("assemblyLine");
+await admin.__deleteTable("productionReport");
+await admin.__deleteTable("user"); 
+await admin.__deleteTable("machine");
+await admin.__deleteTable("session");
+
+
+await     admin.__createAdminUser();
+
+await session.__createSessionTable();
+await machine.__createMachineTable();
+await report.__connect();
+await production.__createProductionTable();
+await assemblyLine.__createAssemblyLineTable();
+await assemblyLine.__createAssemblyLineLayoutTable();
+await report.__createProductionReportTable();
+}
+
+
+async function normal_start_database(){
+    await admin.startDatabase();
+    
+    await session.__createSessionTable();
+    await machine.__createMachineTable();
+    await report.__connect();
+    await production.__createProductionTable();
+    await assemblyLine.__createAssemblyLineTable();
+    await assemblyLine.__createAssemblyLineLayoutTable();
+    await report.__createProductionReportTable();
+}

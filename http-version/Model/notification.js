@@ -61,6 +61,7 @@ async function __createNotificationTable(){
         timeSent datetime DEFAULT CURRENT_TIMESTAMP,
         message varchar(300),
         CONSTRAINT fk_user_notification FOREIGN KEY (userid) REFERENCES user(userid)
+        ON DELETE CASCADE
         );`; // Find username through relational query
         
             connection.query(sql_query, (err, results, fields)=>{

@@ -23,6 +23,9 @@ import { ResourceComponent } from './pm-dashboard/resource/resource.component';
 import { ReportsComponent } from './pm-dashboard/reports/reports.component';
 import { AssemblyLineComponent } from './pm-dashboard/assembly-line/assembly-line.component';
 import { RegisterAssemblyLineComponent } from './pm-dashboard/resource/register-assembly-line/register-assembly-line.component';
+import { SubmitReportComponent } from './supervisor-dashboard/submit-report/submit-report.component';
+import { CongestionComponent } from './congestion/congestion.component';
+import { SetLineLayoutComponent } from './pm-dashboard/production/set-line-layout/set-line-layout.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +48,10 @@ import { RegisterAssemblyLineComponent } from './pm-dashboard/resource/register-
     ResourceComponent,
     ReportsComponent,
     AssemblyLineComponent,
-    RegisterAssemblyLineComponent
+    RegisterAssemblyLineComponent,
+    SubmitReportComponent,
+    CongestionComponent,
+    SetLineLayoutComponent
   ],
   imports: [
     BrowserModule,

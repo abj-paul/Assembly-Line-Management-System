@@ -61,4 +61,8 @@ Processing: Fast API Accepts the array.
 
 * Boundary cases 
 - [ ] notification is clickable 
-- [ ] 
+- [ ] different productions at the same time
+
+* Future TODO 
+- Profile image
+- Users should be able to change their information through profile

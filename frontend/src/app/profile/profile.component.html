@@ -12,7 +12,7 @@
           <div class='myRow'>Employee Id: {{user.userid}}</div>
         </div>
       <div class="col-sm-5">
-        <img [src]="user.pic">
+        <img [src]="imageURL">
       </div>
     </div>
 
@@ -23,5 +23,10 @@
     <th> Message </th>
     <th> Action </th> <!--<button>Click</button>-->
   </tr>
-  <script> getNotifications() </script>
+
+  <tr *ngFor="let notification of notifications; let i = index" [attr.data-index]="i">
+    <td>{{notification[0]}}</td>
+    <td>{{notification[1]}}</td>
+    <td> <button>Delete</button> </td>
+  </tr>
 </table>

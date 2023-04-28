@@ -4,15 +4,20 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { DownloadDataComponent } from './admin-dashboard/download-data/download-data.component';
 import { RegisterUserComponent } from './admin-dashboard/register-user/register-user.component';
 import { UsersInfoComponent } from './admin-dashboard/users-info/users-info.component';
+import { CongestionComponent } from './congestion/congestion.component';
 import { HomeComponent } from './home/home.component';
 import { InvalidCredentialComponent } from './home/invalid-credential/invalid-credential.component';
+import { LcDashboardComponent } from './lc-dashboard/lc-dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { AssemblyLineComponent } from './pm-dashboard/assembly-line/assembly-line.component';
 import { PmDashboardComponent } from './pm-dashboard/pm-dashboard.component';
 import { ProductionComponent } from './pm-dashboard/production/production.component';
+import { SetLineLayoutComponent } from './pm-dashboard/production/set-line-layout/set-line-layout.component';
 import { ReportsComponent } from './pm-dashboard/reports/reports.component';
 import { ResourceComponent } from './pm-dashboard/resource/resource.component';
 import { ProfileComponent } from './profile/profile.component';
+import { SubmitReportComponent } from './supervisor-dashboard/submit-report/submit-report.component';
+import { SupervisorDashboardComponent } from './supervisor-dashboard/supervisor-dashboard.component';
 import { ViewerComponent } from './viewer/viewer.component';
 
 const routes: Routes = [
@@ -33,7 +38,23 @@ const routes: Routes = [
     {path: "reports", component: ReportsComponent},
     {path: "assembly-line", component: AssemblyLineComponent}
   ]},
-  {path: "assembly-line", component: ViewerComponent}
+  {path: "lc-dashboard", component: LcDashboardComponent, children: [
+    {path: "profile", component: ProfileComponent},
+    {path: "congestion", component: CongestionComponent},
+    {path: "reports", component: ReportsComponent},
+    {path: "assembly-line", component: AssemblyLineComponent}
+  ]},
+  {path: "supervisor-dashboard", component: SupervisorDashboardComponent, children: [
+    {path: "profile", component: ProfileComponent},
+    {path: "reports", component: SubmitReportComponent},
+    {path: "assembly-line", component: AssemblyLineComponent}
+  ]},
+  {path: "assembly-line", component: ViewerComponent},
+  {path: "assembly-line-layout-set", component: SetLineLayoutComponent},
+  { path: '',
+   redirectTo: '/',
+   pathMatch: 'full'
+  }
 ];
 
 @NgModule({

@@ -13,8 +13,6 @@ export class RegisterUserComponent {
   password: string = "";
   status : string = "";
 
-  url : string = "";
-
   constructor(private accessControlService : AccessControlService, private constantsService: ConstantsService){}
 
   onSelectFile(event: Event) {
@@ -24,7 +22,7 @@ export class RegisterUserComponent {
       var reader= new FileReader();
       reader.readAsDataURL(target.files[0]);
       reader.onload=(event:any) =>{
-        this.url=event.target.result;
+        this.user.pic=event.target.result;
         console.log("DEBUG: "+event.target.result);
       }
     }
@@ -41,6 +39,7 @@ export class RegisterUserComponent {
         "age": this.user.age,
         "generalInfo": this.user.general_info,
         "role": this.user.role,
+        "pic": this.user.pic,
         "userHash": this.accessControlService.getUser().userHash
     }
 

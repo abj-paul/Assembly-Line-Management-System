@@ -60,6 +60,7 @@ export class NavbarComponent implements OnInit{
     })
     .catch((err)=>{
       console.log(err);
+      this.router.navigate(["login"]);
     });
   }
 }

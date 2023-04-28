@@ -2,3 +2,5 @@ http-version/node_modules/
 http-version/backend/__pycache__/
 http-version/congestion-dataset/
 backend/node_modules/
+frontend/node_modules/
+frontend/.angular

@@ -4,3 +4,15 @@
     font-size: 20px;
     color:darkcyan;
 }
+
+th{
+    text-align: center;
+}
+
+input{
+    width: 150px;
+}
+
+.actionColumn{
+    width: 200px;
+}

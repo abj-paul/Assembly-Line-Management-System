@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Route } from '@angular/router';
+import { Route, Router } from '@angular/router';
 import { AssemblyLine } from 'src/app/models/AssemblyLine';
 import { AccessControlService } from 'src/app/services/access-control.service';
 import { ConstantsService } from 'src/app/services/constants.service';
@@ -11,7 +11,7 @@ import { ConstantsService } from 'src/app/services/constants.service';
 })
 export class ProductionComponent implements OnInit{
 
-  constructor(private accessControlService: AccessControlService, private constantsService: ConstantsService){}
+  constructor(private accessControlService: AccessControlService, private constantsService: ConstantsService, private router: Router){}
 
   ngOnInit(): void {
     this.populateAssemblyLineList();
@@ -23,7 +23,7 @@ export class ProductionComponent implements OnInit{
       this.__registerTotalProductionTarget();
       const assignedLCId = (<HTMLInputElement>document.getElementById("assignedLCId")).value;
       sessionStorage.setItem("assignedLCId", assignedLCId);
-      window.location.href = "layout.html";
+      this.router.navigate(["assembly-line-layout-set"]);
   }
 
   __registerTotalProductionTarget():void{

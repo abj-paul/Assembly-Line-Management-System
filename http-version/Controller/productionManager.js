@@ -99,16 +99,17 @@ function __serveRequest(req, res){
 async function login(req, res){
     const body = req.body;
     const username = body.username;
-	const password = body.password;
+    const password = body.password;
 
     const data = await admin.__getUserData(username, password)
 
-    if(data==undefined) res.status(200).send({"authentication":"unsuccessful!", "nextPage":"none"});
+    if(data==undefined || data.length==0) res.status(200).send({"authentication":"unsuccessful!", "nextPage":"none"});
     else if(data[0].password==password){
         const x = await userHashLib.createSession(username+password, constants.PM_ENDPOINT);
 
         console.log("DEbug: hash="+x);
         res.status(200).send({"userHash": x, "authentication":"successful!", "nextPage":"production-manager-dashboard.html", "userInfo":data[0]});
+	console.log("DEBUG-PM LOgin: "+data[0].pic);
     }
     else res.status(200).send({"authentication":"unsuccessful!", "nextPage":"none"});
  
