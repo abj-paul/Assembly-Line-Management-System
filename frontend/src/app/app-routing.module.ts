@@ -18,6 +18,7 @@ import { ResourceComponent } from './pm-dashboard/resource/resource.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SubmitReportComponent } from './supervisor-dashboard/submit-report/submit-report.component';
 import { SupervisorDashboardComponent } from './supervisor-dashboard/supervisor-dashboard.component';
+import { TestAreaComponent } from './test-area/test-area.component';
 import { ViewerComponent } from './viewer/viewer.component';
 
 const routes: Routes = [
@@ -51,10 +52,7 @@ const routes: Routes = [
   ]},
   {path: "assembly-line", component: ViewerComponent},
   {path: "assembly-line-layout-set", component: SetLineLayoutComponent},
-  { path: '',
-   redirectTo: '/',
-   pathMatch: 'full'
-  }
+  {path: "test", component: TestAreaComponent}
 ];
 
 @NgModule({
