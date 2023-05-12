@@ -31,7 +31,8 @@ async function __createMachineTable(){
     machineModel varchar(50) NOT NULL,
     machineType varchar(50) NOT NULL,
     perHourProduction int NOT NULL,
-    otherInfo varchar(300));`;
+    otherInfo varchar(300)
+    );`;
     
         connection.query(sql_query, (err, results, fields)=>{
             if(err) throw err;
@@ -75,4 +76,31 @@ async function getMachineList(machineModel, machineType, otherInfo){
     );
 }
 
-module.exports = { __createMachineTable, registerMachine, getMachineList}
+async function update_machine_info(machineId, machineModel, machineType, otherInfo, perHourProduction){
+    return new Promise((resolve, reject)=>{
+        const sql_query = "UPDATE machine SET machineModel='"+machineModel+"', machineType='"+machineType+"', otherInfo='"+otherInfo+"', perHourProduction="+perHourProduction+" where machineId="+machineId+";";
+        connection.query(sql_query, (err, results, fields)=>{
+            if(err) {
+                reject(err);
+            }
+            resolve(results);
+        });
+    }
+    );
+}
+
+async function delete_machine(machineId){
+    return new Promise((resolve, reject)=>{
+        const sql_query = "DELETE FROM machine where machineId="+machineId;
+        connection.query(sql_query, (err, results, fields)=>{
+            if(err) {
+                reject(err);
+            }
+            resolve(results);
+        });
+    }
+    );
+}
+
+
+module.exports = { __createMachineTable, registerMachine, getMachineList, update_machine_info, delete_machine}

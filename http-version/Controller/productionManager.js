@@ -127,6 +127,34 @@ function __serveRequest(req, res){
         .then((data)=>{
             res.status(200).send({"LCANDLINES": data});
         });
+    }else if(operationType == constants.GET_MACHINE_AND_ADDED_LINE){
+        combinationQuery.getMachineAndAssemblyLineItIsAddedTo()
+        .then((data)=>{
+            res.status(200).send({"MACHINE_AND_ASSIGNED_LINE": data});
+        });
+    }else if(operationType==constants.UPDATE_MACHINE_INFO){
+        const machineId = body.machineId;
+        const machineModel = body.machineModel;
+        const machineType = body.machineType;
+        const otherInfo = body.otherInfo;
+        const perHourProduction = body.perHourProduction;
+
+        machine.update_machine_info(machineId, machineModel, machineType, otherInfo, perHourProduction)
+        .then((data)=>{
+            res.status(200).send({"Update Status:": data});
+        });
+    }else if(operationType==constants.DELETE_MACHINE){
+        const machineId = body.machineId;
+
+        machine.delete_machine(machineId)
+        .then((data)=>{
+            res.status(200).send({"Delete Status": "Successful"});
+        })
+    }else if(operationType==constants.GET_UNUSED_MACHINE_LIST){
+        combinationQuery.getUnusedMachineList()
+        .then((data)=>{
+            res.status(200).send({"UNUSED_MACHINES": data});
+        })
     }
 }
 

@@ -209,7 +209,7 @@ export class SetLineLayoutComponent implements OnInit{
   // Regular CRUD Functions
   loadMachinesFromBackend(){
     let data = {
-        "operation":"gml",
+        "operation":"guml",
         "userHash": this.accessControlService.getUser().userHash
     }
     let url = this.constantsService.SERVER_IP_ADDRESS + "productionManager";
@@ -231,11 +231,11 @@ export class SetLineLayoutComponent implements OnInit{
       })
     .then((data)=>{
         console.log(data);
-        let machines = data.MachineList;
-
+        let machines = data.UNUSED_MACHINES;
+        this.items = [];
         for(let i=0; i<machines.length; i++){
           this.items.push(
-            {id: machines[i][4], name: machines[i][1], hourly_production: machines[i][3] }
+            {id: machines[i].machineId, name: machines[i].machineModel, hourly_production: machines[i].perHourProduction}
           );
         }
         for(let i=0; i<this.sharedService.selected_assembly_lines_for_production.length; i++) this.boxes.push(this.sharedService.selected_assembly_lines_for_production[i]);
@@ -252,27 +252,29 @@ export class SetLineLayoutComponent implements OnInit{
   saveAssemblyLineLayoutInDatabase(){
     let body = <HTMLElement>document.getElementById("body");
     for(let i=1; i<body.children.length; i++){
-      this.__saveSingleLineInDatabase(body.children[i]);
+      this.__saveSingleLineInDatabase(body.children[i], i);
     }
   }
 
-  __saveSingleLineInDatabase(line : Element):void{
+  __saveSingleLineInDatabase(line : Element, index : number):void{
     let lineContent = line.children;
-    let assemblyLineId =  Number(line.id.charAt(line.id.length-1));
+    let assemblyLineId =  parseInt(line.id.charAt(line.id.length-1));
 
     let layoutArr = [];
     for(let i=1; i<lineContent.length; i++) {
       let index = lineContent[i].id;
       layoutArr.push({"machineId": index, "position":i, otherInfo:"None"})
     }
+    console.log("DEBUG: SAVE Assembly LINE: "+assemblyLineId);
 
     let data = {
       "operation": "sall",
       "assemblyLineId": assemblyLineId,
       "layoutArr": layoutArr,
       "userHash": this.accessControlService.getUser().userHash,
-      "LCUserId": sessionStorage.getItem("assignedLCId")
+      "LCUserId": this.boxes[index].lineChiefId
   };
+  
   let url = this.constantsService.SERVER_IP_ADDRESS + "layout";
 
   console.log(data);
