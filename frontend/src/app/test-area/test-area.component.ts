@@ -10,7 +10,7 @@ import { Item } from './Item';
 export class TestAreaComponent implements OnInit{
   productionTarget : number = 200;
   workHour : number = 10;
-  lineProductions : number[] = [];
+  //lineProductions : number[] = [];
 
   items : Item[] = [
     {id:1, name:"AF Plus-1", hourly_production: 20},
@@ -54,7 +54,7 @@ export class TestAreaComponent implements OnInit{
       boxDiv.addEventListener("dragleave", this.dragLeave);
       boxDiv.addEventListener("drop", this.drop);
 
-      this.lineProductions.push(0);
+      //this.lineProductions.push(0);
       const matricesDiv = document.createElement("div");
       //boxDiv.setAttribute("class", "matrices");
       matricesDiv.style.cssText = `
@@ -65,7 +65,7 @@ export class TestAreaComponent implements OnInit{
       margin-bottom: 10px;
       text-align: center
       padding: 10px;`;
-      matricesDiv.innerHTML = this.boxes[i].name + "<br> Production: " + this.lineProductions[i];
+      matricesDiv.innerHTML = this.boxes[i].name + "<br> Production: <span>0</span>" ;//this.lineProductions[i];
       boxDiv.appendChild(matricesDiv);
 
       document.getElementById("body")?.appendChild(boxDiv);
@@ -127,7 +127,14 @@ export class TestAreaComponent implements OnInit{
     console.log(itemHourlyProduction);
     //this.lineProductions[destIdNumber] += itemHourlyProduction;
     let oldProduction = Number((<HTMLElement>document.getElementById("currentProduction")).innerHTML.split(": ")[1]);
-    (<HTMLElement>document.getElementById("currentProduction")).innerHTML = "Current Production: " + (oldProduction+itemHourlyProduction);
+
+    let newProduction = oldProduction;
+    if(sourceIdNumber==1) newProduction += itemHourlyProduction;
+    if(destIdNumber==1) newProduction -= itemHourlyProduction;
+
+    console.log("DEBUG: "+newProduction);
+
+    (<HTMLElement>document.getElementById("currentProduction")).innerHTML = "Current Production: " + newProduction;
   }
 
   updateStats(sourceIdNumber: number, destIdNumber: number, itemIdNumber: number){
