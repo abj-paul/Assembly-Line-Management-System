@@ -7,7 +7,7 @@ const assemblyLines = JSON.parse(sessionStorage.getItem("selectedAssemblyLines")
 
 
 let currentProductionReached = 0;
-let lineProduction = [];
+//let lineProduction = [];
 
 function renderResource(){
     document.getElementById("targetProduction").innerText = "Target Production: "+ targetProduction;

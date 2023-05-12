@@ -3,6 +3,8 @@ import { Route, Router } from '@angular/router';
 import { AssemblyLine } from 'src/app/models/AssemblyLine';
 import { AccessControlService } from 'src/app/services/access-control.service';
 import { ConstantsService } from 'src/app/services/constants.service';
+import { SharedStuffsService } from 'src/app/services/shared-stuffs.service';
+import { Box } from 'src/app/test-area/Box';
 
 @Component({
   selector: 'app-production',
@@ -11,7 +13,7 @@ import { ConstantsService } from 'src/app/services/constants.service';
 })
 export class ProductionComponent implements OnInit{
 
-  constructor(private accessControlService: AccessControlService, private constantsService: ConstantsService, private router: Router){}
+  constructor(private accessControlService: AccessControlService, private constantsService: ConstantsService, private router: Router, private sharedService : SharedStuffsService){}
 
   ngOnInit(): void {
     this.populateAssemblyLineList();
@@ -23,19 +25,27 @@ export class ProductionComponent implements OnInit{
       this.__registerTotalProductionTarget();
       const assignedLCId = (<HTMLInputElement>document.getElementById("assignedLCId")).value;
       sessionStorage.setItem("assignedLCId", assignedLCId);
-      this.router.navigate(["assembly-line-layout-set"]);
+      //this.router.navigate(["assembly-line-layout-set"]);
+      this.router.navigate(["test"]);
+
   }
 
   __registerTotalProductionTarget():void{
     var checkboxes = document.getElementsByName("assemblyLineCheckbox");
-    var checkboxesChecked = [];
     for (var i=0; i<checkboxes.length; i++) {
        if ((<HTMLInputElement>checkboxes[i]).checked) {
-          checkboxesChecked.push({"name": (<HTMLElement>checkboxes[i].nextSibling).innerText, "id": (<HTMLInputElement>checkboxes[i]).value, "capacity": this.assemblyLines[i].capacity});
+          this.sharedService.selected_assembly_lines_for_production.push(
+            {
+              "name": (<HTMLElement>checkboxes[i].nextSibling).innerText,
+              "id": this.assemblyLines[i].assemblyLineId,
+              "capacity": this.assemblyLines[i].capacity,
+              "lineChiefId": ""+this.assemblyLines[i].LCUserId
+            }
+          );
        }
     }
-
-    sessionStorage.setItem("selectedAssemblyLines", JSON.stringify(checkboxesChecked));
+    console.log("DEBUG: Selected lines : "+this.sharedService.selected_assembly_lines_for_production);
+    //sessionStorage.setItem("selectedAssemblyLines", JSON.stringify(checkboxesChecked));
 
     let totalProductionTarget = (<HTMLInputElement>document.getElementById("totalProductionTarget")).value;
     sessionStorage.setItem("totalProductionTarget", totalProductionTarget);

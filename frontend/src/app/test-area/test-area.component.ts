@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Routes } from '@angular/router';
+import { AccessControlService } from '../services/access-control.service';
+import { ConstantsService } from '../services/constants.service';
+import { SharedStuffsService } from '../services/shared-stuffs.service';
 import { Box } from './Box';
 import { Item } from './Item';
 
@@ -12,7 +16,10 @@ export class TestAreaComponent implements OnInit{
   workHour : number = 10;
   //lineProductions : number[] = [];
 
+  constructor(private accessControlService: AccessControlService, private constantsService: ConstantsService, private sharedService : SharedStuffsService){}
+
   items : Item[] = [
+    /*
     {id:1, name:"AF Plus-1", hourly_production: 20},
     {id:2, name:"AF Plus-2", hourly_production: 21},
     {id:3, name:"AF Plus-3", hourly_production: 22},
@@ -23,16 +30,14 @@ export class TestAreaComponent implements OnInit{
     {id:8, name:"AF Plus-8", hourly_production: 27},
     {id:9, name:"AF Plus-9", hourly_production: 28},
     {id:10, name:"AF Plus-10", hourly_production: 29}
+    */
   ];
   boxes : Box[] = [
-    {id:1, name:"box1", capacity:10, lineChiefId:"2"},
-    {id:2, name:"box2", capacity:8, lineChiefId:"3"},
-    {id:3, name:"box3", capacity:13, lineChiefId:"4"}
+    {id:-1, name:"Resource", capacity:1000, lineChiefId:"-1"}
   ];
 
   ngOnInit(): void {
-    this.createBoxes();
-    this.createItems();
+    this.loadMachinesFromBackend();
   }
 
   createBoxes():void{
@@ -135,6 +140,23 @@ export class TestAreaComponent implements OnInit{
     console.log("DEBUG: "+newProduction);
 
     (<HTMLElement>document.getElementById("currentProduction")).innerHTML = "Current Production: " + newProduction;
+
+    // Updating Individual Line Production
+    if(sourceIdNumber!=1){
+      let boxElem = <any>sourceBox;
+      let curr_production = boxElem.firstChild?.lastChild.innerHTML;
+      let new_production = parseInt(curr_production) - itemHourlyProduction;
+      console.log("DEBUG: "+new_production);
+      boxElem.firstChild.lastChild.innerHTML = new_production;
+    }
+    if(destIdNumber!=1){
+      let boxElem = <any>destBox;
+      let curr_production = boxElem.firstChild?.lastChild.innerHTML;
+      let new_production = parseInt(curr_production) + itemHourlyProduction;
+      console.log("DEBUG: "+new_production);
+      boxElem.firstChild.lastChild.innerHTML = new_production;
+    }
+    
   }
 
   updateStats(sourceIdNumber: number, destIdNumber: number, itemIdNumber: number){
@@ -181,4 +203,48 @@ export class TestAreaComponent implements OnInit{
       boxDiv?.appendChild(itemDiv);
     }
   }
+
+  // Regular CRUD Functions
+  loadMachinesFromBackend(){
+    let data = {
+        "operation":"gml",
+        "userHash": this.accessControlService.getUser().userHash
+    }
+    let url = this.constantsService.SERVER_IP_ADDRESS + "productionManager";
+
+
+    fetch(url, {
+        method: "POST", 
+        mode: "cors", 
+        cache: "no-cache", 
+        credentials: "same-origin", 
+        headers: { "Content-Type": "application/json",},
+        redirect: "follow",
+        referrerPolicy: "no-referrer",
+        body: JSON.stringify(data),
+    })
+    .then((resolve)=>{
+            console.log("Get Machine List Request has been resolved!");
+            return resolve.json()
+      })
+    .then((data)=>{
+        console.log(data);
+        let machines = data.MachineList;
+
+        for(let i=0; i<machines.length; i++){
+          this.items.push(
+            {id: machines[i][4], name: machines[i][1], hourly_production: machines[i][3] }
+          );
+        }
+        for(let i=0; i<this.sharedService.selected_assembly_lines_for_production.length; i++) this.boxes.push(this.sharedService.selected_assembly_lines_for_production[i]);
+
+        console.log("DEBUG: Concat boxes: ");
+        console.log(this.boxes);
+        this.createBoxes();
+
+        this.createItems();
+      }
+    )
+  }
+
 }
