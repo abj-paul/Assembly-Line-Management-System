@@ -33,7 +33,7 @@ export class TestAreaComponent implements OnInit{
     */
   ];
   boxes : Box[] = [
-    {id:-1, name:"Resource", capacity:1000, lineChiefId:"-1"}
+    {id:0, name:"Resource", capacity:1000, lineChiefId:"-1"}
   ];
 
   ngOnInit(): void {
@@ -134,22 +134,22 @@ export class TestAreaComponent implements OnInit{
     let oldProduction = Number((<HTMLElement>document.getElementById("currentProduction")).innerHTML.split(": ")[1]);
 
     let newProduction = oldProduction;
-    if(sourceIdNumber==1) newProduction += itemHourlyProduction;
-    if(destIdNumber==1) newProduction -= itemHourlyProduction;
+    if(sourceIdNumber==0) newProduction += itemHourlyProduction;
+    if(destIdNumber==0) newProduction -= itemHourlyProduction;
 
     console.log("DEBUG: "+newProduction);
 
     (<HTMLElement>document.getElementById("currentProduction")).innerHTML = "Current Production: " + newProduction;
 
     // Updating Individual Line Production
-    if(sourceIdNumber!=1){
+    if(sourceIdNumber!=0){
       let boxElem = <any>sourceBox;
       let curr_production = boxElem.firstChild?.lastChild.innerHTML;
       let new_production = parseInt(curr_production) - itemHourlyProduction;
       console.log("DEBUG: "+new_production);
       boxElem.firstChild.lastChild.innerHTML = new_production;
     }
-    if(destIdNumber!=1){
+    if(destIdNumber!=0){
       let boxElem = <any>destBox;
       let curr_production = boxElem.firstChild?.lastChild.innerHTML;
       let new_production = parseInt(curr_production) + itemHourlyProduction;
