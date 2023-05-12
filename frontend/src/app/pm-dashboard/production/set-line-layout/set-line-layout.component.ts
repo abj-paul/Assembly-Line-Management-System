@@ -1,229 +1,272 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { AccessControlService } from 'src/app/services/access-control.service';
-import { ConstantsService } from 'src/app/services/constants.service';
+import { Component, OnInit } from '@angular/core';
+import { Router, Routes } from '@angular/router';
+import { AccessControlService } from '../../../services/access-control.service';
+import { ConstantsService } from '../../../services/constants.service';
+import { SharedStuffsService } from '../../../services/shared-stuffs.service';
+import { Box } from './Box';
+import { Item } from './Item';
 
 @Component({
   selector: 'app-set-line-layout',
   templateUrl: './set-line-layout.component.html',
   styleUrls: ['./set-line-layout.component.css']
 })
-export class SetLineLayoutComponent {
+export class SetLineLayoutComponent implements OnInit{
+  productionTarget : number = 200;
+  workHour : number = 10;
+  //lineProductions : number[] = [];
 
-  targetProduction : any = 0; 
-  machines : any = [];
-  assemblyLines : any = JSON.parse(<string>sessionStorage.getItem("selectedAssemblyLines"));
-  
-  currentProductionReached : number = 0;
-  lineProduction : number[] = [];
+  constructor(private accessControlService: AccessControlService, private constantsService: ConstantsService, private sharedService : SharedStuffsService, private router : Router){}
 
-  constructor(private accessControlService: AccessControlService, private constantsService: ConstantsService, private router: Router){
-    this.targetProduction = sessionStorage.getItem("totalProductionTarget");
-    this.renderResource();
+  items : Item[] = [
+    /*
+    {id:1, name:"AF Plus-1", hourly_production: 20},
+    {id:2, name:"AF Plus-2", hourly_production: 21},
+    {id:3, name:"AF Plus-3", hourly_production: 22},
+    {id:4, name:"AF Plus-4", hourly_production: 23},
+    {id:5, name:"AF Plus-5", hourly_production: 24},
+    {id:6, name:"AF Plus-6", hourly_production: 25},
+    {id:7, name:"AF Plus-7", hourly_production: 26},
+    {id:8, name:"AF Plus-8", hourly_production: 27},
+    {id:9, name:"AF Plus-9", hourly_production: 28},
+    {id:10, name:"AF Plus-10", hourly_production: 29}
+    */
+  ];
+  boxes : Box[] = [
+    {id:0, name:"Resource", capacity:1000, lineChiefId:"-1"}
+  ];
+
+  ngOnInit(): void {
+    this.loadMachinesFromBackend();
   }
 
-  renderResource():void{
+  createBoxes():void{
+    for(let i=0; i<this.boxes.length; i++){
+      let box_bootstrap_col_len = Math.floor(12/this.boxes.length);
+
+      const boxDiv = document.createElement("div");
+      boxDiv.setAttribute("draggable", "true");
+      boxDiv.setAttribute("class", "box col-sm-"+box_bootstrap_col_len);
+      boxDiv.setAttribute("id", "box"+this.boxes[i].id.toString());
+
+      //boxDiv.innerHTML = this.boxes[i].name;
+      boxDiv.style.cssText = `
+      background-color: rgb(255, 230, 198);
+      height: 900px;
+      border: 2px solid black;
+      text-align: center;`;
+
+      boxDiv.addEventListener("dragenter", this.dragEnter);
+      boxDiv.addEventListener("dragover", this.dragOver);
+      boxDiv.addEventListener("dragleave", this.dragLeave);
+      boxDiv.addEventListener("drop", this.drop);
+
+      //this.lineProductions.push(0);
+      const matricesDiv = document.createElement("div");
+      //boxDiv.setAttribute("class", "matrices");
+      matricesDiv.style.cssText = `
+      background-color: yellow;
+      height: 60px;
+      border: 1px solid groove;
+      margin: auto;
+      margin-bottom: 10px;
+      text-align: center
+      padding: 10px;`;
+      matricesDiv.innerHTML = this.boxes[i].name + "<br> Production: <span>0</span>" ;//this.lineProductions[i];
+      boxDiv.appendChild(matricesDiv);
+
+      document.getElementById("body")?.appendChild(boxDiv);
+
+    }
+  }
+
+  dragStart(e: any){
+    console.log("Drag Start");
+    e.dataTransfer.setData("text/plain", e.target.id);
+    //console.log(e.target.parentElement.id);
+    setTimeout(()=>{
+        //e.target.classList.add("hide");
+        e.target.style.cssText = "display:none;";
+    },0);
+  }
+
+  drop(e:any){
+    console.log("DROP");
+    console.log(e);
+
+    let itemId  = e.dataTransfer.getData("text/plain");
+    let item = <HTMLElement>document.getElementById(itemId);
+    let sourceBox = <HTMLElement>item.parentElement;
+  
+    console.log("Moving the item "+itemId);
+    //item.classList.remove("hide");
+    item.style.cssText = `
+    display:block;
+    background-color: gainsboro;
+    height: 60px;
+    border: 1px solid groove;
+    margin: auto;
+    margin-bottom: 10px;
+    text-align: center;`;
+    (<HTMLElement>item.parentNode).removeChild(item);
+    e.target.appendChild(item);
+
+    let boxObjects = document.getElementsByClassName("box");
+    let destBox = null;
+    for(let i=0; i<boxObjects.length; i++){
+        let boxItems = boxObjects[i].children;
+        for(let j=0; j<boxItems.length; j++){
+            if(boxItems[j]==item){
+                destBox = boxObjects[i];
+                break;
+            }
+        }
+        if(destBox!=null) break;
+    }
+
+    // Calculating Stats
+    let sourceIdNumber = Number(sourceBox.id.charAt(sourceBox.id.length-1));
+    let destIdNumber = Number(destBox?.id.charAt(sourceBox.id.length-1));
+    let itemIdNumber = Number(itemId);
+    console.log("Moving item "+itemIdNumber+" from "+sourceIdNumber + " to "+destIdNumber);
+    
+    let itemHourlyProduction = Number(item.innerHTML.split(": ")[1]);
+    console.log(itemHourlyProduction);
+    //this.lineProductions[destIdNumber] += itemHourlyProduction;
+    let oldProduction = Number((<HTMLElement>document.getElementById("currentProduction")).innerHTML.split(": ")[1]);
+
+    let newProduction = oldProduction;
+    if(sourceIdNumber==0) newProduction += itemHourlyProduction;
+    if(destIdNumber==0) newProduction -= itemHourlyProduction;
+
+    console.log("DEBUG: "+newProduction);
+
+    (<HTMLElement>document.getElementById("currentProduction")).innerHTML = "Current Production: " + newProduction;
+
+    // Updating Individual Line Production
+    if(sourceIdNumber!=0){
+      let boxElem = <any>sourceBox;
+      let curr_production = boxElem.firstChild?.lastChild.innerHTML;
+      let new_production = parseInt(curr_production) - itemHourlyProduction;
+      console.log("DEBUG: "+new_production);
+      boxElem.firstChild.lastChild.innerHTML = new_production;
+    }
+    if(destIdNumber!=0){
+      let boxElem = <any>destBox;
+      let curr_production = boxElem.firstChild?.lastChild.innerHTML;
+      let new_production = parseInt(curr_production) + itemHourlyProduction;
+      console.log("DEBUG: "+new_production);
+      boxElem.firstChild.lastChild.innerHTML = new_production;
+    }
+    
+  }
+
+  updateStats(sourceIdNumber: number, destIdNumber: number, itemIdNumber: number){
+   
+  }
+
+
+  dragEnter(e: any){
+    console.log("Drag Enter");
+    e.preventDefault();
+  }
+
+  dragOver(e: any){
+    console.log("Drag Over");
+    e.preventDefault();
+  }
+
+  dragLeave(e: any){
+    console.log("Drag Over");
+    e.preventDefault();
+  }
+
+  createItems(): void {
+    const boxDiv = document.getElementById("box"+this.boxes[0].id.toString());
+
+    for(let i=0; i<this.items.length; i++){
+      const itemDiv = document.createElement("div");
+
+      itemDiv.setAttribute("class", "item");
+      itemDiv.setAttribute("draggable", "true");
+      itemDiv.setAttribute("id", ""+this.items[i].id.toString());
+
+      itemDiv.innerHTML = this.items[i].name + "<br> Hourly Production: "+this.items[i].hourly_production;
+      itemDiv.style.cssText = `
+      background-color: gainsboro;
+      height: 60px;
+      border: 1px solid groove;
+      margin: auto;
+      margin-bottom: 10px;
+      text-align: center;`;
+
+      itemDiv.addEventListener("dragstart",this.dragStart);
+
+      boxDiv?.appendChild(itemDiv);
+    }
+  }
+
+  // Regular CRUD Functions
+  loadMachinesFromBackend(){
     let data = {
         "operation":"gml",
         "userHash": this.accessControlService.getUser().userHash
     }
     let url = this.constantsService.SERVER_IP_ADDRESS + "productionManager";
 
+
     fetch(url, {
         method: "POST", 
         mode: "cors", 
-        cache: "no-cache",
-        credentials: "same-origin",
-        headers: {"Content-Type": "application/json",},
+        cache: "no-cache", 
+        credentials: "same-origin", 
+        headers: { "Content-Type": "application/json",},
         redirect: "follow",
         referrerPolicy: "no-referrer",
         body: JSON.stringify(data),
     })
-        .then((resolve)=>{
+    .then((resolve)=>{
             console.log("Get Machine List Request has been resolved!");
             return resolve.json()
-        })
-        .then((data)=>{
-            console.log(data);
-            this.machines = data.MachineList;
+      })
+    .then((data)=>{
+        console.log(data);
+        let machines = data.MachineList;
 
-            for(let i=0; i<this.machines.length; i++){
-                /*
-                <div class="item" id="item1" draggable="true">
-                    <p>Sewing Machine 1</p>
-                </div>
-                */
-                const div = document.createElement("div");
-                div.setAttribute("class", "item");
-                div.setAttribute("draggable", "true");
-                div.setAttribute("id", this.machines[i][4]);
-                div.addEventListener("dragstart", this.dragStart);
-            
-                const p = document.createElement("p");
-                p.innerHTML = this.machines[i][0] + " <br> Type: " + this.machines[i][1] + " <br> Hourly Production: "+ this.machines[i][3];
-                div.appendChild(p);
-            
-                (<HTMLElement>document.getElementById("resourceBox")).appendChild(div)
-            }
+        for(let i=0; i<machines.length; i++){
+          this.items.push(
+            {id: machines[i][4], name: machines[i][1], hourly_production: machines[i][3] }
+          );
+        }
+        for(let i=0; i<this.sharedService.selected_assembly_lines_for_production.length; i++) this.boxes.push(this.sharedService.selected_assembly_lines_for_production[i]);
 
-            const margin = 11;
-            let newHeight = ((<HTMLElement>document.getElementById("1")).offsetHeight+margin) * (this.machines.length+1);
-            (<HTMLElement>document.getElementById("resourceBox")).style.height = newHeight+"px" ;
+        console.log("DEBUG: Concat boxes: ");
+        console.log(this.boxes);
+        this.createBoxes();
 
-            this.__renderAssemblyLine();
-        })
-        .catch((err)=>{console.log(err);});
-
-}
-
-   __renderAssemblyLine(): void{
-    let div = <HTMLDivElement>document.getElementById("resourceBox");
-    div.setAttribute("draggable", "true");
-    div.addEventListener("dragenter", this.dragEnter);
-    div.addEventListener("dragover", this.dragOver);
-    div.addEventListener("drop", this.drop);
-    div.addEventListener("dragleave", this.dragLeave);
-  
-  for(let i=0; i<this.assemblyLines.length; i++){
-    this.lineProduction.push(0); //initial production
-
-      /*
-      <div class="col-sm-6">
-          <div class="box" id="box2">
-              <div class="matrices">
-                  <p>Assembly Line 1</p>
-                  <p>Current Efficiency: 0</p>
-              </div>
-          </div>
-      </div>
-      */
-
-
-      let div0 = document.createElement("div");
-      div0.setAttribute("class", "col-sm-"+12/this.assemblyLines.length);
-      div0.setAttribute("class", "box"); // ADDED THIS NEW LINE
-      div0.setAttribute("draggable", "true");
-      div0.addEventListener("drop", this.drop);
-      div0.addEventListener("dragenter", this.dragEnter);
-      div0.addEventListener("dragover", this.dragOver);
-      div0.addEventListener("dragleave", this.dragLeave);
-
-      let div1 = document.createElement("div");
-      //div1.setAttribute("class","box");
-      div1.setAttribute("id","box"+i);
-      let div2 = document.createElement("div");
-      div2.setAttribute("class", "matrices");
-
-      let p1 = document.createElement("p");
-      p1.innerText = this.assemblyLines[i].name;
-      let p2 = document.createElement("p");
-      p2.innerText = "Current Production: "+ this.lineProduction[i];
-      let p3 = document.createElement("p");
-      p3.innerText = "Capacity : "+ this.assemblyLines[i].capacity;
-
-      div2.appendChild(p1);
-      div2.appendChild(p2);
-      div2.appendChild(p3);
-      div1.appendChild(div2);
-      div0.appendChild(div1);
-  
-      (<HTMLElement>document.getElementById("assemblyLineGUIPortion")).appendChild(div0);
-  }
-}
-dragStart(e:any):void{
-  e.dataTransfer.setData("text/plain", e.target.id);
-  console.log("Drag Started!");
-  //console.log(e.target.parentElement.id);
-  setTimeout(()=>{
-      e.target.classList.add("hide");
-  },0);
-}
-
-dragEnter(e:any){
-  console.log("Drag Enter");
-  e.preventDefault();
-}
-dragOver(e:any){
-  console.log("Drag Over");
-  e.preventDefault();
-}
-dragLeave(e:any){console.log("Drag Leave");}
-
-drop(e:any):void{
-  console.log("DROPW is being called by");
-
-  let itemId  = e.dataTransfer.getData("text/plain");
-  let item = <HTMLElement>document.getElementById(itemId);
-  let sourceBox = <HTMLElement>item.parentElement;
-
-  console.log("Moving the item "+itemId);
-
-  
-
-  item.classList.remove("hide");
-  (<HTMLElement>item.parentNode).removeChild(item);
-  e.target.appendChild(item);
-
-  // Finding Destination Box
-  let boxObjects = document.getElementsByClassName("box");
-  let destBox = null;
-  for(let i=0; i<boxObjects.length; i++){
-      let boxItems = boxObjects[i].children;
-      for(let j=0; j<boxItems.length; j++){
-          if(boxItems[j]==item){
-              destBox = boxObjects[i];
-              break;
-          }
+        this.createItems();
       }
-      if(destBox!=null) break;
-  }
-  if(destBox==null) destBox = document.getElementById("resourceBox");
-
-
-  // Update Values
-  const itemProductionAmount = this.machines[item.id][3];
-  if(sourceBox.id!="resourceBox") {
-      let index = <number><unknown>sourceBox.id[3];
-      this.lineProduction[index] -= itemProductionAmount;
-      sourceBox.children[0].children[1].innerHTML = "Current Production: "+this.lineProduction[index];
-      sourceBox.children[0].children[2].innerHTML = "Capacity: "+ (this.assemblyLines[index].capacity - sourceBox.children.length + 1);
-      this.currentProductionReached-=itemProductionAmount;
+    )
   }
 
-  if((<HTMLElement>destBox).id!="resourceBox"){
-      let index = <number><unknown>(<HTMLElement>destBox).id[3];
-      this.lineProduction[index] += itemProductionAmount;
-      (<HTMLElement>destBox).children[0].children[1].innerHTML = "Current Production: "+this.lineProduction[index];
-      (<HTMLElement>destBox).children[0].children[2].innerHTML = "Capacity: "+ (this.assemblyLines[index].capacity - (<HTMLElement>destBox).children.length + 1);
-
-      this.currentProductionReached += itemProductionAmount;
+  saveAssemblyLineLayoutInDatabase(){
+    let body = <HTMLElement>document.getElementById("body");
+    for(let i=1; i<body.children.length; i++){
+      this.__saveSingleLineInDatabase(body.children[i]);
+    }
   }
 
-  (<HTMLElement>document.getElementById("currentProduction")).innerText = "Current Production: "+this.currentProductionReached;
+  __saveSingleLineInDatabase(line : Element):void{
+    let lineContent = line.children;
+    let assemblyLineId =  Number(line.id.charAt(line.id.length-1));
 
-}
+    let layoutArr = [];
+    for(let i=1; i<lineContent.length; i++) {
+      let index = lineContent[i].id;
+      layoutArr.push({"machineId": index, "position":i, otherInfo:"None"})
+    }
 
-goBack() : void{
-  this.router.navigate(["/pm-dashboard/production"]);
-}
-
-saveLayout(): void{
-  let boxes = document.getElementsByClassName("box");
-  for(let i=1; i<boxes.length; i++)
-     this.__saveSingleAssemblyLineLayout(boxes[i].id);
-}
-
- __saveSingleAssemblyLineLayout(boxId: string):void{
-  let machineList = (<HTMLElement>document.getElementById(boxId)).children;
-  let layoutArr = []
-  for(let i=1; i<machineList.length; i++){
-      let index = machineList[i].id;
-      layoutArr.push({"machineId": index, "position":i, otherInfo:"None"});
-  }
-
-  let assemblyLineId = this.assemblyLines[boxId[3]].id;
-
-  let data = {
+    let data = {
       "operation": "sall",
       "assemblyLineId": assemblyLineId,
       "layoutArr": layoutArr,
@@ -247,14 +290,18 @@ saveLayout(): void{
       body: JSON.stringify(data), 
   })
       .then((resolve)=>{
-          console.log("Get Machine List Request has been resolved!");
+          console.log("Saving layout Request has been resolved!");
           return resolve.json()
       })
       .then((data)=>{
           console.log(data);
+          this.router.navigate(['/pm-dashboard/production'])
       })
       .catch((err)=>{console.log(err);});
+  }
 
-}
+  goBack(){
+    this.router.navigate(["/pm-dashboard/production"]);
+  }
 
 }

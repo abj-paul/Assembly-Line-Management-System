@@ -4,7 +4,7 @@ import { AssemblyLine } from 'src/app/models/AssemblyLine';
 import { AccessControlService } from 'src/app/services/access-control.service';
 import { ConstantsService } from 'src/app/services/constants.service';
 import { SharedStuffsService } from 'src/app/services/shared-stuffs.service';
-import { Box } from 'src/app/test-area/Box';
+import { Box } from 'src/app/pm-dashboard/production/set-line-layout/Box';
 
 @Component({
   selector: 'app-production',
@@ -23,10 +23,10 @@ export class ProductionComponent implements OnInit{
 
   loadLayoutPage():void{
       this.__registerTotalProductionTarget();
-      const assignedLCId = (<HTMLInputElement>document.getElementById("assignedLCId")).value;
-      sessionStorage.setItem("assignedLCId", assignedLCId);
+      //const assignedLCId = (<HTMLInputElement>document.getElementById("assignedLCId")).value;
+      //sessionStorage.setItem("assignedLCId", assignedLCId);
       //this.router.navigate(["assembly-line-layout-set"]);
-      this.router.navigate(["test"]);
+      this.router.navigate(["set-assembly-line-layout"]);
 
   }
 

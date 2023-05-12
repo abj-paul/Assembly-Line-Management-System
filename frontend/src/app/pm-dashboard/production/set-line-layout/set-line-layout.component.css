@@ -1,0 +1,22 @@
+.box {
+    background-color: rgb(255, 230, 198);
+    height: 900px;
+    border: 2px solid black;
+    text-align: center;
+}
+.item {
+    background-color: gainsboro;
+    height: 60px;
+    border: 1px solid groove;
+    margin: auto;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.hide {
+    /*display: none;*/
+    background-color: red;
+}
+
+#body {
+    background-color: aqua;
+}

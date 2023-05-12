@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SetLineLayoutComponent } from './set-line-layout.component';
 
-describe('SetLineLayoutComponent', () => {
+describe('TestAreaComponent', () => {
   let component: SetLineLayoutComponent;
   let fixture: ComponentFixture<SetLineLayoutComponent>;
 

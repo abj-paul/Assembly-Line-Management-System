@@ -25,8 +25,8 @@ import { AssemblyLineComponent } from './pm-dashboard/assembly-line/assembly-lin
 import { RegisterAssemblyLineComponent } from './pm-dashboard/resource/register-assembly-line/register-assembly-line.component';
 import { SubmitReportComponent } from './supervisor-dashboard/submit-report/submit-report.component';
 import { CongestionComponent } from './congestion/congestion.component';
+import { TestComponent } from './test/test.component';
 import { SetLineLayoutComponent } from './pm-dashboard/production/set-line-layout/set-line-layout.component';
-import { TestAreaComponent } from './test-area/test-area.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +53,7 @@ import { TestAreaComponent } from './test-area/test-area.component';
     SubmitReportComponent,
     CongestionComponent,
     SetLineLayoutComponent,
-    TestAreaComponent
+    TestComponent
   ],
   imports: [
     BrowserModule,

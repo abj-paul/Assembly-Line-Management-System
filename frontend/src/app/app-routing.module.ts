@@ -12,13 +12,13 @@ import { LoginComponent } from './login/login.component';
 import { AssemblyLineComponent } from './pm-dashboard/assembly-line/assembly-line.component';
 import { PmDashboardComponent } from './pm-dashboard/pm-dashboard.component';
 import { ProductionComponent } from './pm-dashboard/production/production.component';
-import { SetLineLayoutComponent } from './pm-dashboard/production/set-line-layout/set-line-layout.component';
+import { TestComponent } from './test/test.component';
 import { ReportsComponent } from './pm-dashboard/reports/reports.component';
 import { ResourceComponent } from './pm-dashboard/resource/resource.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SubmitReportComponent } from './supervisor-dashboard/submit-report/submit-report.component';
 import { SupervisorDashboardComponent } from './supervisor-dashboard/supervisor-dashboard.component';
-import { TestAreaComponent } from './test-area/test-area.component';
+import { SetLineLayoutComponent } from './pm-dashboard/production/set-line-layout/set-line-layout.component';
 import { ViewerComponent } from './viewer/viewer.component';
 
 const routes: Routes = [
@@ -51,8 +51,8 @@ const routes: Routes = [
     {path: "assembly-line", component: AssemblyLineComponent}
   ]},
   {path: "assembly-line", component: ViewerComponent},
-  {path: "assembly-line-layout-set", component: SetLineLayoutComponent},
-  {path: "test", component: TestAreaComponent}
+  {path: "set-assembly-line-layout", component: SetLineLayoutComponent},
+  {path: "test", component: TestComponent}
 ];
 
 @NgModule({

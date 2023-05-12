@@ -1,0 +1,75 @@
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+        <style>
+            #targetProduction {
+                margin-top: 100px;
+
+            }
+            .box{
+                background-color: rgb(51, 29, 2);
+                height: 900px;
+                border: 2px solid black;
+            }
+            .item{
+                background-color: gainsboro;
+                height: 60px;
+                border: 1px solid groove;
+                margin: auto;
+                margin-bottom: 10px;
+            }
+            .hide{
+                display: none;
+            }
+            .matrices{
+                padding: 10px;
+                background-color: cadetblue;
+                margin-bottom: 10px;
+            }
+
+            p{
+                text-align: center;
+            }
+        </style>
+    </head>
+  
+
+
+        <div class="container">
+
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#"> Set Layout</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a (click)="saveLayout()">Save</a></li>
+                    <li><a (click)="goBack()">Go Back</a></li>
+                </ul>
+                </div>
+            </nav>
+
+            <h1 id="targetProduction"> Target Production :  </h1>
+            <h1> Current Production : {{currentProductionReached}} </h1>
+
+
+            <div class="col-sm-4">
+                <div class="box" id="resourceBox">
+                    <div class="matrices">
+                        <p>Resources</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-8">
+
+                <div class="row" id="assemblyLineGUIPortion">
+
+                </div>
+            </div>
+
