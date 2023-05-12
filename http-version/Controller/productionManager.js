@@ -75,13 +75,15 @@ function __serveRequest(req, res){
         const name = body.name;
         const capacity = body.capacity;
         const LCUserId = body.LCUserId;
+        const createdBy = body.createdBy;
         const otherInfo = body.otherInfo;
-        assemblyLine.registerAssemblyLine(name, capacity, LCUserId, otherInfo)
+        assemblyLine.registerAssemblyLine(name, capacity, LCUserId, createdBy, otherInfo)
         .then((data)=>{
             res.status(200).send({"RegisteredAssemblyLineId":data.insertId});
         });
     }else if(operationType == constants.GET_ASSEMBLY_LINE_LIST){
-        assemblyLine.getAssemblyLineList()
+        const userid = body.userid;
+        assemblyLine.getAssemblyLineList(userid)
         .then((data)=>{
             console.log("GALL request resolved!");
             res.status(200).send({"AssemblyLineList": data});

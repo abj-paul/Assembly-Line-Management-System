@@ -10,6 +10,7 @@ import { ConstantsService } from 'src/app/services/constants.service';
   styleUrls: ['./register-assembly-line.component.css']
 })
 export class RegisterAssemblyLineComponent {
+  //floor : number = 0;
   constructor(private contantsService: ConstantsService, private accessControlService: AccessControlService){}
 
   registerAssemblyLine():void{
@@ -24,6 +25,7 @@ export class RegisterAssemblyLineComponent {
         "name": name,
         "capacity": capacity,
         "LCUserId": LCUserId,
+        "createdBy": this.accessControlService.getUser().userid,
         "otherInfo": otherInfo,
         "userHash":this.accessControlService.getUser().userHash
     }

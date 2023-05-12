@@ -31,6 +31,7 @@ async function __createAssemblyLineTable(){
     name varchar(300) NOT NULL,
     capacity int NOT NULL,
     LCUserId int,
+    createdBy int,
     otherInfo varchar(300),
     CONSTRAINT fk_machine FOREIGN KEY (LCUserId) REFERENCES user(userid)  
         ON DELETE CASCADE
@@ -82,9 +83,9 @@ async function __createAssemblyLineLayoutTable(){
     
 }
 
-async function registerAssemblyLine(name, capacity, LCUserId, otherInfo){
+async function registerAssemblyLine(name, capacity, LCUserId, createdBy, otherInfo){
     return new Promise((resolve, reject)=>{
-        const sql_query = "INSERT into assemblyLine(name, capacity, LCUserId, otherInfo) values('"+name+"', "+capacity+","+ LCUserId +", '"+otherInfo+"');";
+        const sql_query = "INSERT into assemblyLine(name, capacity, LCUserId, createdBy, otherInfo) values('"+name+"', "+capacity+","+ LCUserId +","+ createdBy +", '"+otherInfo+"');";
         connection.query(sql_query, (err, results, fields)=>{
             if(err) {
                 reject(err);
@@ -160,9 +161,9 @@ async function getAssemblyLineLayout(assemblyLineId){
     );
 }
 
-async function getAssemblyLineList(){
+async function getAssemblyLineList(PMuserid){
     return new Promise((resolve, reject)=>{
-        const sql_query = " SELECT * FROM assemblyLine";
+        const sql_query = " SELECT * FROM assemblyLine where createdBy="+PMuserid;
         connection.query(sql_query, (err, results, fields)=>{
             if(err) {
                 reject(err);

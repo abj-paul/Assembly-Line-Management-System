@@ -57,6 +57,7 @@ export class ProductionComponent implements OnInit{
 
     let data = {
         "operation":"gallist",
+        "userid": this.accessControlService.getUser().userid,
         "userHash":this.accessControlService.getUser().userHash
     }
     let url = this.constantsService.SERVER_IP_ADDRESS + "productionManager";
