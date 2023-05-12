@@ -42,9 +42,11 @@ export class TestAreaComponent implements OnInit{
 
   createBoxes():void{
     for(let i=0; i<this.boxes.length; i++){
+      let box_bootstrap_col_len = 12/this.boxes.length;
+
       const boxDiv = document.createElement("div");
       boxDiv.setAttribute("draggable", "true");
-      boxDiv.setAttribute("class", "box col-sm-4");
+      boxDiv.setAttribute("class", "box col-sm-"+box_bootstrap_col_len);
       boxDiv.setAttribute("id", "box"+this.boxes[i].id.toString());
 
       //boxDiv.innerHTML = this.boxes[i].name;
