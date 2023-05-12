@@ -49,5 +49,33 @@ async function getUnusedMachineList(){
     );
 }
 
+async function getAssignedLineIdForLineChief(userId){
+    return new Promise((resolve, reject)=>{
+        const sql_query = "SELECT * FROM user, assemblyLine WHERE user.userid = assemblyLine.LCUserId and user.userid="+userId;
+        connection.query(sql_query, (err, results, fields)=>{
+            if(err) {
+                reject(err);
+            }
+            resolve(results);
+        });
+    }
+    );
+}
 
-module.exports = {getLCAndTheirLines, getMachineAndAssemblyLineItIsAddedTo, getUnusedMachineList}
+async function get_assembly_line_layout_for_given_line_id(lineId){
+    return new Promise((resolve, reject)=>{
+        const sql_query = " SELECT distinct * FROM assemblyLineLayout, assemblyLine, machine where assemblyLine.assemblyLineId = assemblyLineLayout.assemblyLineId and machine.machineId = assemblyLineLayout.machineId and assemblyLine.assemblyLineId="+lineId;
+        connection.query(sql_query, (err, results, fields)=>{
+            if(err) {
+                reject(err);
+            }
+            resolve(results);
+        });
+    }
+    );
+}
+
+
+
+
+module.exports = {getLCAndTheirLines, getMachineAndAssemblyLineItIsAddedTo, getUnusedMachineList, getAssignedLineIdForLineChief, get_assembly_line_layout_for_given_line_id}

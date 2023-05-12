@@ -6,6 +6,7 @@ const session = require("../Model/session.js");
 const userHashLib = require("../Controller/userHash.js");
 const notification = require("../Model/notification.js");
 const assemblyLine = require("../Model/assembly-line-layoud.model.js");
+const combinationQuery = require("../Model/combinations.query.js");
 
 
 function handlePostRequestToLineChief(req, res){
@@ -62,6 +63,22 @@ function __serveRequest(req, res){
         })
     }else if(operationType == constants.PING){
         res.status(200).send({"Access": "OK"});
+    }else if(operationType==constants.GET_ASSIGNED_LINE_ID){
+        const userId = body.userid;
+        combinationQuery.getAssignedLineIdForLineChief(userId)
+        .then((data)=>{
+            console.log("DEBUG: AssignedAssemblyLineId: ");
+            console.log(data[0].assemblyLineId);
+            res.status(200).send({"AssignedAssemblyLineId": data[0].assemblyLineId});
+        })
+    }else if(operationType==constants.GET_LAYOUT_FOR_GIVEN_LINEID){
+        const lineId = body.lineId;
+        combinationQuery.get_assembly_line_layout_for_given_line_id(lineId)
+        .then((data)=>{
+            console.log("DEBUG: Layout for "+lineId);
+            console.log(data);
+            res.status(200).send({"Layout": data});
+        })
     }
 }
 

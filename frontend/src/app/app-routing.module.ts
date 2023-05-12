@@ -22,6 +22,7 @@ import { SetLineLayoutComponent } from './pm-dashboard/production/set-line-layou
 import { ViewerComponent } from './viewer/viewer.component';
 import { RegisterAssemblyLineComponent } from './pm-dashboard/resource/register-assembly-line/register-assembly-line.component';
 import { RegisterMachineComponent } from './pm-dashboard/resource/register-machine/register-machine.component';
+import { ViewLineComponent } from './lc-dashboard/view-line/view-line.component';
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
@@ -45,7 +46,7 @@ const routes: Routes = [
   ]},
   {path: "lc-dashboard", component: LcDashboardComponent, children: [
     {path: "profile", component: ProfileComponent},
-    {path: "congestion", component: CongestionComponent},
+    {path: "congestion", component: ViewLineComponent},
     {path: "reports", component: ReportsComponent},
     {path: "assembly-line", component: AssemblyLineComponent}
   ]},

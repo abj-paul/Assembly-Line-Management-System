@@ -30,6 +30,7 @@ import { SetLineLayoutComponent } from './pm-dashboard/production/set-line-layou
 import { ViewAssemblyLinesComponent } from './pm-dashboard/resource/view-assembly-lines/view-assembly-lines.component';
 import { RegisterMachineComponent } from './pm-dashboard/resource/register-machine/register-machine.component';
 import { ViewMachineListComponent } from './pm-dashboard/resource/view-machine-list/view-machine-list.component';
+import { ViewLineComponent } from './lc-dashboard/view-line/view-line.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { ViewMachineListComponent } from './pm-dashboard/resource/view-machine-l
     TestComponent,
     ViewAssemblyLinesComponent,
     RegisterMachineComponent,
-    ViewMachineListComponent
+    ViewMachineListComponent,
+    ViewLineComponent
   ],
   imports: [
     BrowserModule,

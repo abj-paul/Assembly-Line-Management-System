@@ -16,7 +16,7 @@ export class LcDashboardComponent implements OnInit{
     this.navbarServie.setNavItems(
       [
         {itemName: "Profile", routerLink:"/lc-dashboard/profile"},
-        {itemName: "Congestion", routerLink:"/lc-dashboard/line-control"},
+        {itemName: "Congestion", routerLink:"/lc-dashboard/congestion"},
         {itemName: "Reports", routerLink:"/lc-dashboard/reports"},
         {itemName: "Assembly Line", routerLink:"/assembly-line"}
       ]
