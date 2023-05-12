@@ -32,6 +32,8 @@ export class ProductionComponent implements OnInit{
 
   __registerTotalProductionTarget():void{
     var checkboxes = document.getElementsByName("assemblyLineCheckbox");
+
+    this.sharedService.selected_assembly_lines_for_production = [];
     for (var i=0; i<checkboxes.length; i++) {
        if ((<HTMLInputElement>checkboxes[i]).checked) {
           this.sharedService.selected_assembly_lines_for_production.push(
