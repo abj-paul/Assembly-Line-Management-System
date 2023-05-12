@@ -90,14 +90,14 @@ function __serveRequest(req, res){
         const productName = body.productName;
         const totalProductionTarget = body.totalProductionTarget;
         const designFileId = body.designFileId;
-        const floorNumber = body.floorNumber;
+        //const floorNumber = body.floorNumber;
 
         production.startNewProduction(productName, totalProductionTarget, designFileId)
         .then((data)=>{
             res.status(200).send({"ProductionId": data.insertId});
             console.log("Started production for "+productName);
 
-            floor.register_new_production(floorNumber, data.insertId);
+            //floor.register_new_production(floorNumber, data.insertId);
         })
         .catch((err)=>{console.log(err);})
     }else if(operationType==constants.UPDATE_ASEMBLY_LINE_INFO){
