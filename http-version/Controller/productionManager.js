@@ -7,6 +7,8 @@ const userHashLib = require("../Controller/userHash.js");
 const notification = require("../Model/notification.js");
 const assemblyLine = require("../Model/assembly-line-layoud.model.js");
 const production = require("../Model/production.model.js");
+const floor = require("../Model/floor.model.js");
+const combinationQuery = require("../Model/combinations.query.js");
 
 
 function handlePostRequestToProductionManager(req, res){
@@ -72,27 +74,59 @@ function __serveRequest(req, res){
     }else if(operationType == constants.REGISTER_ASSEMBLY_LINE){
         const name = body.name;
         const capacity = body.capacity;
+        const LCUserId = body.LCUserId;
         const otherInfo = body.otherInfo;
-        assemblyLine.registerAssemblyLine(name, capacity, otherInfo)
+        assemblyLine.registerAssemblyLine(name, capacity, LCUserId, otherInfo)
         .then((data)=>{
             res.status(200).send({"RegisteredAssemblyLineId":data.insertId});
         });
     }else if(operationType == constants.GET_ASSEMBLY_LINE_LIST){
         assemblyLine.getAssemblyLineList()
         .then((data)=>{
+            console.log("GALL request resolved!");
             res.status(200).send({"AssemblyLineList": data});
         })
     }else if(operationType == constants.START_NEW_PRODUCTION){
         const productName = body.productName;
         const totalProductionTarget = body.totalProductionTarget;
         const designFileId = body.designFileId;
+        const floorNumber = body.floorNumber;
 
         production.startNewProduction(productName, totalProductionTarget, designFileId)
         .then((data)=>{
             res.status(200).send({"ProductionId": data.insertId});
             console.log("Started production for "+productName);
+
+            floor.register_new_production(floorNumber, data.insertId);
         })
         .catch((err)=>{console.log(err);})
+    }else if(operationType==constants.UPDATE_ASEMBLY_LINE_INFO){
+        const name = body.name;
+        const capacity = body.capacity;
+        const LCUserId = body.LCUserId;
+        const otherInfo = body.otherInfo;
+        const assemblyLineId = body.assemblyLineId;
+
+        assemblyLine.update_line_info(assemblyLineId, name, capacity, LCUserId, otherInfo)
+        .then((data)=>{
+            res.status(200).send({"Update Line Info Status": "Successful!"});
+        });
+    }else if(operationType==constants.DELETE_ASEMBLY_LINE){
+        const name = body.name;
+        const capacity = body.capacity;
+        const LCUserId = body.LCUserId;
+        const otherInfo = body.otherInfo;
+        const assemblyLineId = body.assemblyLineId;
+        
+        assemblyLine.delete_assembly_line(assemblyLineId, name, capacity, LCUserId, otherInfo)
+        .then((data)=>{
+            res.status(200).send({"Assembly Line Deletion Status": "Successful!"});
+        });
+    }else if(operationType==constants.GET_LINE_CHIEF_AND_ASSIGNED_LINE){
+        combinationQuery.getLCAndTheirLines()
+        .then((data)=>{
+            res.status(200).send({"LCANDLINES": data});
+        });
     }
 }
 
@@ -115,4 +149,4 @@ async function login(req, res){
  
 }
 
-module.exports = {handlePostRequestToProductionManager}
+module.exports = { handlePostRequestToProductionManager }

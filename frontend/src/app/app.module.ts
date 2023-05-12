@@ -27,6 +27,9 @@ import { SubmitReportComponent } from './supervisor-dashboard/submit-report/subm
 import { CongestionComponent } from './congestion/congestion.component';
 import { TestComponent } from './test/test.component';
 import { SetLineLayoutComponent } from './pm-dashboard/production/set-line-layout/set-line-layout.component';
+import { ViewAssemblyLinesComponent } from './pm-dashboard/resource/view-assembly-lines/view-assembly-lines.component';
+import { RegisterMachineComponent } from './pm-dashboard/resource/register-machine/register-machine.component';
+import { ViewMachineListComponent } from './pm-dashboard/resource/view-machine-list/view-machine-list.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +56,10 @@ import { SetLineLayoutComponent } from './pm-dashboard/production/set-line-layou
     SubmitReportComponent,
     CongestionComponent,
     SetLineLayoutComponent,
-    TestComponent
+    TestComponent,
+    ViewAssemblyLinesComponent,
+    RegisterMachineComponent,
+    ViewMachineListComponent
   ],
   imports: [
     BrowserModule,

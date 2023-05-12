@@ -31,8 +31,8 @@ function __serveRequest(req, res){
             res.status(200).send({"SaveOperation": data});
             notifications.__notify(body.LCUserId, "PM has set the layout for assembly line "+assemblyLineId);
         });
-
-
+    }else if(operationType==constants.GET_ASSEMBLY_LINE_LIST_FOR_PRODUCTIONID){
+        
     }
 }
 

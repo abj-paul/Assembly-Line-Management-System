@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { LCANDLINES } from 'src/app/models/LCANDLINES';
 import { AccessControlService } from 'src/app/services/access-control.service';
 import { ConstantsService } from 'src/app/services/constants.service';
 
@@ -7,22 +8,20 @@ import { ConstantsService } from 'src/app/services/constants.service';
   templateUrl: './resource.component.html',
   styleUrls: ['./resource.component.css']
 })
-export class ResourceComponent {
+export class ResourceComponent implements OnInit{
+  lineChiefAndLines : LCANDLINES[] = [];
+
   constructor(private accessControlService: AccessControlService, private constantsService: ConstantsService){}
 
-  registerResouce(): void{
-    const machineModel = (<HTMLInputElement>document.getElementById("machineModelId")).value;
-    const machineType = (<HTMLInputElement>document.getElementById("machineType")).value;
-    const otherInfo = (<HTMLInputElement>document.getElementById("otherInfo")).value;
-    const perHourProduction = (<HTMLInputElement>document.getElementById("perHourProduction")).value;
+  ngOnInit(): void {
+    this.loadLinesAndLineChiefsFromBackend();
+  }
 
+  
+  loadLinesAndLineChiefsFromBackend(){
     let data = {
-        "operation": "rm",
-        "machineModel": machineModel,
-        "machineType": machineType,
-        "otherInfo": otherInfo,
-        "perHourProduction": perHourProduction,
-        "userHash":this.accessControlService.getUser().userHash
+        "operation":"glcaal",
+        "userHash": this.accessControlService.getUser().userHash
     }
     let url = this.constantsService.SERVER_IP_ADDRESS + "productionManager";
 
@@ -32,22 +31,34 @@ export class ResourceComponent {
         mode: "cors", 
         cache: "no-cache", 
         credentials: "same-origin", 
-        headers: {"Content-Type": "application/json",},
-        redirect: "follow", 
-        referrerPolicy: "no-referrer", 
-        body: JSON.stringify(data), 
+        headers: { "Content-Type": "application/json",},
+        redirect: "follow",
+        referrerPolicy: "no-referrer",
+        body: JSON.stringify(data),
     })
-        .then((resolve)=>{
-        console.log("Register Resource Request has been resolved!");
-        return resolve.json()
-        })
-        .then((data)=>{
-            console.log(data);
-            (<HTMLElement>document.getElementById("resourceRegistrationStatus")).innerText = "Status: Successfully machine "+data.MachineId;
-        })
-        .catch((err)=>{
-        console.log(err);
-        });
-}
+    .then((resolve)=>{
+            console.log("Get Assembly Line List Request has been resolved!");
+            return resolve.json()
+      })
+    .then((data)=>{
+        console.log(data);
+        let LCANDLINES = data.LCANDLINES;
 
+        for(let i=0; i<LCANDLINES.length; i++){
+          this.lineChiefAndLines.push(
+            {
+              userid : LCANDLINES[i].userid,
+              username : LCANDLINES[i].username,
+              assemblyLineId : LCANDLINES[i].assemblyLineId,
+              assemblyLineName : LCANDLINES[i].name,
+              capacity : LCANDLINES[i].capacity
+            }
+          );
+        }
+      }
+    )
+    .catch((err)=>{
+      console.log(err);
+    })
+  }
 }

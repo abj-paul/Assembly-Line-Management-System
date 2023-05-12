@@ -20,6 +20,7 @@ import { SubmitReportComponent } from './supervisor-dashboard/submit-report/subm
 import { SupervisorDashboardComponent } from './supervisor-dashboard/supervisor-dashboard.component';
 import { SetLineLayoutComponent } from './pm-dashboard/production/set-line-layout/set-line-layout.component';
 import { ViewerComponent } from './viewer/viewer.component';
+import { RegisterAssemblyLineComponent } from './pm-dashboard/resource/register-assembly-line/register-assembly-line.component';
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
@@ -37,7 +38,8 @@ const routes: Routes = [
     {path: "production", component: ProductionComponent},
     {path: "resources", component: ResourceComponent},
     {path: "reports", component: ReportsComponent},
-    {path: "assembly-line", component: AssemblyLineComponent}
+    {path: "assembly-line", component: AssemblyLineComponent},
+    {path: "register-assembly-line", component: RegisterAssemblyLineComponent}
   ]},
   {path: "lc-dashboard", component: LcDashboardComponent, children: [
     {path: "profile", component: ProfileComponent},

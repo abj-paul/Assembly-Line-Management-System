@@ -1,0 +1,33 @@
+
+<div class="row" id="registerResource">
+    <div class="p-5 text-center bg-light">
+        <h4 class="mb-3">Register Machine</h4>
+    </div>
+
+    <div class="form-group">
+        <label for="machineType">Type of Machine:</label>
+        <select class="form-control" id="machineType">
+            <option value="sewingMachine">Sewing Machine</option>
+            <option value="assemblyTable">Assembly Table</option>
+            <option value="doubleSewMachine">Double Sew Machine</option>
+        </select>
+    </div> 
+
+    <div class="form-group">
+        <label for="machineModelId">Machine Model:</label>
+        <input type="text" class="form-control" id="machineModelId">
+    </div>
+    <div class="form-group">
+        <label for="perHourProduction">Production Per Hour(Unit-Cloth):</label>
+        <input type="number" class="form-control" id="perHourProduction">
+    </div>
+    <div class="form-group">
+        <label for="otherInfo">Other Information:</label>
+        <input type="text" class="form-control" id="otherInfo">
+    </div>
+
+    <button type="submit" class="btn btn-primary" (click)="registerResouce()">Submit</button>
+    <span id="resourceRegistrationStatus"></span>
+
+    <h1>See Machine List</h1>
+</div>

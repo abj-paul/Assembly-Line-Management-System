@@ -82,15 +82,41 @@ async function __createAssemblyLineLayoutTable(){
     
 }
 
-async function registerAssemblyLine(name, capacity, otherInfo){
+async function registerAssemblyLine(name, capacity, LCUserId, otherInfo){
     return new Promise((resolve, reject)=>{
-        const sql_query = "INSERT into assemblyLine(name, capacity, otherInfo) values('"+name+"', "+capacity+", '"+otherInfo+"');";
+        const sql_query = "INSERT into assemblyLine(name, capacity, LCUserId, otherInfo) values('"+name+"', "+capacity+","+ LCUserId +", '"+otherInfo+"');";
         connection.query(sql_query, (err, results, fields)=>{
             if(err) {
                 reject(err);
             }
-            //TODO: Notify Supervisor,LC on new assembly line addition.
-            //notification.__notify(, "");
+            notification.__notify(LCUserId, "You have been assigned Assembly Line "+name+"! Please work hard for the company~!");
+            resolve(results);
+        });
+    }
+    );
+}
+
+async function update_line_info(assemblyLineId, name, capacity, LCUserId, otherInfo){
+    return new Promise((resolve, reject)=>{
+        const sql_query = "UPDATE assemblyLine SET name='"+name+"', capacity="+capacity+", LCUserId="+LCUserId+", otherInfo='"+otherInfo+"' where assemblyLineId="+assemblyLineId+";";
+        connection.query(sql_query, (err, results, fields)=>{
+            if(err) {
+                reject(err);
+            }
+            notification.__notify(LCUserId, "Your assembly line information was updated by Production Manager.");
+            resolve(results);
+        });
+    }
+    );
+}
+async function delete_assembly_line(assemblyLineId, name, capacity, LCUserId, otherInfo){
+    return new Promise((resolve, reject)=>{
+        const sql_query = "DELETE FROM assemblyLine where assemblyLineId="+assemblyLineId;
+        connection.query(sql_query, (err, results, fields)=>{
+            if(err) {
+                reject(err);
+            }
+            notification.__notify(LCUserId, "Your assembly line "+ name +" was deleted by Production Manager.");
             resolve(results);
         });
     }
@@ -184,4 +210,4 @@ async function assignLC(assemblyLineId, LCUserId){
     });
 }
 
-module.exports = { registerAssemblyLine, __createAssemblyLineTable, __createAssemblyLineLayoutTable, __saveAssemblyLineLayoutEntry, saveAssemblyLineLayout, getAssemblyLineLayout, getAssemblyLineList, assignLC}
+module.exports = { registerAssemblyLine, __createAssemblyLineTable, __createAssemblyLineLayoutTable, __saveAssemblyLineLayoutEntry, saveAssemblyLineLayout, getAssemblyLineLayout, getAssemblyLineList, assignLC, update_line_info, delete_assembly_line}

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { AssemblyLine } from 'src/app/models/AssemblyLine';
 import { AccessControlService } from 'src/app/services/access-control.service';
 import { ConstantsService } from 'src/app/services/constants.service';
+
 
 @Component({
   selector: 'app-register-assembly-line',
@@ -13,12 +15,15 @@ export class RegisterAssemblyLineComponent {
   registerAssemblyLine():void{
     const name = (<HTMLInputElement>document.getElementById("nameAssemblyLine")).value;
     const otherInfo = (<HTMLInputElement>document.getElementById("otherInfo")).value;
+    const LCUserId = (<HTMLInputElement>document.getElementById("LCUserId")).value;
     const capacity = (<HTMLInputElement>document.getElementById("capacity")).value;
+  
 
     let data = {
         "operation": "ral",
         "name": name,
         "capacity": capacity,
+        "LCUserId": LCUserId,
         "otherInfo": otherInfo,
         "userHash":this.accessControlService.getUser().userHash
     }
@@ -47,6 +52,6 @@ export class RegisterAssemblyLineComponent {
         .catch((err)=>{
           console.log(err);
         });
-
   }
+
 }

@@ -1,35 +1,22 @@
 
-<app-register-assembly-line></app-register-assembly-line>
+<app-view-assembly-lines></app-view-assembly-lines>
 
-<div class="row" id="registerResource">
-    <div class="p-5 text-center bg-light">
-        <h4 class="mb-3">Register Machine</h4>
-    </div>
-
-    <div class="form-group">
-        <label for="machineType">Type of Machine:</label>
-        <select class="form-control" id="machineType">
-            <option value="sewingMachine">Sewing Machine</option>
-            <option value="assemblyTable">Assembly Table</option>
-            <option value="doubleSewMachine">Double Sew Machine</option>
-        </select>
-    </div> 
-
-    <div class="form-group">
-        <label for="machineModelId">Machine Model:</label>
-        <input type="text" class="form-control" id="machineModelId">
-    </div>
-    <div class="form-group">
-        <label for="perHourProduction">Production Per Hour(Unit-Cloth):</label>
-        <input type="number" class="form-control" id="perHourProduction">
-    </div>
-    <div class="form-group">
-        <label for="otherInfo">Other Information:</label>
-        <input type="text" class="form-control" id="otherInfo">
-    </div>
-
-    <button type="submit" class="btn btn-primary" (click)="registerResouce()">Submit</button>
-    <span id="resourceRegistrationStatus"></span>
-
-    <h1>See Machine List</h1>
+<div class="row">
+    <p class="header">Line Chiefs & Their Lines</p>
+    <table class="table table-primary table-striped bg-light">
+        <tr>
+            <th>User Id</th>
+            <th>Line Chief Name</th>
+            <th>Assigned Line</th>
+            <th>Line Capacity</th>
+        </tr>
+        <tr *ngFor="let x of lineChiefAndLines">
+            <td>{{x.userid}}</td>
+            <td>{{x.username}}</td>
+            <td>{{x.assemblyLineName}}</td>
+            <td>{{x.capacity}}</td>
+        </tr>
+    </table>
 </div>
+
+<app-view-machine-list></app-view-machine-list>

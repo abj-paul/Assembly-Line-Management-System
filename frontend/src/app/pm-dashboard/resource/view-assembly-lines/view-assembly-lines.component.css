@@ -1,0 +1,18 @@
+.header{
+    padding: 50px;
+    text-align: center;
+    font-size: 20px;
+    color:darkcyan;
+}
+
+th, tr{
+    text-align: center;
+}
+
+input{
+    width: 150px;
+}
+
+.actionColumn{
+    width: 200px;
+}

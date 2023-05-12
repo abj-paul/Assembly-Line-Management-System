@@ -1,0 +1,37 @@
+
+<div class="header">
+    Registered Assembly Lines
+</div>
+<table class="table table-striped bg-light">
+    <tr>
+        <th> Id </th>
+        <th> Line Name </th>
+        <th> Capacity </th>
+        <th> Line Chief(TODO) </th>
+        <th> General Info </th>
+        <th class="actionColumn"> Action </th>
+    </tr>
+
+    <tr *ngFor="let line of assembly_lines; let i = index" [attr.data-index]="i">
+        <td *ngIf="isUpdating(line)==false">{{line.assemblyLineId}}</td>
+        <td *ngIf="isUpdating(line)==false">{{line.name}}</td>
+        <td *ngIf="isUpdating(line)==false">{{line.capacity}}</td>
+        <td *ngIf="isUpdating(line)==false"> {{line.LCUserId}} </td>
+        <td *ngIf="isUpdating(line)==false">{{line.other_info}}</td>
+        <td *ngIf="processHappening==false" class="actionColumn">
+            <button (click)="editInfo(line)"> Edit </button>
+            <button (click)="deleteInfo(line)"> Delete </button>
+        </td>
+
+        <td *ngIf="isUpdating(line)==true"><input type="number" name="assemblyLineId" [(ngModel)]="assemblyLineId" placeholder={{lineInProcess.assemblyLineId}}></td>
+        <td *ngIf="isUpdating(line)==true"><input type="text" name="name" [(ngModel)]="name" placeholder={{lineInProcess.name}}></td>
+        <td *ngIf="isUpdating(line)==true"><input type="number" name="capacity" [(ngModel)]="capacity" placeholder={{lineInProcess.capacity}}></td>
+        <td *ngIf="isUpdating(line)==true"><input type="text" name="LCUserId" [(ngModel)]="LCUserId"></td> 
+        <td *ngIf="isUpdating(line)==true"><input type="text" name="other_info" [(ngModel)]="other_info" placeholder={{lineInProcess.other_info}}></td> 
+        <td *ngIf="processHappening==true" class="actionColumn">
+            <button (click)="confirmChange()"> Confirm </button>
+        </td>
+    </tr>
+</table>
+
+<button [routerLink]="['/pm-dashboard/register-assembly-line']"> Register New Assembly Line</button>

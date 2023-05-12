@@ -20,7 +20,7 @@ const supervisorController = require("./Controller/supervisor.controller.js");
 const production = require("./Model/production.model.js");
 const session = require("./Model/session.js");
 const fastAPIConnection = require("./Model/congestion.algorithm.js");
-
+const floor = require("./Model/floor.model.js")
 
 
 normal_start_database();
@@ -59,7 +59,7 @@ function wait(ms){
 
 
 async function clearDatabases(){
-    admin.startDatabase();
+  admin.startDatabase();
 
 await admin.__deleteTable("notification");
 await admin.__deleteTable("assemblyLineLayout");
@@ -70,7 +70,8 @@ await admin.__deleteTable("machine");
 await admin.__deleteTable("session");
 
 
-await     admin.__createAdminUser();
+await admin.startDatabase();
+await admin.__createAdminUser();
 
 await session.__createSessionTable();
 await machine.__createMachineTable();
@@ -79,6 +80,8 @@ await production.__createProductionTable();
 await assemblyLine.__createAssemblyLineTable();
 await assemblyLine.__createAssemblyLineLayoutTable();
 await report.__createProductionReportTable();
+//await floor.create_floor_table();
+
 }
 
 
@@ -92,4 +95,6 @@ async function normal_start_database(){
     await assemblyLine.__createAssemblyLineTable();
     await assemblyLine.__createAssemblyLineLayoutTable();
     await report.__createProductionReportTable();
+    //await floor.create_floor_table();
+
 }
