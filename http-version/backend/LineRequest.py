@@ -7,3 +7,8 @@ class LineRequest(BaseModel):
 class LineResponse(BaseModel):
     congestion_statuses: list = []
     line_id: int = 0
+
+class CongestionStatus(BaseModel):
+    imageFileUrl : str = ""
+    congestionStatus: bool = False
+    machineId: int = 0

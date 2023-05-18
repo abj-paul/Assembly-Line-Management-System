@@ -29,6 +29,8 @@ normal_start_database();
 
 // IMAGE SUPPORT START---------------------------------------------------------------------
 const IMAGE_DIR = "./data/profile/";
+const CONGESTION_DATA_DIR = "./congestion-dataset/";
+
 const multer = require("multer");
 const path = require("path");
 
@@ -50,7 +52,9 @@ console.log("dEBUG: "+path.join(__dirname, IMAGE_DIR));
 const upload = multer({ storage });
 
 app.use(express.json()); 
-app.use("/profile", express.static(path.join(__dirname, IMAGE_DIR))); //http://localhost:1401/profile/1684422440449.png
+app.use("/profile", express.static(path.join(__dirname, IMAGE_DIR))); //http://localhost:1401/congestion/image/machine3/frame0.jpg
+app.use("/congestion/image", express.static(path.join(__dirname, CONGESTION_DATA_DIR))); 
+
 
 // Handle POST request for image upload
 app.use(upload.single("profile"));

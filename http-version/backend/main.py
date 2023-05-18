@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from LineRequest import LineRequest
+from LineRequest import CongestionStatus, LineRequest
 from LineRequest import LineResponse
 from camera import *
 from nmf import *
@@ -25,4 +25,19 @@ def line_congestion_status(lineRequest:LineRequest):
         img_path = getLatestImageForWorkstation(machineId)
 
         arr.append(getCongestionStatusForImage(img_path))
+    return arr
+
+@app.post("/congestion_status/line/image/", response_model=list[CongestionStatus])
+def line_congestion_status_with_image(lineRequest:LineRequest):
+    arr = []
+    print(lineRequest)
+    for machineId in lineRequest.machine_list:
+        createFolderForWorkstation(machineId)
+        img_path = getLatestImageForWorkstation(machineId)
+
+        arr.append({
+            "imageFileUrl": img_path,
+            "congestionStatus": getCongestionStatusForImage(img_path),
+            "machineId": machineId
+            })
     return arr
