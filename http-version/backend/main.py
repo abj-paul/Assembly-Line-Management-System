@@ -36,7 +36,7 @@ def line_congestion_status_with_image(lineRequest:LineRequest):
         img_path = getLatestImageForWorkstation(machineId)
 
         arr.append({
-            "imageFileUrl": img_path,
+            "imageFileUrl": img_path.split("congestion-dataset")[1],
             "congestionStatus": getCongestionStatusForImage(img_path),
             "machineId": machineId
             })

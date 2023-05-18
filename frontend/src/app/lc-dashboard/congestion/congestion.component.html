@@ -7,11 +7,11 @@
             <div class="stats col-sm-9">
                 {{machine.machineModel}}, 
                 {{machine.perHourProduction}}
+                <button (click)="showCongestionImage('http://localhost:1401/congestion/image' + congestionStatus[i].imageFileUrl)"> View Congestion Status</button>
             </div>
             <div *ngIf="congestionStatus[i].congestionStatus==true" class="congestion col-sm-3">
                 CONGESTION DETECTED!
             </div>
-                
         </div>
     </div>
 

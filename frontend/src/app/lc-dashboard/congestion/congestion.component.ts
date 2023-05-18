@@ -144,5 +144,8 @@ export class CongestionComponent implements OnInit{
     });
   }
 
+  showCongestionImage(imageUrl : string){
+    window.open(imageUrl, '_blank');
+  }
  
 }

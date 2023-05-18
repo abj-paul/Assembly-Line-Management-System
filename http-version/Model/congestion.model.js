@@ -32,7 +32,7 @@ async function __createCongestionTable(){
     machineId int,
     timeRecorded datetime DEFAULT CURRENT_TIMESTAMP,
     congestionStatus varchar(300),
-    comments varchar(300),
+    imageFileUrl varchar(300),
     CONSTRAINT fk_congestion_machine_machineId FOREIGN KEY (machineId) REFERENCES machine(machineId)
     );`;
     
@@ -58,9 +58,9 @@ async function initializeCongestionStatusForMachines(){
     }
 }
 
-async function __insertCongestionData(machineId, congestionStatus, comments){
+async function __insertCongestionData(machineId, congestionStatus, imageFileUrl){
     return new Promise((resolve, reject)=>{
-        const sql_query = "INSERT INTO congestion(machineId, congestionStatus, comments) values (+"+machineId+", '"+congestionStatus+"', '"+comments+"');";
+        const sql_query = "INSERT INTO congestion(machineId, congestionStatus, imageFileUrl) values (+"+machineId+", '"+congestionStatus+"', '"+imageFileUrl+"');";
 
         connection.query(sql_query, (err, results, fields)=>{
             if(err) {
@@ -72,9 +72,9 @@ async function __insertCongestionData(machineId, congestionStatus, comments){
     );
 }
 
-async function updateCongestionStatusForMachine(machineId, congestionStatus, comments){
+async function updateCongestionStatusForMachine(machineId, congestionStatus, imageFileUrl){
     return new Promise((resolve, reject)=>{
-        const sql_query = "UPDATE congestion SET congestionStatus='"+congestionStatus+"', comments='"+comments+"' where machineId="+machineId;
+        const sql_query = "UPDATE congestion SET congestionStatus='"+congestionStatus+"', imageFileUrl='"+imageFileUrl+"' where machineId="+machineId;
         connection.query(sql_query, (err, results, fields)=>{
             if(err) {
                 reject(err);

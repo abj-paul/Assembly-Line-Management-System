@@ -15,7 +15,7 @@ async function getCongestionStatusForWorkstations(assemblyLineId){
             reject(false);
         }
     
-        const sql_query = "select  distinct congestion.machineId, assemblyLineId, congestionStatus from congestion, assemblyLineLayout where assemblyLineLayout.machineId = congestion.machineId and assemblyLineLayout.assemblyLineId="+assemblyLineId;
+        const sql_query = "select  distinct congestion.machineId, assemblyLineId, congestion.imageFileUrl, congestionStatus from congestion, assemblyLineLayout where assemblyLineLayout.machineId = congestion.machineId and assemblyLineLayout.assemblyLineId="+assemblyLineId;
 
         connection.query(sql_query, (err, results, fields)=>{
             if(err) throw err;
@@ -37,7 +37,7 @@ async function updateCongestionStatusForSingleWorkstation(assemblyLineId){
     for(let i=0; i<rows.length; i++) machine_list.push(rows[i].machineId);
 
     // Send workstation list to fastAPI to get their congestion status.
-    let url = ip_addr + "congestion_status/line/";
+    let url = ip_addr + "congestion_status/line/image/";
     let data = {
         "machine_list": machine_list,
         "line_id": assemblyLineId
@@ -64,8 +64,8 @@ async function updateCongestionStatusForSingleWorkstation(assemblyLineId){
         //congestion_statuses = resData;
         console.log("DEBUG: reply from fastapi: "+resData);
         // Save in Congestion database
-        for(let i=0; i<resData; i++){
-            congestion.updateCongestionStatusForMachine(machine_list[i], resData[i], "uwu machine "+machine_list[i]);
+        for(let i=0; i<resData.length; i++){
+            congestion.updateCongestionStatusForMachine(machine_list[i], resData[i].congestionStatus, resData[i].imageFileUrl);
         }
     })
     .catch((err)=>{

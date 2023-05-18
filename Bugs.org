@@ -76,6 +76,9 @@ Design file (product ID, line ID, Product, Types of Tasks, Sizes of the Cutting 
   - [ ] Same directory, bad solution
   - [ ] Youtube on it
   - [ ] Google on it
+
+  Send image+status from backend
+  - [ ] Google on how to send json using fastAPI
 ** Version Controlling
 Version 1
 #+begin_src js
