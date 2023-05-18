@@ -1,6 +1,7 @@
 const constants = require("../constants.js");
 const assemblyLine = require("../Model/assembly-line-layoud.model.js");
 const notifications = require("../Model/notification.js");
+const congestion = require("../Model/congestion.algorithm.js");
 
 function handlePostRequestToLayoutViaPM(req, res){
      __serveRequest(req, res);
@@ -32,7 +33,13 @@ function __serveRequest(req, res){
             notifications.__notify(body.LCUserId, "PM has set the layout for assembly line "+assemblyLineId);
         });
     }else if(operationType==constants.GET_ASSEMBLY_LINE_LIST_FOR_PRODUCTIONID){
-        
+        console.log("THIS ENDPOINT FEATURE HAS NOT BEEN IMPLEMETNED YET!!!!");
+    }else if(operationType==constants.GET_CONGESTION_STATUS){
+        const assemblyLineId = body.assemblyLineId;
+        congestion.getCongestionStatusForWorkstations(assemblyLineId)
+        .then((data)=>{
+            res.status(200).send({"CongestionStatus": data});
+        });
     }
 }
 

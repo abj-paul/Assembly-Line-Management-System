@@ -4,7 +4,6 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { DownloadDataComponent } from './admin-dashboard/download-data/download-data.component';
 import { RegisterUserComponent } from './admin-dashboard/register-user/register-user.component';
 import { UsersInfoComponent } from './admin-dashboard/users-info/users-info.component';
-import { CongestionComponent } from './congestion/congestion.component';
 import { HomeComponent } from './home/home.component';
 import { InvalidCredentialComponent } from './home/invalid-credential/invalid-credential.component';
 import { LcDashboardComponent } from './lc-dashboard/lc-dashboard.component';
@@ -23,6 +22,7 @@ import { ViewerComponent } from './viewer/viewer.component';
 import { RegisterAssemblyLineComponent } from './pm-dashboard/resource/register-assembly-line/register-assembly-line.component';
 import { RegisterMachineComponent } from './pm-dashboard/resource/register-machine/register-machine.component';
 import { ViewLineComponent } from './lc-dashboard/view-line/view-line.component';
+import { CongestionComponent } from './lc-dashboard/congestion/congestion.component';
 
 const routes: Routes = [
   {path: "", component: HomeComponent},

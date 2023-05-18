@@ -4,10 +4,26 @@ const assemblyLineLayout = require("./assembly-line-layoud.model.js")
 const fetch = require("node-fetch");
 
 const ip_addr = "http://127.0.0.1:8000/";
-let congestion_statuses = []
 
-async function getCongestionStatusForWorkstations(){
-    return congestion_statuses;
+
+async function getCongestionStatusForWorkstations(assemblyLineId){
+    let connection = await databaseService.getDBConnection();
+
+    return new Promise((resolve, reject)=>{
+        if(connection==null){
+            console.log("Connect to databse first!");
+            reject(false);
+        }
+    
+        const sql_query = "select  distinct congestion.machineId, assemblyLineId, congestionStatus from congestion, assemblyLineLayout where assemblyLineLayout.machineId = congestion.machineId and assemblyLineLayout.assemblyLineId="+assemblyLineId;
+
+        connection.query(sql_query, (err, results, fields)=>{
+            if(err) throw err;
+            //console.log(results);
+            resolve(results);
+        })
+    });
+
 }
 
 // Get congestion status for machines from fastAPI

@@ -24,13 +24,13 @@ import { ReportsComponent } from './pm-dashboard/reports/reports.component';
 import { AssemblyLineComponent } from './pm-dashboard/assembly-line/assembly-line.component';
 import { RegisterAssemblyLineComponent } from './pm-dashboard/resource/register-assembly-line/register-assembly-line.component';
 import { SubmitReportComponent } from './supervisor-dashboard/submit-report/submit-report.component';
-import { CongestionComponent } from './congestion/congestion.component';
 import { TestComponent } from './test/test.component';
 import { SetLineLayoutComponent } from './pm-dashboard/production/set-line-layout/set-line-layout.component';
 import { ViewAssemblyLinesComponent } from './pm-dashboard/resource/view-assembly-lines/view-assembly-lines.component';
 import { RegisterMachineComponent } from './pm-dashboard/resource/register-machine/register-machine.component';
 import { ViewMachineListComponent } from './pm-dashboard/resource/view-machine-list/view-machine-list.component';
 import { ViewLineComponent } from './lc-dashboard/view-line/view-line.component';
+import { CongestionComponent } from './lc-dashboard/congestion/congestion.component';
 
 @NgModule({
   declarations: [
@@ -55,13 +55,13 @@ import { ViewLineComponent } from './lc-dashboard/view-line/view-line.component'
     AssemblyLineComponent,
     RegisterAssemblyLineComponent,
     SubmitReportComponent,
-    CongestionComponent,
     SetLineLayoutComponent,
     TestComponent,
     ViewAssemblyLinesComponent,
     RegisterMachineComponent,
     ViewMachineListComponent,
-    ViewLineComponent
+    ViewLineComponent,
+    CongestionComponent
   ],
   imports: [
     BrowserModule,

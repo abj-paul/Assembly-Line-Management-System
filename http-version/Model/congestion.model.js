@@ -48,10 +48,14 @@ async function __createCongestionTable(){
 
 async function initializeCongestionStatusForMachines(){
     await __createCongestionTable();
-    machine.getMachineIdArr()
-    .then((machineIdArr)=>{
-        for(let i=0; i<machineIdArr.length; i++) __insertCongestionData(machineIdArr[i], '0', 'No comments on machine '+machineIdArr[i]);
-    })
+
+    let row = await getAllCongestionStatus();
+    if(row.length==0){
+        machine.getMachineIdArr()
+        .then((machineIdArr)=>{
+            for(let i=0; i<machineIdArr.length; i++) __insertCongestionData(machineIdArr[i], '0', 'No comments on machine '+machineIdArr[i]);
+        })
+    }
 }
 
 async function __insertCongestionData(machineId, congestionStatus, comments){

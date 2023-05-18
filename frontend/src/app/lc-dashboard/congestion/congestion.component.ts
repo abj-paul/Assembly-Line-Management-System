@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CongestionStatus } from 'src/app/models/CongestionStatus';
 import { Machine } from 'src/app/models/Machine';
 import { AccessControlService } from 'src/app/services/access-control.service';
 import { ConstantsService } from 'src/app/services/constants.service';
@@ -10,10 +11,13 @@ import { SharedStuffsService } from 'src/app/services/shared-stuffs.service';
   templateUrl: './congestion.component.html',
   styleUrls: ['./congestion.component.css']
 })
-export class CongestionComponent {
+export class CongestionComponent implements OnInit{
   productionTarget : number = 0;
-  machineListInLayout: Machine[] = [];
+
+  machineListInLayout: Machine[] =  []; //    {"assemblyLineId": 0, "assemblyLineName":"Default", "machineId":0, "machineModel": "default model", "machineType": "default type", "otherInfo":"Default info", "perHourProduction":2}
+ 
   assignedLineId : number = 0;
+  congestionStatus : CongestionStatus [] = [];
 
   constructor(private accessControlService: AccessControlService, private constantsService: ConstantsService, private sharedService : SharedStuffsService, private router : Router){}
 
@@ -53,6 +57,7 @@ export class CongestionComponent {
         console.log(this.assignedLineId);
 
         this.loadLineLayout();
+        this.loadCongestionStatus();
     })
     .catch((err)=>{
       console.log(err);
@@ -105,4 +110,39 @@ export class CongestionComponent {
       console.log(err);
     });
   }
+
+  loadCongestionStatus(){
+    let url = this.constantsService.SERVER_IP_ADDRESS + "layout";
+    let data={
+        "operation":"gcs",
+        "assemblyLineId": this.assignedLineId,
+        "userHash":this.accessControlService.getUser().userHash
+    }
+
+    fetch(url, {
+        method: "POST",
+        mode: "cors", 
+        cache: "no-cache", 
+        credentials: "same-origin", 
+        headers: {"Content-Type": "application/json",},
+        redirect: "follow", 
+        referrerPolicy: "no-referrer",
+        body: JSON.stringify(data),
+    })
+    .then((resolve)=>{
+        console.log("GET Congestion Status Request has been resolved!");
+        return resolve.json()
+    })
+    .then((data)=>{
+        console.log("DEBUG: Congestion Status -");
+        this.congestionStatus = data.CongestionStatus;
+        console.log(this.congestionStatus);
+
+    })
+    .catch((err)=>{
+      console.log(err);
+    });
+  }
+
+ 
 }

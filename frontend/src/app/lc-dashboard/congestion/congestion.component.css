@@ -1,0 +1,25 @@
+.box {
+    background-color: rgb(255, 230, 198);
+    height: 900px;
+    border: 2px solid black;
+    text-align: center;
+}
+.item {
+    margin-bottom: 10px;
+    border: 1px solid groove;
+}
+.congestion{
+    border: 5px solid red;
+    background-color: blueviolet;
+    color: white;
+    height: 60px;
+    float: left;
+}
+
+.stats {
+    background-color: gainsboro;
+    height: 60px;
+    margin: auto;
+    text-align: center;
+    float: right;
+}
