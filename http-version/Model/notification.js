@@ -38,13 +38,20 @@ async function getNotifications(userid){
     
 }
 
-function __notify(userid, msg){
-    const sql_query = "INSERT into notification(userid, message) values("+userid+", '"+msg+"');";
-
-    connection.query(sql_query, (err, results, fields)=>{
-        if(err) throw err;
-        console.log("Notification has been sent successfully to user "+userid);
-    })
+async function __notify(userid, msg){
+    return new Promise((resolve, reject)=>{
+        if(connection==null){
+            console.log("Connect to databse first!");
+            reject(false);
+        }
+        
+        const sql_query = "INSERT into notification(userid, message) values("+userid+", '"+msg+"');";
+        
+        connection.query(sql_query, (err, results, fields)=>{
+            if(err) throw err;
+            console.log("Notification has been sent successfully to user "+userid);
+        })
+    });
 }
 
 async function __createNotificationTable(){

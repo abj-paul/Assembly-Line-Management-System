@@ -12,11 +12,12 @@ import { ConstantsService } from '../services/constants.service';
 export class ProfileComponent implements OnInit{
   user : User = new User();
   notifications: any[] = [];
-  imageURL : any ;
+  imageURL : string = "" ;
 
   constructor(private accessControlService: AccessControlService, private router : Router, private constantsService : ConstantsService){}
   ngOnInit(): void {
     this.user = this.accessControlService.getUser();
+    this.imageURL = this.imageURL+this.user.pic;
     this.getNotifications();
   }
 

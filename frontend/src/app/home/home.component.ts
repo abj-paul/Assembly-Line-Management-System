@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-    ecommerceWelcomeMessage : string = "Welcome to ecommerce site!";
+    ecommerceWelcomeMessage : string = "Welcome to alms site!";
     testPara: string = "Testing paragraph";
 }

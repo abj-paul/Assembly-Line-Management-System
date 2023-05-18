@@ -27,6 +27,65 @@ const congestion = require("./Model/congestion.model.js");
 normal_start_database();
 //clearDatabases();
 
+// IMAGE SUPPORT START---------------------------------------------------------------------
+const IMAGE_DIR = "./data/profile/";
+
+const multer = require("multer");
+const path = require("path");
+
+var cors = require('cors')
+app.use(cors());
+app.options('*', cors());
+
+
+// Configure multer storage
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, IMAGE_DIR));
+  },
+  filename: (req, file, cb) => {
+    const filename = Date.now() + path.extname(file.originalname);
+    cb(null, filename);
+  }
+});
+
+console.log("dEBUG: "+path.join(__dirname, IMAGE_DIR));
+
+// Create multer upload instance
+const upload = multer({ storage });
+
+app.use(express.json()); 
+app.use("/profile", express.static(path.join(__dirname, IMAGE_DIR))); //http://localhost:1401/profile/1684422440449.png
+
+// Handle POST request for image upload
+app.use(upload.single("profile"));
+app.post("/uploadImage", (req, res) => {
+  // File upload successful
+  console.log("File saved:", req.file);
+  console.log("Extra data:", req.body.userId);
+
+  // save image in db
+  admin.saveProfilePicture(req.body.userId, req.file.filename);
+
+  // Send response
+  res.status(200).json({ message: "Image uploaded successfully" });
+});
+
+app.get("/getProfilePicture", (req, res) => {
+  // File upload successful
+  console.log("Extra data:", req.body.userId);
+
+  // save image in db
+  admin.getProfilePicture(req.body.userId)
+  .then((picName)=>{
+    console.log("DEBUG image: " +picName[0].pic);
+    res.status(200).send({ "ProfilePictureName" : picName[0].pic });
+  })
+
+  // Send response
+});
+
+// IMAGE SUPPORT END-----------------------------------------------------------------------
 
 app.listen(PORT, ()=>misc.serverHasStartedNotification(PORT));
 app.post("/admin", (req, res) => controller.handlePostRequestToAdmin(req,res));
@@ -60,7 +119,6 @@ function wait(ms){
    }
  }
 
-
 async function clearDatabases(){
   admin.startDatabase();
 
@@ -73,6 +131,7 @@ await admin.__deleteTable("user");
 await admin.__deleteTable("machine");
 await admin.__deleteTable("session");
 
+console.log("Done deleting all databases!---------------------");
 
 await admin.startDatabase();
 await admin.__createAdminUser();

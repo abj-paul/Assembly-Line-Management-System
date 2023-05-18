@@ -70,7 +70,7 @@ async function __createUserTable(){
     password varchar(50) NOT NULL,
     age int,
     role varchar(50) NOT NULL,
-    pic LONGBLOB,
+    pic varchar(100),
     general_info varchar(300))
     ;`;
     
@@ -115,8 +115,38 @@ async function __getUserData(name, password){
     );
 }
 
+async function saveProfilePicture(userId, imageName){
+    console.log("DEBUG save image name: "+userId +", "+imageName);
+    return new Promise((resolve, reject)=>{
+        const sql_query = "UPDATE user SET pic='"+imageName+"' where userId="+userId;
+        connection.query(sql_query, (err, results, fields)=>{
+            if(err) {
+                reject(err);
+            }
+            resolve(results);
+        });
+    }
+    );
+}
+
+async function getProfilePicture(userId){
+    return new Promise((resolve, reject)=>{
+        const sql_query = "select pic from user where userId="+userId;
+        connection.query(sql_query, (err, results, fields)=>{
+            if(err) {
+                reject(err);
+            }
+            resolve(results);
+        });
+    }
+    );
+}
+
+
 
 async function __createAdminUser(){
+    await __createUserTable();
+
     const adminIdPromise = await __insertUserData("Admin", DEFAULT_ADMIN_PASSWORD, 21, "Admin", "none", "A daunty young man!");
 
     //console.log(adminIdPromise.insertId);
@@ -177,4 +207,4 @@ function __viewAllTableData(){
 }
 
 // Admin login, Register new user, view existing user, delete existing user, edit user data, view his notification
-module.exports = {startDatabase, viewRegisteredUsers, __viewRegisteredUsers, __insertUserData, __deleteTable, __viewAllTableData, __getUserData, __deleteEntry , __createAdminUser}
+module.exports = {startDatabase, viewRegisteredUsers, __viewRegisteredUsers, __insertUserData, __deleteTable, __viewAllTableData, __getUserData, __deleteEntry , __createAdminUser, saveProfilePicture, getProfilePicture}

@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -31,6 +29,9 @@ import { RegisterMachineComponent } from './pm-dashboard/resource/register-machi
 import { ViewMachineListComponent } from './pm-dashboard/resource/view-machine-list/view-machine-list.component';
 import { ViewLineComponent } from './lc-dashboard/view-line/view-line.component';
 import { CongestionComponent } from './lc-dashboard/congestion/congestion.component';
+
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { CongestionComponent } from './lc-dashboard/congestion/congestion.compon
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

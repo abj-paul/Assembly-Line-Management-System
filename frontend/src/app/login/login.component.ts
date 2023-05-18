@@ -14,6 +14,7 @@ export class LoginComponent {
   password: string = "";
   loginStatus: string = "";
   role: string = "";
+  pic: string = "http://localhost:1401/profile/";
 
   
   constructor(private constantsService: ConstantsService, private router: Router, private accessControlService: AccessControlService) { }
@@ -65,7 +66,7 @@ export class LoginComponent {
           "role": <string>data.userInfo.role,
           "general_info": <string>data.userInfo.general_info,
           "userHash": <string>data.userHash,
-          "pic" : data.userInfo.pic
+          "pic" : this.pic + data.userInfo.pic
          });
 
         console.log("DEBUG-Login: image - "+data.userInfo.pic);

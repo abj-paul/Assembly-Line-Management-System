@@ -25,6 +25,7 @@ import { ViewLineComponent } from './lc-dashboard/view-line/view-line.component'
 import { CongestionComponent } from './lc-dashboard/congestion/congestion.component';
 
 const routes: Routes = [
+  {path: "test", component: TestComponent},
   {path: "", component: HomeComponent},
   {path:"home", component: HomeComponent},
   {path:"login", component: LoginComponent},
@@ -57,8 +58,7 @@ const routes: Routes = [
     {path: "assembly-line", component: AssemblyLineComponent}
   ]},
   {path: "assembly-line", component: ViewerComponent},
-  {path: "set-assembly-line-layout", component: SetLineLayoutComponent},
-  {path: "test", component: TestComponent}
+  {path: "set-assembly-line-layout", component: SetLineLayoutComponent}
 ];
 
 @NgModule({
