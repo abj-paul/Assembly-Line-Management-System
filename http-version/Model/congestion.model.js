@@ -1,5 +1,6 @@
 const mysql = require("mysql2");
 const notification = require("./notification.js");
+const machine = require("./machine.js");
 let connection = null;
 
 async function __connect(){
@@ -32,27 +33,44 @@ async function __createCongestionTable(){
     timeRecorded datetime DEFAULT CURRENT_TIMESTAMP,
     congestionStatus varchar(300),
     comments varchar(300),
-    CONSTRAINT fk_machine FOREIGN KEY (machineId) REFERENCES machine(machineId)
+    CONSTRAINT fk_congestion_machine_machineId FOREIGN KEY (machineId) REFERENCES machine(machineId)
     );`;
     
         connection.query(sql_query, (err, results, fields)=>{
             if(err) throw err;
             //console.log(results);
-            console.log("Machine Table has been created successfully!");
+            console.log("Congestion Table has been created successfully!");
             resolve(true);
         })
     });
     
 }
 
-async function initializeCongestionStatusForMachines(machineIdArr){
-    
+async function initializeCongestionStatusForMachines(){
+    await __createCongestionTable();
+    machine.getMachineIdArr()
+    .then((machineIdArr)=>{
+        for(let i=0; i<machineIdArr.length; i++) __insertCongestionData(machineIdArr[i], '0', 'No comments on machine '+machineIdArr[i]);
+    })
 }
 
+async function __insertCongestionData(machineId, congestionStatus, comments){
+    return new Promise((resolve, reject)=>{
+        const sql_query = "INSERT INTO congestion(machineId, congestionStatus, comments) values (+"+machineId+", '"+congestionStatus+"', '"+comments+"');";
+
+        connection.query(sql_query, (err, results, fields)=>{
+            if(err) {
+                reject(err);
+            }
+            resolve(results);
+        });
+    }
+    );
+}
 
 async function updateCongestionStatusForMachine(machineId, congestionStatus, comments){
     return new Promise((resolve, reject)=>{
-        const sql_query = "INSERT into congestion(machineId, congestionStatus, comments) values("+machineId+",'"+congestionStatus+"','"+comments+"');";
+        const sql_query = "UPDATE congestion SET congestionStatus='"+congestionStatus+"', comments='"+comments+"' where machineId="+machineId;
         connection.query(sql_query, (err, results, fields)=>{
             if(err) {
                 reject(err);
@@ -89,3 +107,8 @@ async function getAllCongestionStatus(){
     );
 }
 
+async function checkAndNotifyCongestion(){
+
+}
+
+module.exports = { initializeCongestionStatusForMachines, updateCongestionStatusForMachine, getAllCongestionStatus, getCongestionStatusForMachine, checkAndNotifyCongestion}

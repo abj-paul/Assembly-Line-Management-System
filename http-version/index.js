@@ -21,6 +21,7 @@ const production = require("./Model/production.model.js");
 const session = require("./Model/session.js");
 const fastAPIConnection = require("./Model/congestion.algorithm.js");
 const floor = require("./Model/floor.model.js")
+const congestion = require("./Model/congestion.model.js");
 
 
 normal_start_database();
@@ -43,11 +44,11 @@ function testAdmin(){
     admin.viewRegisteredUsers();
     admin.viewNotifications(1);
 }
-/*
+
 setInterval(function() {
   fastAPIConnection.updateCongestionStatusForWorkstations()
-}, 30 * 1000); // 10 * 10000 milsec = 10s
-*/
+}, 5 * 1000); // 10 * 10000 milsec = 10s
+
 
 function wait(ms){
     var start = new Date().getTime();
@@ -61,6 +62,7 @@ function wait(ms){
 async function clearDatabases(){
   admin.startDatabase();
 
+await admin.__deleteTable("congestion");
 await admin.__deleteTable("notification");
 await admin.__deleteTable("assemblyLineLayout");
 await admin.__deleteTable("assemblyLine");
@@ -80,6 +82,8 @@ await production.__createProductionTable();
 await assemblyLine.__createAssemblyLineTable();
 await assemblyLine.__createAssemblyLineLayoutTable();
 await report.__createProductionReportTable();
+
+await congestion.initializeCongestionStatusForMachines();
 //await floor.create_floor_table();
 
 }
@@ -95,6 +99,5 @@ async function normal_start_database(){
     await assemblyLine.__createAssemblyLineTable();
     await assemblyLine.__createAssemblyLineLayoutTable();
     await report.__createProductionReportTable();
-    //await floor.create_floor_table();
-
+    await congestion.initializeCongestionStatusForMachines();
 }

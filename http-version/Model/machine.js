@@ -59,7 +59,7 @@ async function registerMachine(machineModel, machineType, otherInfo, perHourProd
     );
 }
 
-async function getMachineList(machineModel, machineType, otherInfo){
+async function getMachineList(){
     return new Promise((resolve, reject)=>{
         const sql_query = "select * from machine;";
         connection.query(sql_query, (err, results, fields)=>{
@@ -69,6 +69,23 @@ async function getMachineList(machineModel, machineType, otherInfo){
             let machines = []
             for(let i=0; i<results.length; i++){
                 machines.push([results[i].machineModel, results[i].machineType, results[i].otherInfo, results[i].perHourProduction, results[i].machineId])
+            }
+            resolve(machines);
+        });
+    }
+    );
+}
+
+async function getMachineIdArr(){
+    return new Promise((resolve, reject)=>{
+        const sql_query = "select * from machine;";
+        connection.query(sql_query, (err, results, fields)=>{
+            if(err) {
+                reject(err);
+            }
+            let machines = []
+            for(let i=0; i<results.length; i++){
+                machines.push( results[i].machineId );
             }
             resolve(machines);
         });
@@ -103,4 +120,4 @@ async function delete_machine(machineId){
 }
 
 
-module.exports = { __createMachineTable, registerMachine, getMachineList, update_machine_info, delete_machine}
+module.exports = { __createMachineTable, registerMachine, getMachineList, update_machine_info, delete_machine, getMachineIdArr}

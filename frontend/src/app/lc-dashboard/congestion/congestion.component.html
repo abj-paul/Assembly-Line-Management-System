@@ -1,0 +1,13 @@
+<div class="container">
+    <h3>Production Target: {{productionTarget}} </h3>
+    <h3 id="currentProduction">Current Production : 0</h3>
+    <h3> Line Name: {{machineListInLayout[0].assemblyLineName}}</h3>
+    <div id="body" class="row">
+        <tr *ngFor="let machine of machineListInLayout" class="item">
+                {{machine.machineModel}} <br>
+                {{machine.perHourProduction}}
+        </tr>
+    </div>
+
+    <button class="btn btn-primary" (click)="gotoLayoutEdit()">Edit Layout</button>
+</div>

@@ -11,11 +11,11 @@ async function getCongestionStatusForWorkstations(){
 }
 
 // Get congestion status for machines from fastAPI
-async function updateCongestionStatusForWorkstations(){
+async function updateCongestionStatusForSingleWorkstation(assemblyLineId){
 
     // Get workstation list from assembly line layout
     await databaseService.getDBConnection();
-    const sql_query = "select * from assemblyLineLayout";
+    const sql_query = "select * from assemblyLineLayout where assemblyLineId="+assemblyLineId;
     const rows = await databaseService.getData(sql_query);
     const machine_list = []
     for(let i=0; i<rows.length; i++) machine_list.push(rows[i].machineId);
@@ -24,7 +24,7 @@ async function updateCongestionStatusForWorkstations(){
     let url = ip_addr + "congestion_status/line/";
     let data = {
         "machine_list": machine_list,
-        "line_id": 1
+        "line_id": assemblyLineId
     }
 
 
@@ -45,13 +45,29 @@ async function updateCongestionStatusForWorkstations(){
         return resolve.json()
     })
     .then((resData)=>{
-        congestion_statuses = resData;
+        //congestion_statuses = resData;
         console.log("DEBUG: reply from fastapi: "+resData);
         // Save in Congestion database
+        for(let i=0; i<resData; i++){
+            congestion.updateCongestionStatusForMachine(machine_list[i], resData[i], "uwu machine "+machine_list[i]);
+        }
     })
     .catch((err)=>{
         console.log(err);
     });
+}
+
+async function updateCongestionStatusForWorkstations(){
+    await databaseService.getDBConnection();
+    const sql_query = "select distinct * from assemblyLine;";
+    const rows = await databaseService.getData(sql_query);
+    console.log("DEBUG Congestion: ");
+    console.log(rows);
+    const assemblyLineList = []
+    for(let i=0; i<rows.length; i++) assemblyLineList.push(rows[i].assemblyLineId);
+
+    // Get congestion status for the assembly line and save it in db
+    for(let i=0; i<assemblyLineList.length; i++) updateCongestionStatusForSingleWorkstation(assemblyLineList[i]);
 }
 
 function testFastAPIConnection(){

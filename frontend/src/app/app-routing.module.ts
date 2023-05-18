@@ -46,7 +46,8 @@ const routes: Routes = [
   ]},
   {path: "lc-dashboard", component: LcDashboardComponent, children: [
     {path: "profile", component: ProfileComponent},
-    {path: "congestion", component: ViewLineComponent},
+    {path: "layout", component: ViewLineComponent},
+    {path: "congestion", component: CongestionComponent},
     {path: "reports", component: ReportsComponent},
     {path: "assembly-line", component: AssemblyLineComponent}
   ]},
