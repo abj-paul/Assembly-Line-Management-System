@@ -29,13 +29,8 @@ normal_start_database();
 
 // IMAGE SUPPORT START---------------------------------------------------------------------
 const IMAGE_DIR = "./data/profile/";
-
 const multer = require("multer");
 const path = require("path");
-
-var cors = require('cors')
-app.use(cors());
-app.options('*', cors());
 
 
 // Configure multer storage
@@ -59,31 +54,8 @@ app.use("/profile", express.static(path.join(__dirname, IMAGE_DIR))); //http://l
 
 // Handle POST request for image upload
 app.use(upload.single("profile"));
-app.post("/uploadImage", (req, res) => {
-  // File upload successful
-  console.log("File saved:", req.file);
-  console.log("Extra data:", req.body.userId);
-
-  // save image in db
-  admin.saveProfilePicture(req.body.userId, req.file.filename);
-
-  // Send response
-  res.status(200).json({ message: "Image uploaded successfully" });
-});
-
-app.get("/getProfilePicture", (req, res) => {
-  // File upload successful
-  console.log("Extra data:", req.body.userId);
-
-  // save image in db
-  admin.getProfilePicture(req.body.userId)
-  .then((picName)=>{
-    console.log("DEBUG image: " +picName[0].pic);
-    res.status(200).send({ "ProfilePictureName" : picName[0].pic });
-  })
-
-  // Send response
-});
+app.post("/uploadImage", (req, res) => admin.saveImage(req, res));
+app.get("/getProfilePicture", (req, res) => admin.getImage(req, res));
 
 // IMAGE SUPPORT END-----------------------------------------------------------------------
 

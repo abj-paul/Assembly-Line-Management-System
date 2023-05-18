@@ -56,3 +56,238 @@ Resources ( machine ID, ~line ID~, machine model, machine type, machine hourly p
 Quality report (report ID, rejected product, rejected workstation,rejection reason)
 Production report (report ID, hourly count, number of rejected product, hourly production, number of accepted product etc)
 Design file (product ID, line ID, Product, Types of Tasks, Sizes of the Cutting Pieces, Size of the Final Product, Number of Products)
+
+* Debugging
+** Image upload
+[[https://www.youtube.com/watch?v=MzShBGTUBhE][Frontend]] ain't working.
+- [X] My old code on profile image. It worked!
+- [ ] [[https://www.youtube.com/watch?v=bGTKu3Bn-z8][That video]] code on profile image.
+- [ ] Google on uploading photoes from angular,multer.
+
+  [[https://stackoverflow.com/questions/51483507/how-to-save-and-show-the-picture-saved-using-multer-package-in-nodejs][Backend of Image upload]]
+
+  Backend not working:
+- [X] Try basic multer documentation code
+- [ ] Google on this issue as it seems like a common issue.
+- [ ] Google on multer examples
+- [ ] Try more on that stackoverflow answer
+
+  Send Image From Backend to Frontend:
+  - [ ] Same directory, bad solution
+  - [ ] Youtube on it
+  - [ ] Google on it
+** Version Controlling
+Version 1
+#+begin_src js
+  const express = require('express');
+const multer = require('multer');
+const path = require('path');
+
+// Image Upload
+const imageStorage = multer.diskStorage({
+    destination: 'images', // Destination to store image 
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '_' + Date.now() + path.extname(file.originalname))
+        // file.fieldname is name of the field (image), path.extname get the uploaded file extension
+    }
+});
+
+const imageUpload = multer({
+    storage: imageStorage,
+    limits: {
+        fileSize: 1000000   // 1000000 Bytes = 1 MB
+    },
+    fileFilter(req, file, cb) {
+        if (!file.originalname.match(/\.(png|jpg)$/)) {     // upload only png and jpg format
+            return cb(new Error('Please upload a Image'))
+        }
+        cb(undefined, true)
+    }
+})  
+
+
+// Starting server
+const cors = require('cors')
+const app = express();
+app.use(cors());
+app.options('*', cors());
+app.use(express.json());
+const PORT = 2050;
+app.listen(PORT, ()=>{
+    console.log("Server has started running at port "+PORT+ "!");
+});
+
+
+// For Single image upload
+app.post('/uploadImage', imageUpload.single('profile'), (req, res) => {
+    console.log("uploading image...");
+    res.send({"Status": "Successfully uploaded image!"});
+}, (error, req, res, next) => {
+    res.status(400).send({ error: error.message })
+})
+
+// For Multiple image upload
+app.post('/uploadBulkImage', imageUpload.array('images', 4), (req, res) => {
+    res.send(req.files)
+}, (error, req, res, next) => {
+    res.status(400).send({ error: error.message })
+})
+
+// ---------------------------------------------------------------------------- //
+
+// Video Upload
+const videoStorage = multer.diskStorage({
+    destination: 'videos', // Destination to store video 
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '_' + Date.now() + path.extname(file.originalname))
+    }
+});
+
+const videoUpload = multer({
+    storage: videoStorage,
+    limits: {
+        fileSize: 10000000   // 10000000 Bytes = 10 MB
+    },
+    fileFilter(req, file, cb) {
+        if (!file.originalname.match(/\.(mp4|MPEG-4)$/)) {     // upload only mp4 and mkv format
+            return cb(new Error('Please upload a Video'))
+        }
+        cb(undefined, true)
+    }
+})
+
+app.post('/uploadVideo', videoUpload.single('video'), (req, res) => {
+    res.send(req.file)
+}, (error, req, res, next) => {
+    res.status(400).send({ error: error.message })
+})
+
+
+#+end_src
+
+Version 2
+#+begin_src js
+  const express = require("express");
+const app = express();
+const controller = require("./controller.js");
+var cors = require('cors')
+app.use(cors());
+app.options('*', cors());
+
+app.use(express.json());
+const PORT = 2050;
+
+app.listen(PORT, ()=>{
+    console.log("The server has started running at port "+ PORT +"!");
+});
+
+
+const multer  = require('multer')
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './images')
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    cb(null, file.fieldname + '-' + uniqueSuffix)
+  }
+})
+
+const upload = multer({ storage: storage })
+app.post("/uploadImage", upload.single('profile'), (req, res) => controller.saveImageRequest(req,res));
+
+#+end_src
+
+Version 3
+#+begin_src js
+  const express = require("express");
+const app = express();
+const controller = require("./controller.js");
+var cors = require('cors')
+app.use(cors());
+app.options('*', cors());
+
+app.use(express.json());
+const PORT = 2050;
+
+app.listen(PORT, ()=>{
+    console.log("The server has started running at port "+ PORT +"!");
+});
+
+
+const multer  = require('multer')
+const path = require('path');
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, path.join(__dirname, './images/'));
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname));
+	console.log(Date.now() + path.extname(file.originalname));
+    }
+
+})
+
+//check image
+const isImage = (req, file, cb) => {
+    if (file.mimetype.startsWith("image")) {
+        cb(null, true);
+    }
+    else {
+        cb(null, { error: "Only image" });
+    }
+}
+
+const upload = multer({
+    storage: storage,
+    fileFilter: isImage
+});
+//app.post("/uploadImage", upload.single('profile'), (req, res) => {});
+app.post("/uploadImage", upload.single('profile'), (req, res) => controller.saveImageRequest(req,res));
+
+#+end_src
+
+Version 4 - chatGPT generated
+#+begin_src js
+  const express = require("express");
+const app = express();
+const multer = require("multer");
+const path = require("path");
+
+var cors = require('cors')
+app.use(cors());
+app.options('*', cors());
+
+
+// Configure multer storage
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, "images"));
+  },
+  filename: (req, file, cb) => {
+    const filename = Date.now() + path.extname(file.originalname);
+    cb(null, filename);
+  }
+});
+
+// Create multer upload instance
+const upload = multer({ storage });
+
+app.use(express.json());
+
+// Handle POST request for image upload
+app.post("/uploadImage", upload.single("profile"), (req, res) => {
+  // File upload successful
+  console.log("File saved:", req.file);
+
+  // Send response
+  res.status(200).json({ message: "Image uploaded successfully" });
+});
+
+const PORT = 2050;
+app.listen(PORT, () => {
+  console.log("The server has started running at port " + PORT + "!");
+});
+
+#+end_src

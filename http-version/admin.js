@@ -206,5 +206,22 @@ function __viewAllTableData(){
     });
 }
 
+function saveImage(req, res){
+    console.log("File saved:", req.file);
+    console.log("Extra data:", req.body.userId);
+  
+    // save image in db
+    saveProfilePicture(req.body.userId, req.file.filename);
+    res.status(200).json({ message: "Image uploaded successfully" });
+}
+
+function getImage(req, res){
+    getProfilePicture(req.body.userId)
+    .then((picName)=>{
+        console.log("DEBUG image: " +picName[0].pic);
+        res.status(200).send({ "ProfilePictureName" : picName[0].pic });
+    })
+}
+
 // Admin login, Register new user, view existing user, delete existing user, edit user data, view his notification
-module.exports = {startDatabase, viewRegisteredUsers, __viewRegisteredUsers, __insertUserData, __deleteTable, __viewAllTableData, __getUserData, __deleteEntry , __createAdminUser, saveProfilePicture, getProfilePicture}
+module.exports = {startDatabase, viewRegisteredUsers, __viewRegisteredUsers, __insertUserData, __deleteTable, __viewAllTableData, __getUserData, __deleteEntry , __createAdminUser, saveProfilePicture, getProfilePicture, saveImage, getImage}
