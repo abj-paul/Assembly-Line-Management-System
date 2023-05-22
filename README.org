@@ -17,5 +17,9 @@ Mashiat Amin Farin, BSSE1202
 3. Assembly Line Layout.
 
 ** ER Diagram
+[[file:implemented-er.png]]
+
+
+Model ER:
 [[file:er-Page-1.drawio.png]]
 
