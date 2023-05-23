@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AdminDashboardComponent } from '../admin-dashboard/admin-dashboard.component';
+import { LcDashboardComponent } from '../lc-dashboard/lc-dashboard.component';
 import { NavItem } from '../models/NavItem';
+import { PmDashboardComponent } from '../pm-dashboard/pm-dashboard.component';
 import { AccessControlService } from '../services/access-control.service';
 import { ConstantsService } from '../services/constants.service';
 import { NavbarService } from '../services/navbar.service';
+import { SharedStuffsService } from '../services/shared-stuffs.service';
+import { SupervisorDashboardComponent } from '../supervisor-dashboard/supervisor-dashboard.component';
 
 @Component({
   selector: 'app-navbar',
@@ -11,7 +16,7 @@ import { NavbarService } from '../services/navbar.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit{
-  constructor(private router: Router, private navbarService : NavbarService, private accessControlService: AccessControlService, private constantsService: ConstantsService){}
+  constructor(private router: Router, private navbarService : NavbarService, private accessControlService: AccessControlService, private constantsService: ConstantsService, private sharedService: SharedStuffsService){}
 
   navItems : NavItem [] = [];
 
@@ -20,6 +25,7 @@ export class NavbarComponent implements OnInit{
   }
 
   makeSelected(index:number){
+    this.sharedService.dashboardComponent.updateLocalAbout(true);
 
     const items = document.getElementsByClassName("sidebarItems");
     for(let i=0; i<items.length; i++){

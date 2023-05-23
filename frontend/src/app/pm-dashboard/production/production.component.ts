@@ -12,6 +12,9 @@ import { Box } from 'src/app/pm-dashboard/production/set-line-layout/Box';
   styleUrls: ['./production.component.css']
 })
 export class ProductionComponent implements OnInit{
+  productName : string = "";
+  designFile : string = "";
+  totalProductionTarget : number = 0;
 
   constructor(private accessControlService: AccessControlService, private constantsService: ConstantsService, private router: Router, private sharedService : SharedStuffsService){}
 
@@ -49,8 +52,8 @@ export class ProductionComponent implements OnInit{
     console.log("DEBUG: Selected lines : "+this.sharedService.selected_assembly_lines_for_production);
     //sessionStorage.setItem("selectedAssemblyLines", JSON.stringify(checkboxesChecked));
 
-    let totalProductionTarget = (<HTMLInputElement>document.getElementById("totalProductionTarget")).value;
-    sessionStorage.setItem("totalProductionTarget", totalProductionTarget);
+    //let totalProductionTarget = (<HTMLInputElement>document.getElementById("totalProductionTarget")).value;
+    sessionStorage.setItem("totalProductionTarget", ""+this.totalProductionTarget);
   }
 
   populateAssemblyLineList(): void{
@@ -114,15 +117,22 @@ export class ProductionComponent implements OnInit{
 
 
   saveProductionRegistrationInDatabase(){
-    let totalProductionTarget = (<HTMLInputElement>document.getElementById("totalProductionTarget")).value;
+    /*let totalProductionTarget = (<HTMLInputElement>document.getElementById("totalProductionTarget")).value;
     let productName = (<HTMLInputElement>document.getElementById("productName")).value;
-    let designFileId = 0;
+    let designFileId = 0;*/
+
+    let assemblyLineIdList = [];
+    for(let i=0; i<this.sharedService.selected_assembly_lines_for_production.length; i++){
+      assemblyLineIdList.push(this.sharedService.selected_assembly_lines_for_production[i].id);
+    }
+
 
     let data = {
       "operation":"snp",
-      "productName": productName, 
-      "totalProductionTarget": totalProductionTarget,
-      "designFileId": designFileId,
+      "productName": this.productName, 
+      "totalProductionTarget": this.totalProductionTarget,
+      "designFileId": this.designFile,
+      "assemblyLineIdList": assemblyLineIdList,
       "userHash":this.accessControlService.getUser().userHash
   }
   let url = this.constantsService.SERVER_IP_ADDRESS + "productionManager";

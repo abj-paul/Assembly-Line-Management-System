@@ -47,6 +47,18 @@ async function insertData(sql_query){
     );
 }
 
+async function executeQuery(sql_query){
+    return new Promise((resolve, reject)=>{
+        connection.query(sql_query, (err, results, fields)=>{
+            if(err) {
+                reject(err);
+            }
+            resolve(results);
+        });
+    }
+    );
+}
+
 async function getData(sql_query){
     return new Promise((resolve, reject)=>{
         connection.query(sql_query, (err, results, fields)=>{
@@ -65,4 +77,4 @@ function getDBConnection(){
     return connection;
 }
 
-module.exports = { getDBConnection, createTable, insertData, getData}
+module.exports = { getDBConnection, createTable, insertData, getData, executeQuery}

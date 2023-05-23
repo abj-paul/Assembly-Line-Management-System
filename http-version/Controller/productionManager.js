@@ -9,6 +9,7 @@ const assemblyLine = require("../Model/assembly-line-layoud.model.js");
 const production = require("../Model/production.model.js");
 const floor = require("../Model/floor.model.js");
 const combinationQuery = require("../Model/combinations.query.js");
+const miscDb = require("../Model/miscellaneous.js");
 
 
 function handlePostRequestToProductionManager(req, res){
@@ -92,6 +93,7 @@ function __serveRequest(req, res){
         const productName = body.productName;
         const totalProductionTarget = body.totalProductionTarget;
         const designFileId = body.designFileId;
+        const assemblyLineIdList = body.assemblyLineIdList;
         //const floorNumber = body.floorNumber;
 
         production.startNewProduction(productName, totalProductionTarget, designFileId)
@@ -99,9 +101,12 @@ function __serveRequest(req, res){
             res.status(200).send({"ProductionId": data.insertId});
             console.log("Started production for "+productName);
 
+            production.updateProductionIdFromLineList(data.insertId, assemblyLineIdList);
+
             //floor.register_new_production(floorNumber, data.insertId);
         })
         .catch((err)=>{console.log(err);})
+
     }else if(operationType==constants.UPDATE_ASEMBLY_LINE_INFO){
         const name = body.name;
         const capacity = body.capacity;
@@ -156,6 +161,13 @@ function __serveRequest(req, res){
         combinationQuery.getUnusedMachineList()
         .then((data)=>{
             res.status(200).send({"UNUSED_MACHINES": data});
+        })
+    }else if(operationType==constants.GET_PRODUCTION_ID_FOR_USER){
+        const userId = body.userId;
+        console.log("DEBUG: GPIFU triggered!");
+        miscDb.getProductionIdForPM(userId)
+        .then((data)=>{
+            res.status(200).send({"ProductionId": data});
         })
     }
 }

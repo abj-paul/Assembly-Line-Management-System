@@ -63,15 +63,14 @@ async function __createAssemblyLineLayoutTable(){
     productionId int,
     position int ,
     hourlyTarget int,
-    otherInfo varchar(300)
-    );`;
-
-    /*
-    3 NOT NULL
+    otherInfo varchar(300),
      CONSTRAINT fk_assemblyline_layout FOREIGN KEY (assemblyLineId) REFERENCES assemblyLine(assemblyLineId),
-    CONSTRAINT fk_machine_layout FOREIGN KEY (machineId) REFERENCES machine(machineId),
-    CONSTRAINT fk_production_layout FOREIGN KEY (productionId) REFERENCES production(productionId)
-    */
+     CONSTRAINT fk_machine_layout FOREIGN KEY (machineId) REFERENCES machine(machineId)
+    ON DELETE CASCADE
+     );`
+     //CONSTRAINT fk_production_layout FOREIGN KEY (productionId) REFERENCES production(productionId)
+    ;
+
     
         connection.query(sql_query, (err, results, fields)=>{
             if(err) throw err;

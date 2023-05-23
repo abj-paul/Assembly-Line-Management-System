@@ -6,6 +6,7 @@
             <app-navbar></app-navbar>
         </div>
         <div class="col-sm-9">
+            <app-about *ngIf="localHideAbout==false"></app-about>
             <router-outlet></router-outlet>
         </div>
     </div>

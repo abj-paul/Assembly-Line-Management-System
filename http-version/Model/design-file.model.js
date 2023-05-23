@@ -26,7 +26,7 @@ async function __createDesignTable(){
             reject(false);
         }
     
-        const sql_query = `CREATE TABLE if not exists production(
+        const sql_query = `CREATE TABLE if not exists design(
     pieceId int auto_increment primary key,
     productionId int,
     pieceName varchar(300),

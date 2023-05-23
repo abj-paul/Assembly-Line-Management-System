@@ -1,9 +1,9 @@
 export class User{
     userid: number = 0;
-    username: string = "";
-    age: number = 0;
-    role: string = "";
-    general_info: string = ""
+    username: string = "Regular User";
+    age: number = 21;
+    role: string = "Undefined";
+    general_info: string = "The user has not been registered yet"
     userHash: string = "";
-    pic: any;
+    pic: any ;
 }

@@ -85,7 +85,6 @@ async function __createUserTable(){
 }
 
 
-
 async function __insertUserData(name, password, age, role, pic, general_info){
     return new Promise((resolve, reject)=>{
         const sql_query = "INSERT into user(username, password, age, role, pic, general_info) values('"+name+"', '"+password+"',"+age+", '"+role+"', '"+pic+"', '"+general_info+"');";
@@ -147,7 +146,7 @@ async function getProfilePicture(userId){
 async function __createAdminUser(){
     await __createUserTable();
 
-    const adminIdPromise = await __insertUserData("Admin", DEFAULT_ADMIN_PASSWORD, 21, "Admin", "none", "A daunty young man!");
+    const adminIdPromise = await __insertUserData("Admin", DEFAULT_ADMIN_PASSWORD, 21, "Admin", "1684754460520.jpeg", "The admin of ALMS system!");
 
     //console.log(adminIdPromise.insertId);
     //notification.__notify(adminIdPromise.insertId, "Admin account has been created!")

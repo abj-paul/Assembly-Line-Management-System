@@ -32,6 +32,11 @@ import { CongestionComponent } from './lc-dashboard/congestion/congestion.compon
 
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
+import { SetViewerInfoComponent } from './admin-dashboard/set-viewer-info/set-viewer-info.component';
+import { AboutComponent } from './pm-dashboard/about/about.component';
+import { AboutLcComponent } from './lc-dashboard/about-lc/about-lc.component';
+import { AboutAdminComponent } from './admin-dashboard/about-admin/about-admin.component';
+import { AboutSupervisorComponent } from './supervisor-dashboard/about-supervisor/about-supervisor.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +67,12 @@ import { BrowserModule } from '@angular/platform-browser';
     RegisterMachineComponent,
     ViewMachineListComponent,
     ViewLineComponent,
-    CongestionComponent
+    CongestionComponent,
+    SetViewerInfoComponent,
+    AboutComponent,
+    AboutLcComponent,
+    AboutAdminComponent,
+    AboutSupervisorComponent
   ],
   imports: [
     BrowserModule,

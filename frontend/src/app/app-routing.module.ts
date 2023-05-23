@@ -23,6 +23,7 @@ import { RegisterAssemblyLineComponent } from './pm-dashboard/resource/register-
 import { RegisterMachineComponent } from './pm-dashboard/resource/register-machine/register-machine.component';
 import { ViewLineComponent } from './lc-dashboard/view-line/view-line.component';
 import { CongestionComponent } from './lc-dashboard/congestion/congestion.component';
+import { SetViewerInfoComponent } from './admin-dashboard/set-viewer-info/set-viewer-info.component';
 
 const routes: Routes = [
   {path: "test", component: TestComponent},
@@ -34,7 +35,8 @@ const routes: Routes = [
     {path: "profile", component: ProfileComponent},
     {path: "user", component: UsersInfoComponent},
     {path: "system-data", component: DownloadDataComponent},
-    {path: "register-user", component: RegisterUserComponent}
+    {path: "register-user", component: RegisterUserComponent},
+    {path: "set-viewer-info", component: SetViewerInfoComponent}
   ]},
   {path: "pm-dashboard", component: PmDashboardComponent, children: [
     {path: "profile", component: ProfileComponent},

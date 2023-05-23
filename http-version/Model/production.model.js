@@ -1,5 +1,7 @@
 const mysql = require("mysql2");
 const notification = require("./notification.js");
+const db_service = require("../Model/DatabaseService.js");
+
 let connection = null;
 
 async function __connect(){
@@ -85,4 +87,12 @@ async function setViewerInfo(productionId, viewerInfo){
     );
 }
 
-module.exports = { __createProductionTable, getProductionInfo, startNewProduction, setViewerInfo}
+async function updateProductionIdFromLineList(productionId, lineIdList){
+    for(let i=0; i<lineIdList.length; i++){
+        const sql_query = " UPDATE assemblyLineLayout SET productionId = "+ productionId +" where assemblyLineId="+lineIdList[i];
+
+        db_service.executeQuery(sql_query);
+    }
+}
+
+module.exports = { __createProductionTable, getProductionInfo, startNewProduction, setViewerInfo, updateProductionIdFromLineList}
