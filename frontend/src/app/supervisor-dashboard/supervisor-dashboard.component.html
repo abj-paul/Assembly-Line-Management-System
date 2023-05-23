@@ -6,7 +6,7 @@
             <app-navbar></app-navbar>
         </div>
         <div class="col-sm-9">
-            <app-about-supervisor *ngIf="localHideAbout"></app-about-supervisor>
+            <app-about-supervisor *ngIf="localHideAbout==false"></app-about-supervisor>
             <router-outlet></router-outlet>
         </div>
     </div>

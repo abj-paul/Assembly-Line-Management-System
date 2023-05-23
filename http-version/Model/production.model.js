@@ -95,4 +95,5 @@ async function updateProductionIdFromLineList(productionId, lineIdList){
     }
 }
 
+
 module.exports = { __createProductionTable, getProductionInfo, startNewProduction, setViewerInfo, updateProductionIdFromLineList}

@@ -196,7 +196,7 @@ function __deleteTable(tableName){
 
 function __viewAllTableData(){
     return new Promise((resolve, reject)=>{
-        const sql_query = "select * from notification, user where notification.userid=user.userid;";
+        const sql_query = "select * from notification, user where notification.userid=user.userid ;";
 
         connection.query(sql_query, (err, results, fields)=>{
             if(err) throw err;

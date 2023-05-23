@@ -2,21 +2,21 @@
     <div class="col-sm-4 subsection">
         <p>Hourly Target Report</p>
         <div class="form-group">
-            <label for="hourlyTargetId">Hourly Target Reached So Far:</label>
-            <input class="form-control" type="number" name="hourlyTarget" id="hourlyTargetId">
+            <label >Hourly Target Reached So Far:</label>
+            <input class="form-control" type="number" [(ngModel)]="hourlyProductionAmountReached">
         </div>
 
         <div class="form-group">
-            <label for="hourlyProductionUnitId">Unit of Production:</label>
-            <input class="form-control" type="text" name="hourlyProductionUnit" id="hourlyProductionUnitId" placeholder="(e.g. Number of Completed Garments)">
+            <label>Unit of Production:</label>
+            <input class="form-control" type="text" [(ngModel)]="unit">
         </div>
 
         <div class="form-group subs">
-            <label for="commentOnHourlyProductionId">Comments: </label>
-            <input class="form-control" type="text" name="commentOnHourlyProduction" id="commentOnHourlyProductionId">
+            <label>Comments: </label>
+            <input class="form-control" type="text" [(ngModel)]="comment">
         </div>
 
-        <button onclick="setHourlyProductionAmount()">Submit Production Count</button>
+        <button (click)="setHourlyProductionAmount()">Submit Production Count</button>
     </div>
 
     <div class="col-sm-4 subsection">
