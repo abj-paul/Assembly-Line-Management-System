@@ -76,7 +76,6 @@ async function getProductionInfo(){
 async function setViewerInfo(productionId, viewerInfo){
     const sql_query = "UPDATE production SET viewerInfo = '"+ viewerInfo +"' WHERE productionId = "+productionId; 
     return new Promise((resolve, reject)=>{
-        const sql_query = "select * from production;";
         connection.query(sql_query, (err, results, fields)=>{
             if(err) {
                 reject(err);

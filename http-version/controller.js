@@ -4,6 +4,7 @@ const editUserData = require("./Model/edit-user-data.js");
 const notification = require("./Model/notification.js");
 const session = require("./Model/session.js");
 const userHashLib = require("./Controller/userHash.js"); 
+const production = require("./Model/production.model.js");
 
 
 function handlePostRequestToAdmin(req, res){
@@ -98,6 +99,16 @@ function __serveRequest(req, res){
 		if(data==true) res.status(200).send({"Status": "Delete successful"});
 		else res.send({"Status": "Delete unsuccessful"});
 	    });
+    }else if(operationType==constants.SET_VIEWER_INFO){
+        const productionId = body.productionId;
+        const viewerInfo = body.viewerInfo;
+
+        production.setViewerInfo(productionId, viewerInfo)
+        .then((data)=>{
+            console.log("DEBUG: ");
+            console.log(data);
+            res.status(200).send({"Status": "Successfully set viewer info"});
+        })
     }
 }
 

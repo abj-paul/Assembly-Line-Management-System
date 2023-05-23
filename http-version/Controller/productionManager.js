@@ -169,14 +169,6 @@ function __serveRequest(req, res){
         .then((data)=>{
             res.status(200).send({"ProductionId": data});
         })
-    }else if(operationType==constants.SET_VIEWER_INFO){
-        const productionId = body.productionId;
-        const viewerInfo = body.viewerInfo;
-
-        production.setViewerInfo(productionId, viewerInfo)
-        .then((data)=>{
-            res.status(200).send({"Status": "Successfully set viewer info"});
-        })
     }
 }
 
