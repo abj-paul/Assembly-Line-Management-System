@@ -75,7 +75,28 @@ async function get_assembly_line_layout_for_given_line_id(lineId){
     );
 }
 
+async function request_resource(LCUserId, lineId, machineType, requestedMachineCount){
+    const productionManagerUserId = await db_service.executeQuery("SELECT createdBy from assemblyLine where assemblyLineId="+lineId);
+    const lineChiefName = await db_service.executeQuery("SELECT username from user where userId="+LCUserId);
+    console.log("DEBUG->line chief name:");
+    const lineNAme = await db_service.executeQuery("SELECT name from assemblyLine where assemblyLineId="+lineId);
+    console.log("DEBUG->lineName:");
+    let message = lineChiefName[0].username + " has requested "+requestedMachineCount + " " + machineType + " for "+lineNAme[0].name+" assembly line";
+
+    console.log("DEBUG->Request Resource Msg: "+message);
 
 
+    const sql_query = "INSERT INTO notification(userId, message) values("+productionManagerUserId[0].createdBy+",'"+message+"');";
+    await db_service.executeQuery(sql_query);
+}
 
-module.exports = {getLCAndTheirLines, getMachineAndAssemblyLineItIsAddedTo, getUnusedMachineList, getAssignedLineIdForLineChief, get_assembly_line_layout_for_given_line_id}
+async function setHourlyProductionTarget(productionId, lineId, hourlyProductionTarget){
+    const sql_query = "UPDATE assemblyLineLayout SET hourlyTarget="+hourlyProductionTarget+" WHERE productionId="+productionId+" and assemblyLineId="+lineId;
+    const reply = await db_service.executeQuery(sql_query);
+    console.log("DEBUG->Hourly Production Target:");
+    console.log(sql_query);
+    console.log(reply);
+    return "blah";
+}
+
+module.exports = {getLCAndTheirLines, getMachineAndAssemblyLineItIsAddedTo, getUnusedMachineList, getAssignedLineIdForLineChief, get_assembly_line_layout_for_given_line_id, request_resource, setHourlyProductionTarget}

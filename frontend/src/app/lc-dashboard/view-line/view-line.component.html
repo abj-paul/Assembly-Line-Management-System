@@ -13,3 +13,29 @@
 
     <button class="btn btn-primary" (click)="gotoLayoutEdit()">Edit Layout</button>
 </div>
+
+<hr>
+<h4>Request Resource</h4>
+<div class="form-group">
+    <label for="machineType">Type of Machine:</label>
+    <select class="form-control" [(ngModel)]="machineType">
+        <option value="sewingMachine">Sewing Machine</option>
+        <option value="assemblyTable">Assembly Table</option>
+        <option value="doubleSewMachine">Double Sew Machine</option>
+    </select>
+</div> 
+<div class="form-group">
+    <label>Number of Machines</label>
+    <input type="number" class="form-control" [(ngModel)]="requestedMachineCount">
+</div>
+
+<button (click)="requestResource()">Request Resource</button>
+
+<hr>
+<h4>{{formattedDateTime}} | Set Hourly Target </h4>
+<div class="form-group">
+    <label>Target</label>
+    <input type="number" class="form-control" [(ngModel)]="hourlyProductionTarget">
+</div>
+<button (click)="setHourlyTarget()">Confirm</button>
+

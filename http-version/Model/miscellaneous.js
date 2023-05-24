@@ -23,7 +23,10 @@ function getProductionIdForPM(pmUserId){
 
 async function getProductionIdForLC(lcUserId){
     return new Promise((resolve, reject)=>{
-        const sql_query = " select distinct LCUserId from assemblyLine, assemblyLineLayout where assemblyLine.assemblyLineId = assemblyLineLayout.assemblyLineId AND assemblyLine.LCUserId="+lcUserId;
+        const sql_query = " select distinct productionId from assemblyLine, assemblyLineLayout where assemblyLine.assemblyLineId = assemblyLineLayout.assemblyLineId AND assemblyLine.LCUserId="+lcUserId;
+
+        console.log("DEBUG->get production id for lc  "+lcUserId);
+        console.log(sql_query);
 
         const connection = db_service.getDBConnection();
 
@@ -42,4 +45,4 @@ async function getProductionIdForSupervisor(supervisorUserId){
     return 1; // TODO
 }
 
-module.exports = {getProductionIdForPM}
+module.exports = {getProductionIdForPM, getProductionIdForLC}

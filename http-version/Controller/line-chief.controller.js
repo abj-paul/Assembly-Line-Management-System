@@ -7,6 +7,8 @@ const userHashLib = require("../Controller/userHash.js");
 const notification = require("../Model/notification.js");
 const assemblyLine = require("../Model/assembly-line-layoud.model.js");
 const combinationQuery = require("../Model/combinations.query.js");
+const miscDb = require("../Model/miscellaneous.js");
+
 
 
 function handlePostRequestToLineChief(req, res){
@@ -78,6 +80,32 @@ function __serveRequest(req, res){
             console.log("DEBUG: Layout for "+lineId);
             console.log(data);
             res.status(200).send({"Layout": data});
+        })
+    }else if(operationType==constants.REQUEST_RESOURCE){
+        const lineId = body.lineId;
+        const userId = body.userId;
+        const machineType = body.machineType;
+        const requestedMachineCount = body.requestedMachineCount;
+
+        combinationQuery.request_resource(userId, lineId, machineType, requestedMachineCount)
+        .then((data)=>{
+            res.status(200).send({"Status": "Resource Request Successful!"});
+        })
+    }else if(operationType==constants.SET_HOURLY_PRODUCTION){
+        const lineId = body.lineId;
+        const hourlyProductionTarget = body.hourlyProductionTarget;
+        const productionId = body.productionId;
+
+        combinationQuery.setHourlyProductionTarget(productionId, lineId, hourlyProductionTarget)
+        .then((data)=>{
+            res.status(200).send({"Status": "Hourly Production Target has been set Successful!"});
+        });
+    }else if(operationType==constants.GET_PRODUCTION_ID_FOR_USER){
+        const userId = body.userId;
+        console.log("DEBUG: GPIFU triggered!");
+        miscDb.getProductionIdForLC(userId)
+        .then((data)=>{
+            res.status(200).send({"ProductionId": data});
         })
     }
 }
