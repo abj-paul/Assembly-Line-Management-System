@@ -169,6 +169,14 @@ function __serveRequest(req, res){
         .then((data)=>{
             res.status(200).send({"ProductionId": data});
         })
+    }else if(operationType==constants.ASSIGN_SUPERVISOR){
+        const userId = body.userId;
+        const assemblyLineId = body.assemblyLineId;
+
+        miscDb.assignSupervisorToLine(userId, assemblyLineId)
+        .then((data)=>{
+            res.status(200).send({"Status":"Successfully assigned supervisor to line "+assemblyLineId});
+        })
     }
 }
 

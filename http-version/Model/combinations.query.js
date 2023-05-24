@@ -62,7 +62,21 @@ async function getAssignedLineIdForLineChief(userId){
     );
 }
 
+async function getAssignedLineIdForSupervisor(userId){
+    return new Promise((resolve, reject)=>{
+        const sql_query = "SELECT * FROM supervisorLineRelationship WHERE supervisorLineRelationship.userid="+userId;
+        connection.query(sql_query, (err, results, fields)=>{
+            if(err) {
+                reject(err);
+            }
+            resolve(results);
+        });
+    }
+    );
+}
+
 async function get_assembly_line_layout_for_given_line_id(lineId){
+    console.log("DEBUG--> this function is being called!");
     return new Promise((resolve, reject)=>{
         const sql_query = " SELECT distinct * FROM assemblyLineLayout, assemblyLine, machine where assemblyLine.assemblyLineId = assemblyLineLayout.assemblyLineId and machine.machineId = assemblyLineLayout.machineId and assemblyLine.assemblyLineId="+lineId;
         connection.query(sql_query, (err, results, fields)=>{
@@ -99,4 +113,4 @@ async function setHourlyProductionTarget(productionId, lineId, hourlyProductionT
     return "blah";
 }
 
-module.exports = {getLCAndTheirLines, getMachineAndAssemblyLineItIsAddedTo, getUnusedMachineList, getAssignedLineIdForLineChief, get_assembly_line_layout_for_given_line_id, request_resource, setHourlyProductionTarget}
+module.exports = {getLCAndTheirLines, getMachineAndAssemblyLineItIsAddedTo, getUnusedMachineList, getAssignedLineIdForLineChief, get_assembly_line_layout_for_given_line_id, request_resource, setHourlyProductionTarget, getAssignedLineIdForSupervisor}

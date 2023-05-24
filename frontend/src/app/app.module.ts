@@ -37,6 +37,8 @@ import { AboutComponent } from './pm-dashboard/about/about.component';
 import { AboutLcComponent } from './lc-dashboard/about-lc/about-lc.component';
 import { AboutAdminComponent } from './admin-dashboard/about-admin/about-admin.component';
 import { AboutSupervisorComponent } from './supervisor-dashboard/about-supervisor/about-supervisor.component';
+import { MarkWorkstationComponent } from './supervisor-dashboard/mark-workstation/mark-workstation.component';
+import { AssignSupervisorComponent } from './pm-dashboard/resource/assign-supervisor/assign-supervisor.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +74,9 @@ import { AboutSupervisorComponent } from './supervisor-dashboard/about-superviso
     AboutComponent,
     AboutLcComponent,
     AboutAdminComponent,
-    AboutSupervisorComponent
+    AboutSupervisorComponent,
+    MarkWorkstationComponent,
+    AssignSupervisorComponent
   ],
   imports: [
     BrowserModule,

@@ -6,6 +6,10 @@ const session = require("../Model/session.js");
 const userHashLib = require("../Controller/userHash.js");
 const notification = require("../Model/notification.js");
 const assemblyLine = require("../Model/assembly-line-layoud.model.js");
+const miscDb = require("../Model/miscellaneous.js");
+const combinationQuery = require("../Model/combinations.query.js");
+
+
 
 function handlePostRequestToSupervisor(req, res){
     const body = req.body;
@@ -61,14 +65,44 @@ function __serveRequest(req, res){
         report.__insertProductionReportData(userid, unit, productionAmount, comment)
         .then((data)=>{
             notification.__notify(3, "Hourly production report has been submitted");
-            notification.__notify(4, "Hourly production report has been submitted");
 
             res.status(200).send({"ReportId":data.insertId});
         })
         .catch((err)=>{
             throw err;
         });
-    } 
+    }else if(operationType == constants.GET_PRODUCTION_ID_FOR_USER){
+        const userId = body.userId;
+        console.log("DEBUG: GPIFU triggered!");
+        miscDb.getProductionIdForSupervisor(userId)
+        .then((data)=>{
+            res.status(200).send({"ProductionId": data});
+        })    
+    }else if(operationType==constants.GET_ASSIGNED_LINE_ID){
+        const userId = body.userid;
+        combinationQuery.getAssignedLineIdForSupervisor(userId)
+        .then((data)=>{
+            console.log("DEBUG: AssignedAssemblyLineId to Supervisor: ");
+            console.log(data[0].assemblyLineId);
+            res.status(200).send({"AssignedAssemblyLineId": data[0].assemblyLineId});
+        })
+    }else if(operationType==constants.GET_LAYOUT_FOR_GIVEN_LINEID){
+        const lineId = body.lineId;
+        combinationQuery.get_assembly_line_layout_for_given_line_id(lineId)
+        .then((data)=>{
+            console.log("DEBUG: Layout for "+lineId);
+            console.log(data);
+            res.status(200).send({"Layout": data});
+        })
+    }else if(operationType==constants.MARK_WORK_STATION){
+        const machineId = body.machineId;
+        const markStatus = body.markStatus;
+
+        miscDb.handleWorkstationMarking(machineId, markStatus)
+        .then((data)=>{
+            res.status(200).send({"Status": "Successfully marked machine "+machineId});
+        })
+    }
 }
 
 async function login(req, res){
@@ -89,4 +123,4 @@ async function login(req, res){
  
 }
 
-module.exports = {handlePostRequestToSupervisor}
+module.exports = { handlePostRequestToSupervisor }

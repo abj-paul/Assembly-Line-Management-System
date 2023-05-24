@@ -27,11 +27,13 @@ async function __createCongestionTable(){
             reject(false);
         }
     
+        
         const sql_query = `CREATE TABLE if not exists congestion(
     congestionId int auto_increment primary key,
     machineId int,
     timeRecorded datetime DEFAULT CURRENT_TIMESTAMP,
-    congestionStatus varchar(300),
+    congestionStatus varchar(30),
+    markedStatus int,
     imageFileUrl varchar(300),
     CONSTRAINT fk_congestion_machine_machineId FOREIGN KEY (machineId) REFERENCES machine(machineId)
     );`;

@@ -3,4 +3,5 @@ export class CongestionStatus{
     machineId: number = 0;
     assemblyLineId: number = 0;
     imageFileUrl: string = "";
+    markedStatus : number = 0;
 }

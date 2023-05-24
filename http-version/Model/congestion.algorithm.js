@@ -15,7 +15,7 @@ async function getCongestionStatusForWorkstations(assemblyLineId){
             reject(false);
         }
     
-        const sql_query = "select  distinct congestion.machineId, assemblyLineId, congestion.imageFileUrl, congestionStatus from congestion, assemblyLineLayout where assemblyLineLayout.machineId = congestion.machineId and assemblyLineLayout.assemblyLineId="+assemblyLineId;
+        const sql_query = "select  distinct congestion.machineId, assemblyLineId, congestion.imageFileUrl, congestionStatus, markedStatus from congestion, assemblyLineLayout where assemblyLineLayout.machineId = congestion.machineId and assemblyLineLayout.assemblyLineId="+assemblyLineId;
 
         connection.query(sql_query, (err, results, fields)=>{
             if(err) throw err;

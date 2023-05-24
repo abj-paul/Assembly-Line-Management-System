@@ -1,0 +1,16 @@
+.congestion{
+    border: 5px solid red;
+    background-color: blueviolet;
+    color: white;
+    height: 60px;
+    float: left;
+}
+
+.stats {
+    background-color: gainsboro;
+    height: 60px;
+    margin: auto;
+    text-align: center;
+    float: right;
+    margin-bottom: 10px;
+}

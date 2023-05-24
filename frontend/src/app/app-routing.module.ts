@@ -24,6 +24,7 @@ import { RegisterMachineComponent } from './pm-dashboard/resource/register-machi
 import { ViewLineComponent } from './lc-dashboard/view-line/view-line.component';
 import { CongestionComponent } from './lc-dashboard/congestion/congestion.component';
 import { SetViewerInfoComponent } from './admin-dashboard/set-viewer-info/set-viewer-info.component';
+import { MarkWorkstationComponent } from './supervisor-dashboard/mark-workstation/mark-workstation.component';
 
 const routes: Routes = [
   {path: "test", component: TestComponent},
@@ -57,7 +58,8 @@ const routes: Routes = [
   {path: "supervisor-dashboard", component: SupervisorDashboardComponent, children: [
     {path: "profile", component: ProfileComponent},
     {path: "reports", component: SubmitReportComponent},
-    {path: "assembly-line", component: AssemblyLineComponent}
+    {path: "assembly-line", component: AssemblyLineComponent},
+    {path: "mark-workstation", component: MarkWorkstationComponent}
   ]},
   {path: "assembly-line", component: ViewerComponent},
   {path: "set-assembly-line-layout", component: SetLineLayoutComponent}
