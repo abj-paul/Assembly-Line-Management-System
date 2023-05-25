@@ -1,5 +1,4 @@
 const mysql = require("mysql2");
-const notification = require("./notification.js");
 let connection = null;
 
 async function __connect(){
@@ -48,6 +47,7 @@ async function insertData(sql_query){
 }
 
 async function executeQuery(sql_query){
+    await __connect();
     return new Promise((resolve, reject)=>{
         connection.query(sql_query, (err, results, fields)=>{
             if(err) {

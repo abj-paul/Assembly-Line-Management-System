@@ -62,7 +62,8 @@ const routes: Routes = [
     {path: "mark-workstation", component: MarkWorkstationComponent}
   ]},
   {path: "assembly-line", component: ViewerComponent},
-  {path: "set-assembly-line-layout", component: SetLineLayoutComponent}
+  {path: "set-assembly-line-layout", component: SetLineLayoutComponent},
+  {path: "viewer", component: ViewerComponent}
 ];
 
 @NgModule({

@@ -26,6 +26,8 @@ export class LoginComponent {
     else if(this.role=="productionManager") url = this.constantsService.SERVER_IP_ADDRESS + "productionManager";
     else if(this.role=="lineChief") url = this.constantsService.SERVER_IP_ADDRESS + "lineChief";
     else if(this.role=="supervisor") url = this.constantsService.SERVER_IP_ADDRESS + "supervisor";
+    else if(this.role=="viewer") url = this.constantsService.SERVER_IP_ADDRESS + "viewer";
+
 
     const data = {
       "operation":"login",
@@ -77,6 +79,7 @@ export class LoginComponent {
           else if(data.nextPage=="production-manager-dashboard.html") this.router.navigate(["pm-dashboard"])
           else if(data.nextPage=="supervisor-dashboard.html") this.router.navigate(["supervisor-dashboard"])
           else if(data.nextPage=="line-chief-dashboard.html") this.router.navigate(["lc-dashboard"])
+          else if(data.nextPage=="viewer") this.router.navigate(["viewer"]);
         }
       })
       .catch((err)=>{
@@ -90,7 +93,8 @@ export class LoginComponent {
     else if(this.role=="productionManager") url = this.constantsService.SERVER_IP_ADDRESS + "productionManager";
     else if(this.role=="lineChief") url = this.constantsService.SERVER_IP_ADDRESS + "lineChief";
     else if(this.role=="supervisor") url = this.constantsService.SERVER_IP_ADDRESS + "supervisor";
-
+    else return;
+    
     const data = {
       "operation":"gpifu",
       "userId": this.accessControlService.getUser().userid,
@@ -112,9 +116,10 @@ export class LoginComponent {
           return resolve.json()
       })
       .then((data)=>{
+        this.sharedService.setProductionId(data.ProductionId);
           console.log("Production Id: ");
           console.log(data);
-          this.sharedService.setProductionId(data.ProductionId);
+          console.log("Saved: "+this.sharedService.getProductionId);
       })
       .catch((err)=>{
           console.log(err);

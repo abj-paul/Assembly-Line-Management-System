@@ -61,8 +61,11 @@ function __serveRequest(req, res){
         const unit = body.unit;
         const productionAmount = body.productionAmount;
         const comment = body.comment;
+        const productionId = body.productionId;
 
-        report.__insertProductionReportData(userid, unit, productionAmount, comment)
+        console.log("DEBUG->Supervisor->hourlyreport: "+productionId);
+
+        report.__insertProductionReportData(userid, productionId, unit, productionAmount, comment)
         .then((data)=>{
             notification.__notify(3, "Hourly production report has been submitted");
 

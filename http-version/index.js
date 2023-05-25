@@ -22,6 +22,7 @@ const session = require("./Model/session.js");
 const fastAPIConnection = require("./Model/congestion.algorithm.js");
 const floor = require("./Model/floor.model.js")
 const congestion = require("./Model/congestion.model.js");
+const viewerController = require("./Controller/viewer.controller.js");
 
 
 normal_start_database();
@@ -69,6 +70,8 @@ app.post("/supervisor", (req, res) => supervisorController.handlePostRequestToSu
 app.post("/productionManager", (req, res) => pmcontroller.handlePostRequestToProductionManager(req,res));
 app.post("/lineChief", (req, res) => lineChiefController.handlePostRequestToLineChief(req,res));
 app.post("/layout", (req, res) => layoutController.handlePostRequestToLayoutViaPM(req,res));
+app.post("/viewer", (req, res) => viewerController.handlePostRequestToViewer(req,res));
+
 
 
 //app.get("/dashboard/:userid", (req, res) => controller.handleGetRequestToDashboard(req,res));

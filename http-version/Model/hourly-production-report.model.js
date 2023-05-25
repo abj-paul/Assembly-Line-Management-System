@@ -49,9 +49,9 @@ async function __createProductionReportTable(){
     
 }
 
-async function __insertProductionReportData(userid, unit, productionAmount, comment){
+async function __insertProductionReportData(userid, productionId, unit, productionAmount, comment){
     return new Promise((resolve, reject)=>{
-        const sql_query = "INSERT into productionReport(userid, unit, productionAmount, comment) values('"+userid+"', '"+unit+"',"+productionAmount+", '"+comment+"');";
+        const sql_query = "INSERT into productionReport(userid, productionId, unit, productionAmount, comment) values('"+userid+"', "+productionId+", '"+unit+"',"+productionAmount+", '"+comment+"');";
         connection.query(sql_query, (err, results, fields)=>{
             if(err) {
                 reject(err);
