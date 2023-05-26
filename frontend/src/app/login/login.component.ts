@@ -14,7 +14,7 @@ export class LoginComponent {
   username: string = "";
   password: string = "";
   loginStatus: string = "";
-  role: string = "";
+  role: string = "admin";
   pic: string = "http://localhost:1401/profile/";
 
   
