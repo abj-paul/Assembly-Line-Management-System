@@ -177,15 +177,4 @@ export class LiveComponent implements OnInit {
   openCamera(camera_link:string):void{
     window.open(camera_link, '_blank');
   }
-  goBack(){
-    if(this.accessControlService.getUser().role=='admin')
-      this.router.navigate(["/admin-dashboard/production"]);
-    else if(this.accessControlService.getUser().role=='productionManager')
-      this.router.navigate(["/pm-dashboard/production"]);
-    else if(this.accessControlService.getUser().role=='lineChief')
-      this.router.navigate(["/lc-dashboard/layout"]);
-    else if(this.accessControlService.getUser().role=='supervisor')
-      this.router.navigate(["/supervisor-dashboard"]);
-    else this.router.navigate(["/home"]);
-  }
 }

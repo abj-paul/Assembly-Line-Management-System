@@ -79,12 +79,11 @@ const routes: Routes = [
   ]},
   {path: "assembly-line", component: ViewerComponent},
   {path: "set-assembly-line-layout", component: SetLineLayoutComponent},
-  {path: "viewer", component: ViewerComponent},
-  {path: "production", component: ProductionStatusComponent},
-  {path: "live", component: LiveComponent},
-  {path: "reports", component: ReportsMemosComponent}
-
-
+  {path: "viewer", component: ViewerComponent, children: [
+    {path: "production", component: ProductionStatusComponent},
+    {path: "live", component: LiveComponent},
+    {path: "reports", component: ReportsMemosComponent}
+  ]},
 
 ];
 
