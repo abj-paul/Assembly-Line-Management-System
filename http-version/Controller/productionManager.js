@@ -182,6 +182,11 @@ function __serveRequest(req, res){
         .then((data)=>{
             res.send({"AvailableLineChiefList": data});
         })
+    }else if(operationType == constants.GET_AVAILABLE_SUPERVISOR_LIST){
+        admin.getAvailableSupervisors()
+        .then((data)=>{
+            res.send({"AvailableSupervisorList": data});
+        })
     }
 }
 

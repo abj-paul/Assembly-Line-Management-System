@@ -2,14 +2,20 @@
 
 <div class="body">
     <div class="form-group">
-        <label>Assembly Line Id: </label>
-        <input type="number" class="form-control" [(ngModel)]="assemblyLineId">
+        <label>Assign Line Chief</label>
+        <select class="form-control" name="floor" [(ngModel)]="assemblyLineId">
+            <option value="1">Select Assembly Line</option>
+            <option *ngFor="let assemblyLine of assemblyLineList" [ngValue]="assemblyLine.assemblyLineId">{{assemblyLine.name}}</option>
+        </select>
     </div>
     <div class="form-group">
-        <label>Supervisor Id:</label>
-        <input type="number" class="form-control" [(ngModel)]="supervisorId">
+        <label>Assign Supervisor</label>
+        <select class="form-control" name="floor" [(ngModel)]="supervisorId">
+            <option value="1">Assign Supervisor to Line:</option>
+            <option *ngFor="let supervisor of availableSupervisorList" [ngValue]="supervisor.userId">{{supervisor.username}}</option>
+        </select>
     </div>
-    
+
     <button class="btn btn-success" (click)="assignSupervisorToLine()" >Assign!</button>
     <button class="btn btn-info" [routerLink]="['/pm-dashboard/resources/manpower']" style="float:right;"> Go Back </button>
 </div>

@@ -233,5 +233,16 @@ async function getAvailableLineChiefs(){
     });
 }
 
+async function getAvailableSupervisors(){
+    return new Promise((resolve, reject)=>{
+        const sql_query = "select * from user where userId not in (select userId from supervisorLineRelationship) AND  user.role='supervisor';";
+
+        connection.query(sql_query, (err, results, fields)=>{
+            if(err) throw err;
+            resolve(results);
+        });
+    });
+}
+
 // Admin login, Register new user, view existing user, delete existing user, edit user data, view his notification
-module.exports = {startDatabase, viewRegisteredUsers, __viewRegisteredUsers, __insertUserData, __deleteTable, __viewAllTableData, __getUserData, __deleteEntry , __createAdminUser, saveProfilePicture, getProfilePicture, saveImage, getImage, getAvailableLineChiefs}
+module.exports = {startDatabase, viewRegisteredUsers, __viewRegisteredUsers, __insertUserData, __deleteTable, __viewAllTableData, __getUserData, __deleteEntry , __createAdminUser, saveProfilePicture, getProfilePicture, saveImage, getImage, getAvailableLineChiefs, getAvailableSupervisors}
