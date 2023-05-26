@@ -115,6 +115,11 @@ function __serveRequest(req, res){
         .then((data)=>{
             res.status(200).send({"Status":"Deleted notification "+notificationId});
         })
+    }else if(operationType==constants.GET_PRODUCTION_LIST){
+        production.get_production_list()
+        .then((data)=>{
+            res.status(200).send({"ProductList":data});
+        })
     }
 }
 

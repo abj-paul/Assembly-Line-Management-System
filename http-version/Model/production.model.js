@@ -94,5 +94,18 @@ async function updateProductionIdFromLineList(productionId, lineIdList){
     }
 }
 
+async function get_production_list(){
+    const sql_query = "SELECT * from production;"; 
+    return new Promise((resolve, reject)=>{
+        connection.query(sql_query, (err, results, fields)=>{
+            if(err) {
+                reject(err);
+            }
+            resolve(results);
+        });
+    }
+    );
+}
 
-module.exports = { __createProductionTable, getProductionInfo, startNewProduction, setViewerInfo, updateProductionIdFromLineList}
+
+module.exports = { __createProductionTable, getProductionInfo, startNewProduction, setViewerInfo, updateProductionIdFromLineList, get_production_list}
