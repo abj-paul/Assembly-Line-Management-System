@@ -222,5 +222,16 @@ function getImage(req, res){
     })
 }
 
+async function getAvailableLineChiefs(){
+    return new Promise((resolve, reject)=>{
+        const sql_query = "select userId, username from user where userid not in (select LCUserId from assemblyLine) AND role='lineChief';";
+
+        connection.query(sql_query, (err, results, fields)=>{
+            if(err) throw err;
+            resolve(results);
+        });
+    });
+}
+
 // Admin login, Register new user, view existing user, delete existing user, edit user data, view his notification
-module.exports = {startDatabase, viewRegisteredUsers, __viewRegisteredUsers, __insertUserData, __deleteTable, __viewAllTableData, __getUserData, __deleteEntry , __createAdminUser, saveProfilePicture, getProfilePicture, saveImage, getImage}
+module.exports = {startDatabase, viewRegisteredUsers, __viewRegisteredUsers, __insertUserData, __deleteTable, __viewAllTableData, __getUserData, __deleteEntry , __createAdminUser, saveProfilePicture, getProfilePicture, saveImage, getImage, getAvailableLineChiefs}

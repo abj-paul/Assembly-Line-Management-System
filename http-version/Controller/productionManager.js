@@ -177,6 +177,11 @@ function __serveRequest(req, res){
         .then((data)=>{
             res.status(200).send({"Status":"Successfully assigned supervisor to line "+assemblyLineId});
         })
+    }else if(operationType==constants.GET_AVAILABLE_LC_LIST){
+        admin.getAvailableLineChiefs()
+        .then((data)=>{
+            res.send({"AvailableLineChiefList": data});
+        })
     }
 }
 

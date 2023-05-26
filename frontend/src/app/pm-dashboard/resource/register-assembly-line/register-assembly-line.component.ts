@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AssemblyLine } from 'src/app/models/AssemblyLine';
 import { AccessControlService } from 'src/app/services/access-control.service';
 import { ConstantsService } from 'src/app/services/constants.service';
@@ -9,14 +9,19 @@ import { ConstantsService } from 'src/app/services/constants.service';
   templateUrl: './register-assembly-line.component.html',
   styleUrls: ['./register-assembly-line.component.css']
 })
-export class RegisterAssemblyLineComponent {
+export class RegisterAssemblyLineComponent implements OnInit {
   //floor : number = 0;
+  LCUserId:number = 0;
+  lineChiefList : any;
+
   constructor(private contantsService: ConstantsService, private accessControlService: AccessControlService){}
+  ngOnInit(): void {
+    this.loadFreeLineChiefList();
+  }
 
   registerAssemblyLine():void{
     const name = (<HTMLInputElement>document.getElementById("nameAssemblyLine")).value;
     const otherInfo = (<HTMLInputElement>document.getElementById("otherInfo")).value;
-    const LCUserId = (<HTMLInputElement>document.getElementById("LCUserId")).value;
     const capacity = (<HTMLInputElement>document.getElementById("capacity")).value;
   
 
@@ -24,7 +29,7 @@ export class RegisterAssemblyLineComponent {
         "operation": "ral",
         "name": name,
         "capacity": capacity,
-        "LCUserId": LCUserId,
+        "LCUserId": this.LCUserId,
         "createdBy": this.accessControlService.getUser().userid,
         "otherInfo": otherInfo,
         "userHash":this.accessControlService.getUser().userHash
@@ -54,6 +59,35 @@ export class RegisterAssemblyLineComponent {
         .catch((err)=>{
           console.log(err);
         });
+  }
+
+  loadFreeLineChiefList():void{
+    let data = {
+      "operation": "get-available-line-chief-list",
+      "userHash":this.accessControlService.getUser().userHash
+  }
+  let url = this.contantsService.SERVER_IP_ADDRESS + "productionManager";
+
+  fetch(url, {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {"Content-Type": "application/json",},
+      redirect: "follow",
+      referrerPolicy: "no-referrer", 
+      body: JSON.stringify(data),
+  })
+      .then((resolve)=>{
+          console.log("Get available line chiefs Request has been resolved!");
+          return resolve.json()
+      })
+      .then((data)=>{
+        this.lineChiefList = data.AvailableLineChiefList;
+      })
+      .catch((err)=>{
+        console.log(err);
+      });
   }
 
 }

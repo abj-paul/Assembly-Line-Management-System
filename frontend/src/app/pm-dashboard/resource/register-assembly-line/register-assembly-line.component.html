@@ -14,8 +14,11 @@
     <input type="number" class="form-control" id="capacity">
 </div>
 <div class="form-group">
-    <label for="LCUserId">Assigned Line Chief</label>
-    <input type="text" class="form-control" id="LCUserId">
+    <label>Assign Line Chief</label>
+    <select class="form-control" name="floor" [(ngModel)]="LCUserId">
+        <option value="1">Select Line Chief</option>
+        <option *ngFor="let lineChief of lineChiefList" [ngValue]="lineChief.userId">{{lineChief.username}}</option>
+    </select>
 </div>
 <!--<div class="form-group">
     <span>Select Floor</span>
@@ -26,11 +29,6 @@
       <option value="4">Fourth Floor</option>
     </select>
 </div> -->
-
-<div class="form-group">
-    <label>Assigned Supervisor</label>
-    <input type="text" class="form-control" id="supervisorId">
-</div>
 
 <div class="form-group">
     <label for="otherInfo">Other Information:</label>
