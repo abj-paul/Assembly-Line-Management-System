@@ -29,15 +29,27 @@ def line_congestion_status(lineRequest:LineRequest):
 
 @app.post("/congestion_status/line/image/", response_model=list[CongestionStatus])
 def line_congestion_status_with_image(lineRequest:LineRequest):
+    print("DEBUG: "+str(lineRequest))
     arr = []
     print(lineRequest)
-    for machineId in lineRequest.machine_list:
+    for index,machineId in enumerate(lineRequest.machine_list):
         createFolderForWorkstation(machineId)
-        img_path = getLatestImageForWorkstation(machineId)
+        if lineRequest.camera_list[index] == None or lineRequest.camera_list[index]=='':
+            #print("NULL DETECTED!---------------")
+            img_path = getLatestImageForWorkstation(machineId)
 
-        arr.append({
-            "imageFileUrl": img_path.split("congestion-dataset")[1],
-            "congestionStatus": getCongestionStatusForImage(img_path),
-            "machineId": machineId
-            })
-    return arr
+            arr.append({
+                "imageFileUrl": img_path.split("congestion-dataset")[1],
+                "congestionStatus": getCongestionStatusForImage(img_path),
+                "machineId": machineId
+                })
+            return arr
+        else:
+            img_path_list = getImagesFromCamera(machineId, lineRequest.camera_list[index])
+
+            arr.append({
+                "imageFileUrl": img_path_list[0].split("congestion-dataset")[1],
+                "congestionStatus": getCongestionStatusFromImageList(img_path_list),
+                "machineId": machineId
+                })
+            return arr

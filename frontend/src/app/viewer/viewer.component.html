@@ -61,6 +61,7 @@
             <td>Houry Production</td>
             <td>Live!</td>
             <td>Marked?</td>
+            <td>Live Camera(Optional)</td>
         </tr>
     </thead>
     <tbody>
@@ -71,7 +72,14 @@
             <td><button (click)="showCongestionImage('http://localhost:1401/congestion/image' + machine.imageFileUrl)"> View Congestion Status</button></td>
             <td *ngIf="machine.markedStatus==1"> Marked </td>
             <td *ngIf="machine.markedStatus!=1"> No </td>
+            <td *ngIf="machine.camera_link!=null"><button (click)="openCamera(machine.camera_link)">Open Camera</button></td>
+            <td *ngIf="machine.camera_link==null"> No Camera </td>
+
         </tr>
     </tbody>
 </table>
 
+<hr>
+<h4>Download PDF:</h4>
+<button (click)="openPDF()">View MEMO</button>
+<a href="http://192.168.0.102:4747/" target="_blank"><button> View Live </button></a>

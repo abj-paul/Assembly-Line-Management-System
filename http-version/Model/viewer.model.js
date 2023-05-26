@@ -1,4 +1,5 @@
 const db_service = require("./DatabaseService.js");
+const memoService =  require("../pdf-generation/memo.js");
 
 async function estimateTotalProduction(productionId){ // returns a single value
     const totalProduction = await db_service.executeQuery("SELECT sum(productionAmount) ProductionReached from productionReport where productionId="+productionId);
@@ -58,7 +59,7 @@ async function getLineListForProduction(productionId){
 }
 
 async function getLineLayout(lineId){
-    const sql_query = "select distinct A.machineId, machineModel, machineType, perHourProduction, position, congestionStatus, markedStatus from machine, assemblyLineLayout A, congestion B where machine.machineId=A.machineId and A.machineId=B.machineId and assemblyLineId="+lineId;
+    const sql_query = "select distinct A.machineId, machineModel, machineType, perHourProduction, position, congestionStatus, markedStatus, machine.otherInfo camera_link from machine, assemblyLineLayout A, congestion B where machine.machineId=A.machineId and A.machineId=B.machineId and assemblyLineId="+lineId;
 
     const lineLayout = await db_service.executeQuery(sql_query);
     return lineLayout;
@@ -76,4 +77,10 @@ getGeneralProductionInfo()
 })
 */
 
-module.exports = {getGeneralProductionInfo, getLineLayout, getLineListForProduction}
+function generate_production_report(){
+    const outputPath = './data/pdf/memo.pdf';
+    memoService.generatePDF(memoService.testContent, outputPath);
+    return "memo.pdf";
+}
+
+module.exports = {getGeneralProductionInfo, getLineLayout, getLineListForProduction, generate_production_report}

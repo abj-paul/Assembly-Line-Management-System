@@ -13,8 +13,12 @@ export class RegisterMachineComponent {
   registerResouce(): void{
     const machineModel = (<HTMLInputElement>document.getElementById("machineModelId")).value;
     const machineType = (<HTMLInputElement>document.getElementById("machineType")).value;
-    const otherInfo = (<HTMLInputElement>document.getElementById("otherInfo")).value;
+    let otherInfo = (<HTMLInputElement>document.getElementById("otherInfo")).value;
     const perHourProduction = (<HTMLInputElement>document.getElementById("perHourProduction")).value;
+
+    console.log("DEBUG: Other Info");
+    //if(otherInfo) otherInfo='NULL';
+    console.log(otherInfo);
 
     let data = {
         "operation": "rm",

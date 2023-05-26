@@ -23,4 +23,10 @@ def getCongestionStatusForImage(image_path):
     
     return kmeans.predict(np.matmul(np.transpose(img_1D_vector.reshape(-1,1)), np.transpose(h)))[0]
 
+def getCongestionStatusFromImageList(img_path_list):
+    votes = []
+    for img_path in img_path_list:
+        votes.append(getCongestionStatusForImage(img_path))
+    return max(set(votes), key = votes.count) # majority voting
+
 print(getCongestionStatusForImage("/home/abhijit/rmg_images/frame0.jpg"))

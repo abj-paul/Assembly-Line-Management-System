@@ -31,15 +31,18 @@ async function updateCongestionStatusForSingleWorkstation(assemblyLineId){
 
     // Get workstation list from assembly line layout
     await databaseService.getDBConnection();
-    const sql_query = "select * from assemblyLineLayout where assemblyLineId="+assemblyLineId;
+    const sql_query = "select distinct machine.machineId, assemblyLineId, machine.otherInfo camera_link from assemblyLineLayout, machine where machine.machineId=assemblyLineLayout.machineId AND assemblyLineId="+assemblyLineId;
     const rows = await databaseService.getData(sql_query);
     const machine_list = []
     for(let i=0; i<rows.length; i++) machine_list.push(rows[i].machineId);
+    const camera_list = []
+    for(let i=0; i<rows.length; i++) camera_list.push(rows[i].camera_link);
 
     // Send workstation list to fastAPI to get their congestion status.
     let url = ip_addr + "congestion_status/line/image/";
     let data = {
         "machine_list": machine_list,
+        "camera_list": camera_list,
         "line_id": assemblyLineId
     }
 

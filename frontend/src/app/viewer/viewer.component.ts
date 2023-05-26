@@ -19,6 +19,8 @@ export class ViewerComponent implements OnInit{
   lineProductions : LineProduction[] = [];
   lineList: any = [];
   lineLayout: any = [];
+  BASE_PDF_URL : string = 'http://localhost:1401/viewer/report/';
+
 
   constructor(private accessControlService: AccessControlService, private constantsService: ConstantsService, private http:HttpClient){}
 
@@ -143,5 +145,39 @@ export class ViewerComponent implements OnInit{
 
   showCongestionImage(imageUrl : string){
     window.open(imageUrl, '_blank');
+  }
+  openPDF(){
+    let url = this.constantsService.SERVER_IP_ADDRESS + "viewer";
+    let data = {
+        "operation":"gpr",
+        "userHash": this.accessControlService.getUser().userHash
+    };
+
+    fetch(url, {
+      method: "POST",
+      mode: "cors", 
+      cache: "no-cache", 
+      credentials: "same-origin", 
+      headers: {"Content-Type": "application/json",},
+      redirect: "follow", 
+      referrerPolicy: "no-referrer", 
+      body: JSON.stringify(data),
+  })
+  .then((resolve)=>{
+      console.log("Generate PDF Request has been resolved!");
+      return resolve.json()
+  })
+  .then((res)=>{
+    const pdfUrl = this.BASE_PDF_URL + res.GeneratedPdfFileName;
+    window.open(pdfUrl, '_blank');
+  })
+  .catch((err)=>{
+    console.log(err);
+  }); 
+      
+  }
+
+  openCamera(camera_link:string):void{
+    window.open(camera_link, '_blank');
   }
 }

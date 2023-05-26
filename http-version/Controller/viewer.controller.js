@@ -50,6 +50,9 @@ function __serveRequest(req, res){
         .then((data)=>{
             res.status(200).send({"LineLayout":data});
         })
+    }else if(operationType==constants.GENERATE_PRODUCTION_REPORT){
+        const generatedPdfFileName = viewer.generate_production_report();
+        res.status(200).send({"GeneratedPdfFileName":generatedPdfFileName});
     }
 }
 

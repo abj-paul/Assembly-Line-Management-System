@@ -31,6 +31,8 @@ normal_start_database();
 // IMAGE SUPPORT START---------------------------------------------------------------------
 const IMAGE_DIR = "./data/profile/";
 const CONGESTION_DATA_DIR = "./congestion-dataset/";
+const REPORT_DIR = "./data/pdf/";
+
 
 const multer = require("multer");
 const path = require("path");
@@ -55,6 +57,7 @@ const upload = multer({ storage });
 app.use(express.json()); 
 app.use("/profile", express.static(path.join(__dirname, IMAGE_DIR))); //http://localhost:1401/congestion/image/machine3/frame0.jpg
 app.use("/congestion/image", express.static(path.join(__dirname, CONGESTION_DATA_DIR))); 
+app.use("/viewer/report", express.static(path.join(__dirname, REPORT_DIR))); //http://localhost:1401/viewer/report/memo.pdf
 
 
 // Handle POST request for image upload
@@ -86,7 +89,7 @@ function testAdmin(){
 /*
 setInterval(function() {
   fastAPIConnection.updateCongestionStatusForWorkstations()
-}, 5 * 1000); // 10 * 10000 milsec = 10s
+}, 30 * 1000); // 10 * 10000 milsec = 10s
 */
 
 

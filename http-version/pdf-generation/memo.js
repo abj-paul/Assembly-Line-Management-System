@@ -1,7 +1,26 @@
 const fs = require('fs');
 const PDFDocument = require('pdfkit');
 
-const memoContent = `
+function generatePDF(content, outputPath) {
+  const doc = new PDFDocument();
+
+  // Pipe the PDF document to a writable stream
+  const writeStream = fs.createWriteStream(outputPath);
+  doc.pipe(writeStream);
+
+  // Write the content to the PDF document
+  doc.fontSize(12).text(content);
+
+  // Finalize the PDF document
+  doc.end();
+
+  // Handle the write stream's finish event
+  writeStream.on('finish', () => {
+    console.log(`PDF saved to: ${outputPath}`);
+  });
+}
+
+let testContent = `
 Memorandum
 
 To: [Recipient Name]
@@ -17,27 +36,11 @@ Please let me know if you have any questions.
 
 Thank you,
 [Your Name]
-`;
 
-// Create a new PDF document
-const doc = new PDFDocument();
+`
+/*
+const outputPath = '../data/pdf/memo.pdf';
+generatePDF(memoContent, outputPath);
+*/
 
-// Pipe the PDF document to a file
-const writeStream = fs.createWriteStream('memo.pdf');
-doc.pipe(writeStream);
-
-// Set the content of the PDF document
-doc.text(memoContent);
-
-// Finalize the PDF document
-doc.end();
-
-// Handle the finish event when the PDF generation is complete
-writeStream.on('finish', () => {
-  console.log('PDF generation complete.');
-});
-
-// Handle any error during PDF generation
-writeStream.on('error', (error) => {
-  console.error('Error generating PDF:', error);
-});
+module.exports = {generatePDF, testContent}
