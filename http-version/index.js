@@ -25,6 +25,7 @@ const congestion = require("./Model/congestion.model.js");
 const viewerController = require("./Controller/viewer.controller.js");
 const notification = require("./Model/notification.js");
 const quality = require("./Model/quality-report.model.js");
+const assemblyLineIssues = require("./Model/assenbly-line-issues-report.model.js");
 
 
 normal_start_database();
@@ -129,6 +130,7 @@ await report.__createProductionReportTable();
 
 await congestion.initializeCongestionStatusForMachines();
 await quality.__createQualityReportTable();
+await assemblyLineIssues.create_assembly_line_issues_report_table();
 //await floor.create_floor_table();
 
 }
@@ -146,6 +148,7 @@ async function normal_start_database(){
     await report.__createProductionReportTable();
     await congestion.initializeCongestionStatusForMachines();
     await quality.__createQualityReportTable();
+    await assemblyLineIssues.create_assembly_line_issues_report_table();
 
     notification.__notify(1, "Assembly Line Management System has started!")
   .then((data)=>{});

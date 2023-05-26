@@ -48,6 +48,8 @@ import { SetHourlyTargetComponent } from './lc-dashboard/set-hourly-target/set-h
 import { LiveComponent } from './viewer/live/live.component';
 import { ProductionStatusComponent } from './viewer/production-status/production-status.component';
 import { ReportsMemosComponent } from './viewer/reports-memos/reports-memos.component';
+import { CongestionIssueReportComponent } from './viewer/congestion-issue-report/congestion-issue-report.component';
+import { QualityReportComponent } from './viewer/quality-report/quality-report.component';
 
 @NgModule({
   declarations: [
@@ -92,7 +94,9 @@ import { ReportsMemosComponent } from './viewer/reports-memos/reports-memos.comp
     LiveComponent,
     ProductionStatusComponent,
     ReportsComponent,
-    ReportsMemosComponent
+    ReportsMemosComponent,
+    CongestionIssueReportComponent,
+    QualityReportComponent
   ],
   imports: [
     BrowserModule,

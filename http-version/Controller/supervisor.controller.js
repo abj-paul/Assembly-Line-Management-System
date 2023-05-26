@@ -9,6 +9,7 @@ const assemblyLine = require("../Model/assembly-line-layoud.model.js");
 const miscDb = require("../Model/miscellaneous.js");
 const combinationQuery = require("../Model/combinations.query.js");
 const qualityService = require("../Model/quality-report.model.js");
+const congestionIssues = require("../Model/assenbly-line-issues-report.model.js");
 
 
 
@@ -116,6 +117,18 @@ function __serveRequest(req, res){
         qualityService.__insertQualityReportData(userid, unit, defectedProductCount, goodProductCount, comment)
         .then((data)=>{
             res.send({"Status":data.insertId});
+        })
+    }else if(operationType == constants.SUBMIT_CONGESTION_REPORT){
+        const userId = body.userid;
+        const productionId = body.productionId;
+        const assemblyLineId = body.assemblyLineId;
+        const machineId = body.machineId;
+        const congestionIssueDetails = body.congestionIssueDescription;
+        const comment = body.comment;
+
+        congestionIssues.insert_assembly_line_issue(userId, productionId, assemblyLineId, machineId,congestionIssueDetails, comment)
+        .then((data)=>{
+            res.send({"InsertId":data.insertId});
         })
     }
 }

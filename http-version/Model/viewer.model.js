@@ -65,6 +65,13 @@ async function getLineLayout(lineId){
     return lineLayout;
 }
 
+async function getCongestionIssuesReports(){
+    const sql_query = "SELECT distinct * FROM assemblyLineIssuesReport A, production where production.productionId=A.productionId;";
+
+    const rows = await db_service.executeQuery(sql_query);
+    return rows;
+}
+
 /*
 //Testing
 getGeneralProductionInfo()
@@ -97,6 +104,13 @@ async function generate_production_report(){
 
 }
 
+async function getQualityReports(){
+    const sql_query = "SELECT distinct * from assemblyLineIssuesReport, production where production.productionId=assemblyLineIssuesReport.productionId;";
+
+    const rows = await db_service.executeQuery(sql_query);
+    return rows;
+}
+
 function test_report(){
     const outputPath = './data/pdf/memo.pdf';
     memoService.generatePDF(memoService.testContent, outputPath);
@@ -127,4 +141,4 @@ function generate_system_start_memo(){
     return "system-start-memo.pdf";
 }
 
-module.exports = {getGeneralProductionInfo, getLineLayout, getLineListForProduction, generate_production_report, generate_system_start_memo}
+module.exports = {getGeneralProductionInfo, getLineLayout, getLineListForProduction, generate_production_report, generate_system_start_memo, getQualityReports, getCongestionIssuesReports}

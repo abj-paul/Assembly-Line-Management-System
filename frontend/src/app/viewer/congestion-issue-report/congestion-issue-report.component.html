@@ -1,0 +1,23 @@
+
+<p class="header">Congestion Issue Reports </p>
+
+<table class="table table-primary table-striped bg-light">
+    <thead>
+        <tr>
+            <th>Time</th>
+            <th>Product</th>
+            <th>Machine</th>
+            <th>Congestion Issue</th>
+            <th>Comments</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let congestionIssue of congestionIssues">
+            <td>{{congestionIssue.timeSent}}</td>
+            <td>{{congestionIssue.productName}}</td>
+            <td>{{congestionIssue.machineId}}</td>
+            <td>{{congestionIssue.congestionIssueDetails}}</td>
+            <td>{{congestionIssue.comment}}</td>
+        </tr>
+    </tbody>
+</table>

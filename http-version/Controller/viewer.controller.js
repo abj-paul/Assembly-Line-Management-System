@@ -3,6 +3,7 @@ const viewer = require("../Model/viewer.model.js");
 const session = require("../Model/session.js");
 const userHashLib = require("../Controller/userHash.js");
 const admin = require("../admin.js");
+const report = require("../Model/hourly-production-report.model.js");
 
 
 
@@ -62,6 +63,26 @@ function __serveRequest(req, res){
     }else if(operationType==constants.GENERATE_SYSTEM_START_MEMO){
         const generatedPdfFileName = viewer.generate_system_start_memo();
         res.status(200).send({"GeneratedPdfFileName":generatedPdfFileName});
+    }else if(operationType==constants.GET_QUALITY_REPORTS){
+
+        viewer.getQualityReports()
+        .then((data)=>{
+            res.send({"QualityReports":data});
+        })
+    }else if(operationType==constants.VIEW_HOURLY_PRODUCTION_REPORT){
+        report.__viewProductionReport()
+        .then((data)=>{
+            res.status(200).send({"ProductionReport":data});
+        })
+        .catch((err)=>{
+            throw err;
+        });
+    }else if(operationType == constants.VIEW_ASSEMBLY_LINE_ISSUES_REPORT){
+
+        viewer.getCongestionIssuesReports()
+        .then((data)=>{
+            res.send({"CongestionIssues":data});
+        })
     }
 }
 

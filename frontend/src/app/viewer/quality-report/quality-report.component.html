@@ -1,0 +1,26 @@
+<p class="header"> Quality Reports</p>
+
+<table class="table table-primary table-striped bg-light">
+    <thead>
+        <tr>
+            <th>Time</th>
+            <th>Product</th>
+            <th>Good Product</th>
+            <th>Defected Product</th>
+            <th>Unit</th>
+            <th>Quality Fall</th>
+            <th>Comments</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let qualityReport of qualityReports">
+            <td>{{qualityReport.timeSent}}</td>
+            <td>{{qualityReport.productName}}</td>
+            <td>{{qualityReport.defectedProductCount}}</td>
+            <td>{{qualityReport.goodProductCount}}</td>
+            <td>{{qualityReport.unit}}</td>
+            <td>{{qualityReport.defectedProductCount/(qualityReport.defectedProductCount + qualityReport.goodProductCount)}}</td>
+            <td>{{qualityReport.comment}}</td>
+        </tr>
+    </tbody>
+</table>

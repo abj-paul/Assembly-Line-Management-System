@@ -6,6 +6,10 @@
     color:darkcyan;
 }
 
+.body{
+    width: 70%;
+    margin: auto;
+}
 .mat-icon {
     vertical-align: middle;
 }

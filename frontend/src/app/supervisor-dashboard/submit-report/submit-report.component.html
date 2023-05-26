@@ -48,26 +48,21 @@
     <div class="col-sm-4 subsection">
         <p>Assembly Line Report</p>
         <div class="form-group">
-            <label for="almNumId">Assembly Line Number:</label>
-            <input class="form-control" type="number" name="almNum" id="almNumId">
+            <label>Congestion Issue Description:</label>
+            <input class="form-control" type="text" [(ngModel)]="congestionIssueDescription" >
         </div>
 
         <div class="form-group">
-            <label for="congestionIssueDescriptionId">Congestion Issue Description:</label>
-            <input class="form-control" type="text" name="congestionIssueDescription" id="congestionIssueDescriptionId">
-        </div>
-
-        <div class="form-group">
-            <label for="wrokstationNumId">Workstation Number:</label>
-            <input class="form-control" type="number" name="wrokstationNum" id="wrokstationNumId" placeholder="(e.g. Number of Completed Garments)">
+            <label>Workstation Number:</label>
+            <input class="form-control" type="number" [(ngModel)]="issue_machineId">
         </div>
 
 
         <div class="form-group subs">
-            <label for="commentOnCongestionId">Comments: </label>
-            <input class="form-control" type="text" name="commentOnCongestion" id="commentOnCongestionId">
+            <label>Comments: </label>
+            <input class="form-control" type="text" [(ngModel)]="commentOnIssue">
         </div>
 
-        <button onclick="">Submit Congestion Issue</button>
+        <button (click)="submitCongestionIssue()">Submit Congestion Issue</button>
     </div>
 </div>
