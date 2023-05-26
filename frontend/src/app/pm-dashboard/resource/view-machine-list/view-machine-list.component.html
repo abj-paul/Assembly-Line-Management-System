@@ -2,30 +2,35 @@
 <div class="header">
     Registered Machines & Their Availability
 </div>
-<table class="table table-striped bg-light">
-    <tr>
-        <th> Model </th>
-        <th> Hourly Production </th>
-        <th> Assigned Line </th>
-        <th class="actionColumn"> Action </th>
-    </tr>
+<table class="table table-primary table-striped bg-light">
+    <thead>
+        <tr>
+            <th> Model </th>
+            <th> Hourly Production </th>
+            <th> Assigned Line </th>
+            <th class="actionColumn"> Action </th>
+        </tr>
+    </thead>
 
-    <tr *ngFor="let machine of machineList; let i = index" [attr.data-index]="i">
-        <td *ngIf="isUpdating(machine)==false">{{machine.machineModel}}</td>
-        <td *ngIf="isUpdating(machine)==false">{{machine.perHourProduction}}</td>
-        <td *ngIf="isUpdating(machine)==false"> {{machine.assemblyLineName}} </td>
-        <td *ngIf="processHappening==false" class="actionColumn">
-            <button (click)="editInfo(machine)"> Edit </button>
-            <button (click)="deleteInfo(machine)"> Delete </button>
-        </td>
+    <tbody>
+        <tr *ngFor="let machine of machineList; let i = index" [attr.data-index]="i">
+            <td *ngIf="isUpdating(machine)==false">{{machine.machineModel}}</td>
+            <td *ngIf="isUpdating(machine)==false">{{machine.perHourProduction}}</td>
+            <td *ngIf="isUpdating(machine)==false"> {{machine.assemblyLineName}} </td>
+            <td *ngIf="processHappening==false" class="actionColumn">
+                <button (click)="editInfo(machine)"> Edit </button>
+                <button (click)="deleteInfo(machine)"> Delete </button>
+            </td>
+    
+            <td *ngIf="isUpdating(machine)==true"><input type="text" name="machineModel" [(ngModel)]="machineModel" placeholder={{machineInProcess.machineModel}}></td>
+            <td *ngIf="isUpdating(machine)==true"><input type="text" name="perHourProduction" [(ngModel)]="perHourProduction">{{machineInProcess.perHourProduction}}</td> 
+            <td *ngIf="isUpdating(machine)==true">{{machineInProcess.assemblyLineName}}</td>
+            <td *ngIf="processHappening==true" class="actionColumn">
+                <button (click)="confirmChange()"> Confirm </button>
+            </td>
+        </tr>
+    </tbody>
 
-        <td *ngIf="isUpdating(machine)==true"><input type="text" name="machineModel" [(ngModel)]="machineModel" placeholder={{machineInProcess.machineModel}}></td>
-        <td *ngIf="isUpdating(machine)==true"><input type="text" name="perHourProduction" [(ngModel)]="perHourProduction">{{machineInProcess.perHourProduction}}</td> 
-        <td *ngIf="isUpdating(machine)==true">{{machineInProcess.assemblyLineName}}</td>
-        <td *ngIf="processHappening==true" class="actionColumn">
-            <button (click)="confirmChange()"> Confirm </button>
-        </td>
-    </tr>
 </table>
 
-<button [routerLink]="['/pm-dashboard/register-machine']"> Register New Machine</button>
+<button class="btn btn-primary registerButton" [routerLink]="['/pm-dashboard/register-machine']"> Register New Machine</button>

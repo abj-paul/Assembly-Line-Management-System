@@ -1,11 +1,16 @@
-<h4> Assign Supervisor to Assembly Line: </h4>
-<div class="form-group">
-    <label>Assembly Line Id: </label>
-    <input type="number" class="form-control" [(ngModel)]="assemblyLineId">
-</div>
-<div class="form-group">
-    <label>Supervisor Id:</label>
-    <input type="number" class="form-control" [(ngModel)]="supervisorId">
+<p class="header"> Assign Supervisor to Assembly Line</p>
+
+<div class="body">
+    <div class="form-group">
+        <label>Assembly Line Id: </label>
+        <input type="number" class="form-control" [(ngModel)]="assemblyLineId">
+    </div>
+    <div class="form-group">
+        <label>Supervisor Id:</label>
+        <input type="number" class="form-control" [(ngModel)]="supervisorId">
+    </div>
+    
+    <button class="btn btn-success" (click)="assignSupervisorToLine()" >Assign!</button>
+    <button class="btn btn-info" [routerLink]="['/pm-dashboard/resources/manpower']" style="float:right;"> Go Back </button>
 </div>
 
-<button (click)="assignSupervisorToLine()" >Assign!</button>

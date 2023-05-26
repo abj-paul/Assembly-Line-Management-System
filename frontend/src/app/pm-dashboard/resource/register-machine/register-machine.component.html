@@ -1,9 +1,6 @@
-
-<div class="row" id="registerResource">
-    <div class="p-5 text-center bg-light">
-        <h4 class="mb-3">Register Machine</h4>
-    </div>
-
+<h4 class="header">Register Machine</h4>
+<div class="row body" id="registerResource">
+    
     <div class="form-group">
         <label for="machineType">Type of Machine:</label>
         <select class="form-control" id="machineType">
@@ -26,8 +23,8 @@
         <input type="text" class="form-control" id="otherInfo">
     </div>
 
-    <button type="submit" class="btn btn-primary" (click)="registerResouce()">Submit</button>
+    <button class="btn btn-primary" (click)="registerResouce()">Submit</button>
+    <button class="btn btn-info" [routerLink]="['/pm-dashboard/resources/machine']"> Go Back </button>
     <span id="resourceRegistrationStatus"></span>
 </div>
 
-<button [routerLink]="['/pm-dashboard/resources']"> Go Back </button>

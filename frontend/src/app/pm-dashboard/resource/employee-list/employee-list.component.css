@@ -1,11 +1,10 @@
-.header{
-    padding: 30px;
-    text-align: center;
-    font-size: 20px;
-    color:darkcyan;
-}
-
 .registerButton{
     width: 30%;
     float: right;
+}
+.header{
+    padding: 20px;
+    text-align: center;
+    font-size: 20px;
+    color:darkcyan;
 }

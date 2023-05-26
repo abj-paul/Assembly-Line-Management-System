@@ -25,6 +25,10 @@ import { ViewLineComponent } from './lc-dashboard/view-line/view-line.component'
 import { CongestionComponent } from './lc-dashboard/congestion/congestion.component';
 import { SetViewerInfoComponent } from './admin-dashboard/set-viewer-info/set-viewer-info.component';
 import { MarkWorkstationComponent } from './supervisor-dashboard/mark-workstation/mark-workstation.component';
+import { EmployeeListComponent } from './pm-dashboard/resource/employee-list/employee-list.component';
+import { ViewMachineListComponent } from './pm-dashboard/resource/view-machine-list/view-machine-list.component';
+import { ViewAssemblyLinesComponent } from './pm-dashboard/resource/view-assembly-lines/view-assembly-lines.component';
+import { AssignSupervisorComponent } from './pm-dashboard/resource/assign-supervisor/assign-supervisor.component';
 
 const routes: Routes = [
   {path: "test", component: TestComponent},
@@ -42,7 +46,12 @@ const routes: Routes = [
   {path: "pm-dashboard", component: PmDashboardComponent, children: [
     {path: "profile", component: ProfileComponent},
     {path: "production", component: ProductionComponent},
-    {path: "resources", component: ResourceComponent},
+    {path: "resources", component: ResourceComponent, children: [
+      {path: "manpower", component: EmployeeListComponent},
+      {path: "assign", component: AssignSupervisorComponent},
+      {path: "machine", component: ViewMachineListComponent},
+      {path: "assembly-line", component: ViewAssemblyLinesComponent},
+    ]},
     {path: "reports", component: ReportsComponent},
     {path: "assembly-line", component: AssemblyLineComponent},
     {path: "register-assembly-line", component: RegisterAssemblyLineComponent},

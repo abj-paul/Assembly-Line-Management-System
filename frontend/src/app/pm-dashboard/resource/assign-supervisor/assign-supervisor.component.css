@@ -1,0 +1,21 @@
+
+.header{
+    padding: 20px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+    color:darkcyan;
+}
+
+.body{
+    width: 70%;
+    background-color: beige;
+    margin-top: 200px;
+    margin: auto;
+    padding: 50px;
+}
+
+input, button {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

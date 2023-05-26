@@ -1,26 +1,7 @@
-
-<app-view-assembly-lines></app-view-assembly-lines>
-
-<div class="row">
-    <p class="header">Line Chiefs & Their Lines</p>
-    <table class="table table-primary table-striped bg-light">
-        <tr>
-            <th>User Id</th>
-            <th>Line Chief Name</th>
-            <th>Assigned Line</th>
-            <th>Line Capacity</th>
-        </tr>
-        <tr *ngFor="let x of lineChiefAndLines">
-            <td>{{x.userid}}</td>
-            <td>{{x.username}}</td>
-            <td>{{x.assemblyLineName}}</td>
-            <td>{{x.capacity}}</td>
-        </tr>
-    </table>
+<div class="menu">
+    <button class="btn btn-success" [routerLink]="['/pm-dashboard/resources/manpower']"> Manpower </button>
+    <button class="btn btn-primary" [routerLink]="['/pm-dashboard/resources/assembly-line']"> Assembly Lines </button>
+    <button class="btn btn-info" [routerLink]="['/pm-dashboard/resources/machine']"> Machines </button>
 </div>
 
-<app-view-machine-list></app-view-machine-list>
-
-<hr>
-
-<app-assign-supervisor></app-assign-supervisor>
+<router-outlet></router-outlet>

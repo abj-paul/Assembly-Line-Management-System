@@ -1,0 +1,25 @@
+
+<div class="row">
+    <p class="header">Line Chiefs & Their Lines</p>
+    <table class="table table-primary table-striped bg-light">
+        <thead>
+            <tr>
+                <th>User Id</th>
+                <th>Line Chief Name</th>
+                <th>Assigned Line</th>
+                <th>Line Capacity</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <tr *ngFor="let x of lineChiefAndLines">
+                <td>{{x.userid}}</td>
+                <td>{{x.username}}</td>
+                <td>{{x.assemblyLineName}}</td>
+                <td>{{x.capacity}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<button class="btn btn-primary registerButton" [routerLink]="['/pm-dashboard/resources/assign']"> Assign Supervisor </button>

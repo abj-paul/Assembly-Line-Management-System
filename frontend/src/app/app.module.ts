@@ -42,6 +42,7 @@ import { AssignSupervisorComponent } from './pm-dashboard/resource/assign-superv
 
 import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EmployeeListComponent } from './pm-dashboard/resource/employee-list/employee-list.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AboutAdminComponent,
     AboutSupervisorComponent,
     MarkWorkstationComponent,
-    AssignSupervisorComponent
+    AssignSupervisorComponent,
+    EmployeeListComponent
   ],
   imports: [
     BrowserModule,
