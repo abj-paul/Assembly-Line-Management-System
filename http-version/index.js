@@ -23,6 +23,7 @@ const fastAPIConnection = require("./Model/congestion.algorithm.js");
 const floor = require("./Model/floor.model.js")
 const congestion = require("./Model/congestion.model.js");
 const viewerController = require("./Controller/viewer.controller.js");
+const notification = require("./Model/notification.js");
 
 
 normal_start_database();
@@ -74,7 +75,6 @@ app.post("/productionManager", (req, res) => pmcontroller.handlePostRequestToPro
 app.post("/lineChief", (req, res) => lineChiefController.handlePostRequestToLineChief(req,res));
 app.post("/layout", (req, res) => layoutController.handlePostRequestToLayoutViaPM(req,res));
 app.post("/viewer", (req, res) => viewerController.handlePostRequestToViewer(req,res));
-
 
 
 //app.get("/dashboard/:userid", (req, res) => controller.handleGetRequestToDashboard(req,res));
@@ -143,4 +143,8 @@ async function normal_start_database(){
     await assemblyLine.__createAssemblyLineLayoutTable();
     await report.__createProductionReportTable();
     await congestion.initializeCongestionStatusForMachines();
+
+    notification.__notify(1, "Assembly Line Management System has started!")
+  .then((data)=>{});
+
 }

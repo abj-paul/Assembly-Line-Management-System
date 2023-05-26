@@ -149,7 +149,7 @@ async function __createAdminUser(){
     const adminIdPromise = await __insertUserData("Admin", DEFAULT_ADMIN_PASSWORD, 21, "Admin", "1684754460520.jpeg", "The admin of ALMS system!");
 
     //console.log(adminIdPromise.insertId);
-    //notification.__notify(adminIdPromise.insertId, "Admin account has been created!")
+    //.__notify(adminIdPromise.insertId, "Admin account has been created!")
     return adminIdPromise.insertId;
 }
 

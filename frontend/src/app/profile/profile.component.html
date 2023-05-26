@@ -1,32 +1,39 @@
 <div class="row" id="profile">
-    <div class="p-5 text-center bg-light">
-      <h4 class="mb-3">Profile</h4>
-    </div>
+  <div class="p-5 text-center">
+    <h4 class="header">Profile</h4>
+  </div>
 
-    <div class="row">
-      <div class="col-sm-7">     
-          <h3>Role: </h3>             
-          <div class='myRow'>Name: {{user.username}}</div>
-          <div class='myRow'>Age: {{user.age}}</div>
-          <div class='myRow'>General Info: {{user.general_info}}</div>
-          <div class='myRow'>Employee Id: {{user.userid}}</div>
-        </div>
-      <div class="col-sm-5">
-        <img [src]="imageURL">
+
+  <div class="row">
+    <div class="col-sm-7">    
+        <h3><b>Role:</b> </h3>            
+        <div class='myRow'><b>Name:</b> {{user.username}}</div>
+        <div class='myRow'> <b>Age:</b> {{user.age}}</div>
+        <div class='myRow'><b>General Info:</b> {{user.general_info}}</div>
+        <div class='myRow'><b>Employee Id:</b> {{user.userid}}</div>
       </div>
+    <div class="col-sm-5">
+      <img [src]="imageURL">
     </div>
-
-<p>Notifications:</p>
+  </div>
+<br>
+<br>
+<div class="notification-box" style="padding-top: 20px;">
+<h3><b>Notifications:</b></h3>
 <table class="table table-striped" id="notificationTable">
-  <tr>
-    <th> Timestamp </th>
-    <th> Message </th>
-    <th> Action </th> <!--<button>Click</button>-->
-  </tr>
+<tr style="background-color: chartreuse; text-align: center;">
+  <th> Timestamp </th>
+  <th> Message </th>
+  <th> Action </th> <!--<button>Click</button>-->
+</tr>
 
-  <tr *ngFor="let notification of notifications; let i = index" [attr.data-index]="i">
-    <td>{{notification[0]}}</td>
-    <td>{{notification[1]}}</td>
-    <td> <button>Delete</button> </td>
-  </tr>
+
+<tr *ngFor="let notification of notifications; let i = index" [attr.data-index]="i">
+  <td>{{notification[0]}}</td>
+  <td>{{notification[1]}}</td>
+  <td> <button (click)="deleteNotification(notification[2])">Delete</button> </td>
+</tr>
 </table>
+
+
+</div>

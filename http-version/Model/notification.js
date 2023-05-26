@@ -30,7 +30,7 @@ async function getNotifications(userid){
                 if(err) throw err;
                 let notifications = []
                 for(let i=0; i<results.length; i++){
-                    notifications.push([results[i].timeSent, results[i].message])
+                    notifications.push([results[i].timeSent, results[i].message, results[i].notificationId])
                 }
                 resolve(notifications);
             })
@@ -81,4 +81,23 @@ async function __createNotificationTable(){
     
 }
 
-module.exports = {getNotifications, __connect, __createNotificationTable, __notify}
+async function delete_notification(notificationId){
+    await __connect();
+    return new Promise((resolve, reject)=>{
+        if(connection==null){
+            console.log("Connect to databse first!");
+            reject(false);
+        }
+        
+            const sql_query = "DELETE FROM notification WHERE notificationId="+notificationId;
+        
+            connection.query(sql_query, (err, results, fields)=>{
+                if(err) throw err;
+                //console.log(results);
+                console.log("notification has been deleted successfully!");
+                resolve(true);
+            })
+    });
+}
+
+module.exports = {getNotifications, __connect, __createNotificationTable, __notify, delete_notification}

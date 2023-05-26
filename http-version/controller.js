@@ -109,6 +109,12 @@ function __serveRequest(req, res){
             console.log(data);
             res.status(200).send({"Status": "Successfully set viewer info"});
         })
+    }else if(operationType==constants.DELETE_NOTIFICATION){
+        const notificationId = body.notificationId;
+        notification.delete_notification(notificationId)
+        .then((data)=>{
+            res.status(200).send({"Status":"Deleted notification "+notificationId});
+        })
     }
 }
 

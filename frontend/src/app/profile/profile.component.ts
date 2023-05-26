@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../models/User';
@@ -14,7 +15,7 @@ export class ProfileComponent implements OnInit{
   notifications: any[] = [];
   imageURL : string = "" ;
 
-  constructor(private accessControlService: AccessControlService, private router : Router, private constantsService : ConstantsService){}
+  constructor(private accessControlService: AccessControlService, private router : Router, private constantsService : ConstantsService, private http: HttpClient){}
   ngOnInit(): void {
     this.user = this.accessControlService.getUser();
     this.imageURL = this.imageURL+this.user.pic;
@@ -23,7 +24,7 @@ export class ProfileComponent implements OnInit{
 
   getNotifications():void{
 
-    let url = this.constantsService.SERVER_IP_ADDRESS + "productionManager";
+    let url = this.constantsService.SERVER_IP_ADDRESS + this.accessControlService.getUser().role;
     let data={
         "operation":"gn",
         "userid": this.accessControlService.getUser().userid,
@@ -51,6 +52,19 @@ export class ProfileComponent implements OnInit{
     .catch((err)=>{
       console.log(err);
     });
+}
+
+deleteNotification(notificationId:number):void{
+  let url = this.constantsService.SERVER_IP_ADDRESS + this.accessControlService.getUser().role;
+  let data={
+      "operation":"delete-notification",
+      "notificationId": notificationId,
+      "userHash":this.accessControlService.getUser().userHash
+  }
+  this.http.post(url, data).subscribe((data)=>{
+    console.log(data);
+    this.getNotifications();
+  });
 }
 
 }
