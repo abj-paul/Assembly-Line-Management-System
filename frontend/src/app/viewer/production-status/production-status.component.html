@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" [routerLink]="['/home']">ALMS</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" [routerLink]="['/production']">Production <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/live']">Live Assembly Line</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/reports']">Reports</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" (click)="goBack()">Go Back</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+<div class="body">
+    <div *ngFor="let productionData of generalProductionInfo" class="productionBox">
+        <pre>
+            Product Name: {{productionData.productName}}
+            Production Target: {{productionData.productionTarget}}
+            Production Reached: {{productionData.productionReached}}
+            Description: {{productionData.viewerInfo}}
+        </pre>
+    
+        <div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <td>Assembly Line</td>
+                        <td>Total Production</td>
+                    </tr>
+                </thead>
+    
+                <tbody>
+                    <tr *ngFor="let line of productionData.lineProductions">
+                        <td>{{line.name}}</td>
+                        <td>{{line.TotalProduction}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+    <hr>

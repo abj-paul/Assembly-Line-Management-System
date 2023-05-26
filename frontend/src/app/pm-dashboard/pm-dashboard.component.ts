@@ -29,7 +29,7 @@ export class PmDashboardComponent implements OnInit{
         {itemName: "Start New Production", routerLink:"/pm-dashboard/production"}, // set production target
         {itemName: "Resources", routerLink:"/pm-dashboard/resources"}, // Register Resource, Assembly line
         {itemName: "Reports", routerLink:"/pm-dashboard/reports"},
-        {itemName: "Assembly Line", routerLink:"/pm-dashboard/assembly-line"}
+        {itemName: "Assembly Line", routerLink:"/viewer"}
 
       ]
     );

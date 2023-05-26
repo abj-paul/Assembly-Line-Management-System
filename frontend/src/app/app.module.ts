@@ -45,6 +45,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EmployeeListComponent } from './pm-dashboard/resource/employee-list/employee-list.component';
 import { RequestResourceComponent } from './lc-dashboard/request-resource/request-resource.component';
 import { SetHourlyTargetComponent } from './lc-dashboard/set-hourly-target/set-hourly-target.component';
+import { LiveComponent } from './viewer/live/live.component';
+import { ProductionStatusComponent } from './viewer/production-status/production-status.component';
+import { ReportsMemosComponent } from './viewer/reports-memos/reports-memos.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +88,11 @@ import { SetHourlyTargetComponent } from './lc-dashboard/set-hourly-target/set-h
     AssignSupervisorComponent,
     EmployeeListComponent,
     RequestResourceComponent,
-    SetHourlyTargetComponent
+    SetHourlyTargetComponent,
+    LiveComponent,
+    ProductionStatusComponent,
+    ReportsComponent,
+    ReportsMemosComponent
   ],
   imports: [
     BrowserModule,

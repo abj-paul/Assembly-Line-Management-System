@@ -31,6 +31,9 @@ import { ViewAssemblyLinesComponent } from './pm-dashboard/resource/view-assembl
 import { AssignSupervisorComponent } from './pm-dashboard/resource/assign-supervisor/assign-supervisor.component';
 import { SetHourlyTargetComponent } from './lc-dashboard/set-hourly-target/set-hourly-target.component';
 import { RequestResourceComponent } from './lc-dashboard/request-resource/request-resource.component';
+import { ProductionStatusComponent } from './viewer/production-status/production-status.component';
+import { LiveComponent } from './viewer/live/live.component';
+import { ReportsMemosComponent } from './viewer/reports-memos/reports-memos.component';
 
 const routes: Routes = [
   {path: "test", component: TestComponent},
@@ -76,7 +79,13 @@ const routes: Routes = [
   ]},
   {path: "assembly-line", component: ViewerComponent},
   {path: "set-assembly-line-layout", component: SetLineLayoutComponent},
-  {path: "viewer", component: ViewerComponent}
+  {path: "viewer", component: ViewerComponent},
+  {path: "production", component: ProductionStatusComponent},
+  {path: "live", component: LiveComponent},
+  {path: "reports", component: ReportsMemosComponent}
+
+
+
 ];
 
 @NgModule({

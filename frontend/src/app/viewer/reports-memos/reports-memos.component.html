@@ -1,0 +1,26 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/home">ALMS</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="/production">Production <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/live'">Live Assembly Line</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/reports'">Reports</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="goBack()">Go Back</a>
+      </li>
+      </ul>
+    </div>
+  </nav>
+
+<h4>Download PDF:</h4>
+<button (click)="openPDF()">View MEMO</button>
+<a href="http://192.168.0.102:4747/" target="_blank"><button> View Live </button></a>

@@ -1,0 +1,63 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" [routerLink]="['/home']">ALMS</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" [routerLink]="['/production']">Production <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/live']">Live Assembly Line</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/reports']">Reports</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" (click)="goBack()">Go Back</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+<div class="productList">
+    <div *ngFor="let productionData of generalProductionInfo">
+        <button (click)="loadLineList(productionData.productionId)"  class="btn btn-info productName">{{productionData.productName}}</button>
+    </div>
+</div>
+
+<p class="header"> Live Assembly Line Status </p>
+
+
+<div class="lineList">
+    <div *ngFor="let line of lineList">
+        <button class="btn btn-success lineName" (click)="loadLineLayout(line.assemblyLineId)" style="float: left;">{{line.name}}</button>
+    </div>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>Machine Model</td>
+            <td>Machine Type</td>
+            <td>Houry Production</td>
+            <td>Live!</td>
+            <td>Marked?</td>
+            <td>Live Camera(Optional)</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let machine of lineLayout" [ngStyle]="{'border': machine.congestionStatus == true ? '4px groove red' : '1px solid black'}">
+            <td>{{machine.machineModel}}</td>
+            <td>{{machine.machineType}}</td>
+            <td>{{machine.hourlyProduction}}</td>
+            <td><button (click)="showCongestionImage('http://localhost:1401/congestion/image' + machine.imageFileUrl)"> View Congestion Status</button></td>
+            <td *ngIf="machine.markedStatus==1"> Marked </td>
+            <td *ngIf="machine.markedStatus!=1"> No </td>
+            <td *ngIf="machine.camera_link!=null"><button (click)="openCamera(machine.camera_link)">Open Camera</button></td>
+            <td *ngIf="machine.camera_link==null"> No Camera </td>
+
+        </tr>
+    </tbody>
+</table>

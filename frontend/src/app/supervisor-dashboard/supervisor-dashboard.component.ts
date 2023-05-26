@@ -26,7 +26,7 @@ export class SupervisorDashboardComponent  implements OnInit{
         {itemName: "Profile", routerLink:"/supervisor-dashboard/profile"},
         {itemName: "Reports", routerLink:"/supervisor-dashboard/reports"},
         {itemName: "Mark Workstation", routerLink:"/supervisor-dashboard/mark-workstation"},
-        {itemName: "Assembly Line", routerLink:"/supervisor-dashboard/assembly-line"}
+        {itemName: "Assembly Line", routerLink:"/viewer"}
       ]
     );
   }
