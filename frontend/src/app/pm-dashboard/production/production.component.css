@@ -1,0 +1,13 @@
+.registerButton{
+    margin-bottom: 10px;
+}
+.header{
+    padding: 20px;
+    text-align: center;
+    font-size: 20px;
+    color:darkcyan;
+}
+
+.mat-icon {
+    vertical-align: middle;
+}
