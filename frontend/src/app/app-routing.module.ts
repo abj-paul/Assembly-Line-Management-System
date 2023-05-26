@@ -29,6 +29,8 @@ import { EmployeeListComponent } from './pm-dashboard/resource/employee-list/emp
 import { ViewMachineListComponent } from './pm-dashboard/resource/view-machine-list/view-machine-list.component';
 import { ViewAssemblyLinesComponent } from './pm-dashboard/resource/view-assembly-lines/view-assembly-lines.component';
 import { AssignSupervisorComponent } from './pm-dashboard/resource/assign-supervisor/assign-supervisor.component';
+import { SetHourlyTargetComponent } from './lc-dashboard/set-hourly-target/set-hourly-target.component';
+import { RequestResourceComponent } from './lc-dashboard/request-resource/request-resource.component';
 
 const routes: Routes = [
   {path: "test", component: TestComponent},
@@ -59,7 +61,9 @@ const routes: Routes = [
   ]},
   {path: "lc-dashboard", component: LcDashboardComponent, children: [
     {path: "profile", component: ProfileComponent},
-    {path: "layout", component: ViewLineComponent},
+    {path: "layout", component: ViewLineComponent}, 
+    {path: "hourly-target", component: SetHourlyTargetComponent},
+    {path: "request-resource", component: RequestResourceComponent},
     {path: "congestion", component: CongestionComponent},
     {path: "reports", component: ReportsComponent},
     {path: "assembly-line", component: AssemblyLineComponent}

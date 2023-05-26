@@ -1,0 +1,7 @@
+<h4>{{formattedDateTime}} | Set Hourly Target </h4>
+<div class="form-group">
+    <label>Target</label>
+    <input type="number" class="form-control" [(ngModel)]="hourlyProductionTarget">
+</div>
+<button class="btn btn-primary registerButton" (click)="setHourlyTarget()">Confirm</button>
+<button class="btn btn-primary registerButton" [routerLink]="['/lc-dashboard/layout']"> Go Back </button>

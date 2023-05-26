@@ -1,0 +1,16 @@
+<h4>Request Resource</h4>
+<div class="form-group">
+    <label for="machineType">Type of Machine:</label>
+    <select class="form-control" [(ngModel)]="machineType">
+        <option value="sewingMachine">Sewing Machine</option>
+        <option value="assemblyTable">Assembly Table</option>
+        <option value="doubleSewMachine">Double Sew Machine</option>
+    </select>
+</div> 
+<div class="form-group">
+    <label>Number of Machines</label>
+    <input type="number" class="form-control" [(ngModel)]="requestedMachineCount">
+</div>
+
+<button class="btn btn-primary" (click)="requestResource()">Request Resource</button>
+<button class="btn btn-primary registerButton" [routerLink]="['/lc-dashboard/layout']"> Go Back </button>

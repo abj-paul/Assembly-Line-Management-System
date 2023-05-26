@@ -1,36 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Machine } from 'src/app/models/Machine';
-import { Item } from 'src/app/pm-dashboard/production/set-line-layout/Item';
 import { AccessControlService } from 'src/app/services/access-control.service';
 import { ConstantsService } from 'src/app/services/constants.service';
 import { SharedStuffsService } from 'src/app/services/shared-stuffs.service';
 
 @Component({
-  selector: 'app-view-line',
-  templateUrl: './view-line.component.html',
-  styleUrls: ['./view-line.component.css']
+  selector: 'app-request-resource',
+  templateUrl: './request-resource.component.html',
+  styleUrls: ['./request-resource.component.css']
 })
-export class ViewLineComponent implements OnInit {
-  productionTarget : number = 0;
-  machineListInLayout: Machine[] = [];
+export class RequestResourceComponent {
+  machineType : string = "";
+  requestedMachineCount : number = 0;
   assignedLineId : number = 0;
 
   constructor(private accessControlService: AccessControlService, private constantsService: ConstantsService, private sharedService : SharedStuffsService, private router : Router){}
-  
+
   ngOnInit(): void {
     this.loadAssignedLineId(this.accessControlService.getUser().userid);
   }
 
-  gotoLayoutEdit(){
-    this.router.navigate(["set-assembly-line-layout"]);
-  }
-
-  loadLineLayout(){
+  requestResource(){
     let url = this.constantsService.SERVER_IP_ADDRESS + "lineChief";
     let data={
-        "operation":"glfgl",
+        "operation":"request-resource",
         "lineId": this.assignedLineId,
+        "userId":this.accessControlService.getUser().userid,
+        "machineType": this.machineType,
+        "requestedMachineCount": this.requestedMachineCount,
         "userHash":this.accessControlService.getUser().userHash
     }
 
@@ -49,30 +46,12 @@ export class ViewLineComponent implements OnInit {
         return resolve.json()
     })
     .then((data)=>{
-        console.log("DEBUG: Line Layout-");
-        console.log(data.Layout);
-
-        let tempLayout = data.Layout;
-        this.machineListInLayout = [];
-        for(let i=0 ;i<tempLayout.length; i++){
-          this.machineListInLayout.push(
-            {
-              assemblyLineId: tempLayout[i].assemblyLineId,
-              assemblyLineName: tempLayout[i].name,
-              machineId: tempLayout[i].machineId,
-              machineModel : tempLayout[i].machineModel,
-              machineType : tempLayout[i].machineType,
-              perHourProduction : tempLayout[i].perHourProduction,
-              otherInfo : tempLayout[i].otherInfo
-            }
-          );
-        }
+        console.log(data);
     })
     .catch((err)=>{
       console.log(err);
     });
   }
-
 
   loadAssignedLineId(userId: number){
     let url = this.constantsService.SERVER_IP_ADDRESS + "lineChief";
@@ -101,7 +80,7 @@ export class ViewLineComponent implements OnInit {
         this.assignedLineId = data.AssignedAssemblyLineId;
         console.log(this.assignedLineId);
 
-        this.loadLineLayout();
+        //this.loadLineLayout();
     })
     .catch((err)=>{
       console.log(err);

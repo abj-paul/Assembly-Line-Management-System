@@ -43,6 +43,8 @@ import { AssignSupervisorComponent } from './pm-dashboard/resource/assign-superv
 import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EmployeeListComponent } from './pm-dashboard/resource/employee-list/employee-list.component';
+import { RequestResourceComponent } from './lc-dashboard/request-resource/request-resource.component';
+import { SetHourlyTargetComponent } from './lc-dashboard/set-hourly-target/set-hourly-target.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +83,9 @@ import { EmployeeListComponent } from './pm-dashboard/resource/employee-list/emp
     AboutSupervisorComponent,
     MarkWorkstationComponent,
     AssignSupervisorComponent,
-    EmployeeListComponent
+    EmployeeListComponent,
+    RequestResourceComponent,
+    SetHourlyTargetComponent
   ],
   imports: [
     BrowserModule,

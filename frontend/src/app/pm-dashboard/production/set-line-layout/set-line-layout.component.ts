@@ -210,7 +210,7 @@ export class SetLineLayoutComponent implements OnInit{
   loadMachinesFromBackend(){
     let data = {
         "operation":"guml",
-        "userHash": this.accessControlService.getUser().userHash
+        "userHash": 249335157 // this.accessControlService.getUser().userHash
     }
     let url = this.constantsService.SERVER_IP_ADDRESS + "productionManager";
 
@@ -271,7 +271,7 @@ export class SetLineLayoutComponent implements OnInit{
       "operation": "sall",
       "assemblyLineId": assemblyLineId,
       "layoutArr": layoutArr,
-      "userHash": this.accessControlService.getUser().userHash,
+      "userHash":249335157, // this.accessControlService.getUser().userHash,
       "LCUserId": this.boxes[index].lineChiefId
   };
   
@@ -303,7 +303,11 @@ export class SetLineLayoutComponent implements OnInit{
   }
 
   goBack(){
-    this.router.navigate(["/pm-dashboard/production"]);
+    if(this.accessControlService.getUser().role=='productionManager')
+      this.router.navigate(["/pm-dashboard/production"]);
+    else if(this.accessControlService.getUser().role=='lineChief')
+      this.router.navigate(["/lc-dashboard/layout"]);
+    else this.router.navigate(["/home"]);
   }
 
 }

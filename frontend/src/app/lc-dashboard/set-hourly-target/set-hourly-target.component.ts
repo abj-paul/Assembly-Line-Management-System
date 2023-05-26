@@ -1,38 +1,51 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Machine } from 'src/app/models/Machine';
-import { Item } from 'src/app/pm-dashboard/production/set-line-layout/Item';
 import { AccessControlService } from 'src/app/services/access-control.service';
 import { ConstantsService } from 'src/app/services/constants.service';
 import { SharedStuffsService } from 'src/app/services/shared-stuffs.service';
 
 @Component({
-  selector: 'app-view-line',
-  templateUrl: './view-line.component.html',
-  styleUrls: ['./view-line.component.css']
+  selector: 'app-set-hourly-target',
+  templateUrl: './set-hourly-target.component.html',
+  styleUrls: ['./set-hourly-target.component.css']
 })
-export class ViewLineComponent implements OnInit {
-  productionTarget : number = 0;
-  machineListInLayout: Machine[] = [];
+export class SetHourlyTargetComponent implements OnInit{
   assignedLineId : number = 0;
-
-  constructor(private accessControlService: AccessControlService, private constantsService: ConstantsService, private sharedService : SharedStuffsService, private router : Router){}
+  formattedDateTime : string = "";
+  hourlyProductionTarget: number = 0;
   
+  constructor(private accessControlService: AccessControlService, private constantsService: ConstantsService, private sharedService : SharedStuffsService, private router : Router){}
+
   ngOnInit(): void {
     this.loadAssignedLineId(this.accessControlService.getUser().userid);
+
+    const dateTime = new Date();
+    const options = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+      hour12: false
+    };
+
+    this.formattedDateTime = dateTime.toLocaleString("en-US");
+    //console.log(formattedDateTime);
   }
 
-  gotoLayoutEdit(){
-    this.router.navigate(["set-assembly-line-layout"]);
-  }
-
-  loadLineLayout(){
+  setHourlyTarget():void {
     let url = this.constantsService.SERVER_IP_ADDRESS + "lineChief";
     let data={
-        "operation":"glfgl",
+        "operation":"set-hourly-production",
         "lineId": this.assignedLineId,
+        "productionId": this.sharedService.productionId,
+        "hourlyProductionTarget": this.hourlyProductionTarget,
         "userHash":this.accessControlService.getUser().userHash
     }
+
+    console.log("Frontend DEBUG hourly target set-> ");
+    console.log(data);
 
     fetch(url, {
         method: "POST",
@@ -45,34 +58,16 @@ export class ViewLineComponent implements OnInit {
         body: JSON.stringify(data),
     })
     .then((resolve)=>{
-        console.log("Get Line Layout Request has been resolved!");
+        console.log("Set hourly Request has been resolved!");
         return resolve.json()
     })
     .then((data)=>{
-        console.log("DEBUG: Line Layout-");
-        console.log(data.Layout);
-
-        let tempLayout = data.Layout;
-        this.machineListInLayout = [];
-        for(let i=0 ;i<tempLayout.length; i++){
-          this.machineListInLayout.push(
-            {
-              assemblyLineId: tempLayout[i].assemblyLineId,
-              assemblyLineName: tempLayout[i].name,
-              machineId: tempLayout[i].machineId,
-              machineModel : tempLayout[i].machineModel,
-              machineType : tempLayout[i].machineType,
-              perHourProduction : tempLayout[i].perHourProduction,
-              otherInfo : tempLayout[i].otherInfo
-            }
-          );
-        }
+        console.log(data);
     })
     .catch((err)=>{
       console.log(err);
     });
   }
-
 
   loadAssignedLineId(userId: number){
     let url = this.constantsService.SERVER_IP_ADDRESS + "lineChief";
@@ -101,11 +96,10 @@ export class ViewLineComponent implements OnInit {
         this.assignedLineId = data.AssignedAssemblyLineId;
         console.log(this.assignedLineId);
 
-        this.loadLineLayout();
+        //this.loadLineLayout();
     })
     .catch((err)=>{
       console.log(err);
     });
   }
-
 }
