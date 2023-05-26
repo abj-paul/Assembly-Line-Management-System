@@ -86,7 +86,7 @@ function __serveRequest(req, res){
         combinationQuery.getAssignedLineIdForSupervisor(userId)
         .then((data)=>{
             console.log("DEBUG: AssignedAssemblyLineId to Supervisor: ");
-            console.log(data[0].assemblyLineId);
+            //console.log(data[0].assemblyLineId);
             res.status(200).send({"AssignedAssemblyLineId": data[0].assemblyLineId});
         })
     }else if(operationType==constants.GET_LAYOUT_FOR_GIVEN_LINEID){

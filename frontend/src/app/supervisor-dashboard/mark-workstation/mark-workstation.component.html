@@ -1,13 +1,9 @@
 <div class="container">
-    <h3>Production Target: {{productionTarget}} </h3>
-    <h3 id="currentProduction">Current Production : 0</h3>
     <h3> Line Name: {{machineListInLayout[0].assemblyLineName}}</h3>
     <div id="body">
         <div *ngFor="let machine of machineListInLayout; index as i;" class="row">
-            <div *ngIf="congestionStatus[i].markedStatus==1" class="congestion col-sm-1">
-                MARKED!
-            </div>
-            <div class="stats col-sm-9">
+            <div [ngStyle]="{'background-color':congestionStatus[i].congestionStatus==true ? 'yellow' : 'cyan' }">
+            <div class="stats col-sm-12" [ngStyle]="{'border': congestionStatus[i].markedStatus==1 ? '4px groove red' : '1px solid black'}" [ngStyle]="{'border': congestionStatus[i].markedStatus==1 ? '4px groove red' : '1px solid black'}">
                 <button *ngIf="congestionStatus[i].markedStatus==0" (click)="markWorkstation(machine.machineId,1)">Mark Workstation</button>
                 <button *ngIf="congestionStatus[i].markedStatus==1" (click)="markWorkstation(machine.machineId,0)">Unmark Workstation</button>
 
@@ -16,8 +12,6 @@
                 {{machine.perHourProduction}}
                 <button (click)="showCongestionImage('http://localhost:1401/congestion/image' + congestionStatus[i].imageFileUrl)"> View Congestion Status</button>
             </div>
-            <div *ngIf="congestionStatus[i].congestionStatus==true" class="congestion col-sm-2">
-                CONGESTION DETECTED!
             </div>
         </div>
     </div>

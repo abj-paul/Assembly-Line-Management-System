@@ -55,8 +55,12 @@ async function getProductionIdForSupervisor(supervisorUserId){
             if(err) {
                 reject(err);
             }
-            console.log("DEBUG: Get pruductionID: "+results[0].productionId);
-            resolve(results[0].productionId);
+            //console.log("DEBUG: Get pruductionID: "+results[0].productionId);
+            if(results.length==0){
+                console.log("NO PRODUCTION ID FOUND!!!!!!");
+                resolve(1);
+            }
+            else resolve(results[0].productionId);
         });
     }
     );}

@@ -69,6 +69,7 @@ async function getAssignedLineIdForSupervisor(userId){
             if(err) {
                 reject(err);
             }
+            if(results.length==0)resolve([{assemblyLineId:1}])
             resolve(results);
         });
     }
