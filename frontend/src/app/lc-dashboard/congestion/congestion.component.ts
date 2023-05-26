@@ -147,5 +147,8 @@ export class CongestionComponent implements OnInit{
   showCongestionImage(imageUrl : string){
     window.open(imageUrl, '_blank');
   }
+  openCamera(camera_link:string):void{
+    window.open(camera_link, '_blank');
+  }
  
 }

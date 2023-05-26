@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Machine } from 'src/app/models/Machine';
@@ -12,14 +13,17 @@ import { SharedStuffsService } from 'src/app/services/shared-stuffs.service';
   styleUrls: ['./view-line.component.css']
 })
 export class ViewLineComponent implements OnInit {
-  productionTarget : number = 0;
-  machineListInLayout: Machine[] = [];
+  machineListInLayout: any = [];
   assignedLineId : number = 0;
+  productionInfo : any;
+  productionTarget: number = 0;
+  productionReached : number = 0;
 
-  constructor(private accessControlService: AccessControlService, private constantsService: ConstantsService, private sharedService : SharedStuffsService, private router : Router){}
+  constructor(private accessControlService: AccessControlService, private constantsService: ConstantsService, private sharedService : SharedStuffsService, private router : Router, private http : HttpClient){}
   
   ngOnInit(): void {
     this.loadAssignedLineId(this.accessControlService.getUser().userid);
+    this.loadProductionInfo();
   }
 
   gotoLayoutEdit(){
@@ -102,6 +106,48 @@ export class ViewLineComponent implements OnInit {
         console.log(this.assignedLineId);
 
         this.loadLineLayout();
+    })
+    .catch((err)=>{
+      console.log(err);
+    });
+  }
+
+  loadProductionInfo():void{
+    let url = this.constantsService.SERVER_IP_ADDRESS + "lineChief";
+    let data={
+        "operation":"ggpi",
+        "userHash":this.accessControlService.getUser().userHash
+    }
+
+    fetch(url, {
+        method: "POST",
+        mode: "cors", 
+        cache: "no-cache", 
+        credentials: "same-origin", 
+        headers: {"Content-Type": "application/json",},
+        redirect: "follow", 
+        referrerPolicy: "no-referrer",
+        body: JSON.stringify(data),
+    })
+    .then((resolve)=>{
+        console.log("GET production info Request has been resolved!");
+        return resolve.json()
+    })
+    .then((data)=>{
+        console.log("DEBUG: production info -");
+        this.productionInfo = data.GeneralProductionInfo;
+        console.log(this.productionInfo);
+
+        console.log("DEBUG Equity of productionInfo: "+this.sharedService.getProductionId()+"=="+this.productionInfo[0].productionId);
+
+      for(let i=0; i<this.productionInfo.length; i++){
+        console.log(this.productionInfo[i]);
+        if(this.productionInfo[i].productionId==this.sharedService.getProductionId()) {
+          this.productionTarget = this.productionInfo[i].productionTarget;
+          this.productionReached = this.productionInfo[i].productionReached;
+          break;
+        }
+      }
     })
     .catch((err)=>{
       console.log(err);

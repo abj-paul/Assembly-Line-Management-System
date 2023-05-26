@@ -1,22 +1,25 @@
-<div class="container">
-    <h3>Production Target: {{productionTarget}} </h3>
-    <h3 id="currentProduction">Current Production : 0</h3>
-    <h3> Line Name: {{machineListInLayout[0].assemblyLineName}}</h3>
-    <div id="body">
-        <div *ngFor="let machine of machineListInLayout; index as i;" class="row">
-            <div class="stats col-sm-7">
-                {{machine.machineModel}}, 
-                {{machine.perHourProduction}}
-                <button (click)="showCongestionImage('http://localhost:1401/congestion/image' + congestionStatus[i].imageFileUrl)"> View Congestion Status</button>
-            </div>
-            <div *ngIf="congestionStatus[i].congestionStatus==true" class="congestion col-sm-3">
-                CONGESTION DETECTED!
-            </div>
-            <div *ngIf="congestionStatus[i].markedStatus==1" class="congestion col-sm-2">
-                MARKED!
-            </div>
-        </div>
-    </div>
+<table class="table table-primary table-striped bg-light">
+    <thead class="thead-dark">
+        <tr>
+            <th>Machine Model</th>
+            <th>Machine Type</th>
+            <th>Houry Production</th>
+            <th>Live!</th>
+            <th>Marked?</th>
+            <th>Live Camera(Optional)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let machine of machineListInLayout; index as i;" [ngStyle]="{'border': congestionStatus[i].congestionStatus == true ? '4px groove red' : '1px solid black'}">
+            <td>{{machine.machineModel}}</td>
+            <td>{{machine.machineType}}</td>
+            <td>{{machine.perHourProduction}}</td>
+            <td><button (click)="showCongestionImage('http://localhost:1401/congestion/image' + congestionStatus[i].imageFileUrl)"> View Congestion Status</button></td>
+            <td *ngIf="congestionStatus[i].markedStatus==1"> Marked </td>
+            <td *ngIf="congestionStatus[i].markedStatus!=1"> No </td>
+            <td *ngIf="machine.otherInfo!=null"><button (click)="openCamera(machine.otherInfo)">Open Camera</button></td>
+            <td *ngIf="machine.otherInfo==null"> No Camera </td>
 
-    <button class="btn btn-primary" (click)="gotoLayoutEdit()">Edit Layout</button>
-</div>
+        </tr>
+    </tbody>
+</table>

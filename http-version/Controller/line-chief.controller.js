@@ -8,6 +8,7 @@ const notification = require("../Model/notification.js");
 const assemblyLine = require("../Model/assembly-line-layoud.model.js");
 const combinationQuery = require("../Model/combinations.query.js");
 const miscDb = require("../Model/miscellaneous.js");
+const viewer = require("../Model/viewer.model.js");
 
 
 
@@ -106,6 +107,13 @@ function __serveRequest(req, res){
         miscDb.getProductionIdForLC(userId)
         .then((data)=>{
             res.status(200).send({"ProductionId": data});
+        })
+    }else if(operationType==constants.GET_GENERAL_PRODUCTION_INFO){
+        viewer.getGeneralProductionInfo()
+        .then((data)=>{
+            console.log("DEBUG ggpi");
+            console.log(data);
+            res.status(200).send({"GeneralProductionInfo":data});
         })
     }
 }
