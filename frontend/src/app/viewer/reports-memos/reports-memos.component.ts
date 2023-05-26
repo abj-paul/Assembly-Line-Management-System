@@ -13,16 +13,17 @@ import { ConstantsService } from 'src/app/services/constants.service';
 })
 export class ReportsMemosComponent implements OnInit{
   BASE_PDF_URL : string = 'http://localhost:1401/viewer/report/';
+  filename:string = "";
 
 
   constructor(private accessControlService: AccessControlService, private constantsService: ConstantsService, private http:HttpClient, private router : Router){}
   ngOnInit(): void {
 
   }
-  openPDF(){
+  generatePDF(operationType:string){
     let url = this.constantsService.SERVER_IP_ADDRESS + "viewer";
     let data = {
-        "operation":"gpr",
+        "operation": operationType,
         "userHash": this.accessControlService.getUser().userHash
     };
 
@@ -47,8 +48,8 @@ export class ReportsMemosComponent implements OnInit{
   .catch((err)=>{
     console.log(err);
   }); 
-      
   }
+
 
   goBack(){
     if(this.accessControlService.getUser().role=='admin')

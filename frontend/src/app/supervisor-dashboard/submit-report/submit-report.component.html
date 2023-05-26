@@ -22,27 +22,27 @@
     <div class="col-sm-4 subsection">
         <p>Quality Report</p>
         <div class="form-group">
-            <label for="qualityTotalProductId">Units of Product Checked:</label>
-            <input class="form-control" type="number" name="qualityTotalProduct" id="qualityTotalProductId">
+            <label>Units of Product Checked:</label>
+            <input class="form-control" type="number" [(ngModel)]="quality_totalProductCount">
         </div>
 
         <div class="form-group">
-            <label for="qualityDefectedProductId">Units of Defected Products Found:</label>
-            <input class="form-control" type="number" name="qualityDefectedProduct" id="qualityDefectedProductId">
+            <label>Units of Defected Products Found:</label>
+            <input class="form-control" type="number" [(ngModel)]="quality_defectedProductCount">
         </div>
 
         <div class="form-group">
-            <label for="qualityUnitId">Unit of Production:</label>
-            <input class="form-control" type="text" name="qualityUnit" id="qualityUnitId" placeholder="(e.g. Number of Completed Garments)">
+            <label>Unit of Production:</label>
+            <input class="form-control" type="text" [(ngModel)]="qualityUnit" placeholder="(e.g. Number of Completed Garments)">
         </div>
 
 
         <div class="form-group subs">
-            <label for="commentOnQualityInspectionId">Comments: </label>
-            <input class="form-control" type="text" name="commentOnQualityInspection" id="commentOnQualityInspectionId">
+            <label>Comments: </label>
+            <input class="form-control" type="text" [(ngModel)]="commentOnQualityInspection">
         </div>
 
-        <button onclick="">Submit Quality Inspection Result</button>
+        <button (click)="submitQualityReport()">Submit Quality Inspection Result</button>
     </div>
 
     <div class="col-sm-4 subsection">

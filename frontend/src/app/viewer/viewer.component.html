@@ -14,9 +14,12 @@
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/viewer/reports']">Reports</a>
       </li>
-      <li class="nav-item">
-          <a class="nav-link" (click)="goBack()">Go Back</a>
+      <li class="nav-item" *ngIf="currentUserRole=='viewer'">
+          <a class="nav-link" (click)="logout()">Logout</a>
       </li>
+      <li class="nav-item" *ngIf="currentUserRole!='viewer'">
+        <a class="nav-link" (click)="goBack()">Go Back</a>
+    </li>
     </ul>
   </div>
 </nav>

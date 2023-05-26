@@ -77,10 +77,54 @@ getGeneralProductionInfo()
 })
 */
 
-function generate_production_report(){
+async function generate_production_report(){
+    productionData = await getGeneralProductionInfo();
+
+    tableData = "Product Name  |  Production Target   |   Production Reached\n";
+
+    for (let i = 0; i < productionData.length; i++) {
+      tableData +=
+        productionData[i].productName.padEnd(30, ' ') +"|" +
+        productionData[i].productionTarget.toString().padEnd(30, ' ') +"|" +
+        productionData[i].productionReached.toString().padEnd(30, ' ') +
+        "\n";
+    }
+    
+
+    const outputPath = './data/pdf/production-report.pdf';
+    memoService.generatePDF(tableData, outputPath);
+    return "production-report.pdf";
+
+}
+
+function test_report(){
     const outputPath = './data/pdf/memo.pdf';
     memoService.generatePDF(memoService.testContent, outputPath);
     return "memo.pdf";
 }
 
-module.exports = {getGeneralProductionInfo, getLineLayout, getLineListForProduction, generate_production_report}
+function generate_system_start_memo(){
+    let systemStartMemoContent = `
+    Memorandum
+
+    To: Versatile Garments Ltd Management
+    From: Admin
+    Date: 29th May, 2023
+    Subject: On the start of an Assembly Line Management System
+
+    This memo is to inform you of the following:
+
+    The Assembly Line Management System, developed by Abhijit Paul and Mashiat Amin Farin has been deployed and has started functioning from 9:00AM, today. It is with great pleasure that we notice the benefits of automated congestion detection within just an hour.
+
+    Please let me know if you have any questions.
+
+    Thank you,
+    Admin
+    `;
+
+    const outputPath = './data/pdf/system-start-memo.pdf';
+    memoService.generatePDF(systemStartMemoContent, outputPath);
+    return "system-start-memo.pdf";
+}
+
+module.exports = {getGeneralProductionInfo, getLineLayout, getLineListForProduction, generate_production_report, generate_system_start_memo}

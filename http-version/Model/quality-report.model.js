@@ -20,6 +20,7 @@ async function __connect(){
 }
 
 async function __createQualityReportTable(){
+    await __connect();
     return new Promise((resolve, reject)=>{
         if(connection==null){
             console.log("Connect to databse first!");
@@ -35,8 +36,8 @@ async function __createQualityReportTable(){
         unit varchar(50) NOT NULL,
         timeSent datetime DEFAULT CURRENT_TIMESTAMP,
         comment varchar(300),
-        CONSTRAINT fk_production FOREIGN KEY (productionId) REFERENCES production(productionId),
-        CONSTRAINT fk_user FOREIGN KEY (userid) REFERENCES user(userid)
+        CONSTRAINT fk_production_quality_report FOREIGN KEY (productionId) REFERENCES production(productionId),
+        CONSTRAINT fk_user_quality_report FOREIGN KEY (userid) REFERENCES user(userid)
         ON DELETE CASCADE
         );`; // Find username through relational query
         
@@ -57,7 +58,7 @@ async function __insertQualityReportData(userid, unit, defectedProductCount,good
             if(err) {
                 reject(err);
             }
-            console.log("Done inserting production report by user "+userid);
+            console.log("Done inserting quality report by user "+userid);
             resolve(results);
         });
     }

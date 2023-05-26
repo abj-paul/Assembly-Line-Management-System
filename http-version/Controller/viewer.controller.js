@@ -51,7 +51,16 @@ function __serveRequest(req, res){
             res.status(200).send({"LineLayout":data});
         })
     }else if(operationType==constants.GENERATE_PRODUCTION_REPORT){
-        const generatedPdfFileName = viewer.generate_production_report();
+        viewer.generate_production_report()
+        .then((generatedPdfFileName)=>{
+            res.status(200).send({"GeneratedPdfFileName":generatedPdfFileName});
+        })
+    }else if(operationType==constants.LOGOUT){
+        const userHash = body.userHash;
+        userHashLib.deleteSession(userHash, constants.LC_ENDPOINT);
+        res.status(200).send({"SessionDelete":true});
+    }else if(operationType==constants.GENERATE_SYSTEM_START_MEMO){
+        const generatedPdfFileName = viewer.generate_system_start_memo();
         res.status(200).send({"GeneratedPdfFileName":generatedPdfFileName});
     }
 }

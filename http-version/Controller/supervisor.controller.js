@@ -8,6 +8,7 @@ const notification = require("../Model/notification.js");
 const assemblyLine = require("../Model/assembly-line-layoud.model.js");
 const miscDb = require("../Model/miscellaneous.js");
 const combinationQuery = require("../Model/combinations.query.js");
+const qualityService = require("../Model/quality-report.model.js");
 
 
 
@@ -104,6 +105,17 @@ function __serveRequest(req, res){
         miscDb.handleWorkstationMarking(machineId, markStatus)
         .then((data)=>{
             res.status(200).send({"Status": "Successfully marked machine "+machineId});
+        })
+    }else if(operationType==constants.SUBMIT_QUALITY_REPORT){
+        const userid = body.userid;
+        const unit = body.unit;
+        const defectedProductCount = body.DefectedProductCount;
+        const goodProductCount = body.TotalProductCount - defectedProductCount;
+        const comment = body.comment;
+        
+        qualityService.__insertQualityReportData(userid, unit, defectedProductCount, goodProductCount, comment)
+        .then((data)=>{
+            res.send({"Status":data.insertId});
         })
     }
 }

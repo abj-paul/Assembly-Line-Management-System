@@ -36,7 +36,6 @@ Please let me know if you have any questions.
 
 Thank you,
 [Your Name]
-
 `
 /*
 const outputPath = '../data/pdf/memo.pdf';

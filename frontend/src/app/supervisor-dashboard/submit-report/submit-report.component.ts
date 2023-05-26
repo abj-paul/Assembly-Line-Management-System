@@ -16,6 +16,13 @@ export class SubmitReportComponent {
   unit : string = "(e.g. Number of Completed Garments)";
   comment : string = "(e.g. The production has been good this hour)";
 
+  // Quality Report
+  quality_totalProductCount : number = 0;
+  quality_defectedProductCount : number = 0;
+  qualityUnit : string = "(e.g. Number of Completed Garments)";
+  commentOnQualityInspection : string = "(e.g. Some quality issues occurred due to worker inexperience)";
+
+
 
   setHourlyProductionAmount(){
 
@@ -49,6 +56,42 @@ export class SubmitReportComponent {
         })
         .then((data)=>{
             console.log(data.ReportId);
+        })
+        .catch((err)=>{
+        console.log(err);
+        });
+    }
+
+submitQualityReport():void{
+    let url = this.constantsService.SERVER_IP_ADDRESS + "supervisor";
+    let data = {
+        "operation":"submit-quality-report",
+        "userid": this.accessControlService.getUser().userid,
+        "unit": this.qualityUnit,
+        "TotalProductCount": this.quality_totalProductCount,
+        "DefectedProductCount": this.quality_defectedProductCount,
+        "productionId": this.sharedService.getProductionId(),
+        "comment": this.commentOnQualityInspection,
+        "userHash": this.accessControlService.getUser().userHash
+    };
+    fetch(url, {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+        "Content-Type": "application/json",
+        },
+        redirect: "follow",
+        referrerPolicy: "no-referrer", 
+        body: JSON.stringify(data),
+    })
+        .then((resolve)=>{
+        console.log("Quality Report Submission Request has been resolved!");
+        return resolve.json()
+        })
+        .then((data)=>{
+            console.log("Quality Report ID : "+ data.ReportId);
         })
         .catch((err)=>{
         console.log(err);
