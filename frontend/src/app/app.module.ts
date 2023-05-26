@@ -40,6 +40,9 @@ import { AboutSupervisorComponent } from './supervisor-dashboard/about-superviso
 import { MarkWorkstationComponent } from './supervisor-dashboard/mark-workstation/mark-workstation.component';
 import { AssignSupervisorComponent } from './pm-dashboard/resource/assign-supervisor/assign-supervisor.component';
 
+import { MatIconModule } from '@angular/material/icon';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -82,7 +85,9 @@ import { AssignSupervisorComponent } from './pm-dashboard/resource/assign-superv
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    MatIconModule,
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

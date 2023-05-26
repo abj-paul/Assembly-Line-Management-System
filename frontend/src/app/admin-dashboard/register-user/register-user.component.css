@@ -1,12 +1,28 @@
-button {
-    width: 100px;
-    display: inline;
-    margin-left: 100px;
-}
-
 input{
     margin-bottom: 20px;
 }
 select{
     margin-bottom: 20px;
+}
+
+
+
+.header{
+    padding: 20px;
+    text-align: center;
+    font-size: 45px;
+    font-weight: 600;
+    color:darkcyan;
+}
+
+#userRegister{
+    width: 70%;
+    margin: auto;
+    background-color: azure;
+    margin-top: 20px;
+    padding: 30px;
+}
+
+.mat-icon {
+    vertical-align: middle;
 }

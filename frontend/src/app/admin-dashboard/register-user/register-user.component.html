@@ -1,5 +1,5 @@
 <div class="row" id="userRegister">
-    <div class="p-5 text-center bg-light">
+    <div class="header">
       <h4 class="mb-3">Register New User</h4>
     </div>
     <form enctype="multipart/form-data" (ngSubmit)="registerUser()">
@@ -12,8 +12,8 @@
         <input type="password" class="form-control" placeholder="Set password" name="password" [(ngModel)]="password">
       </div>
       <div class="form-group">
-        <span>Select Role:</span>
         <select class="form-control" name="role" [(ngModel)]="user.role">
+          <option value="admin">Select Role</option>
           <option value="admin">Admin</option>
           <option value="productionManager">Production Manager</option>
           <option value="lineChief">Line Chief</option>
@@ -25,14 +25,24 @@
         <input type="number" class="form-control" placeholder="Enter Age" name="age" [(ngModel)]="user.age">
       </div>
       <div class="form-group">
-        <input type="file" name="profile" (change)="onSelectFile($event)">
+        <label class="label">Insert Profile Picture: </label>
+        <input type="file" name="profile" class="form-control" (change)="onSelectFile($event)">
       </div>
       <div class="form-group">
         <input type="text" class="form-control" placeholder="Other Info" name="generalInfo" [(ngModel)]="user.general_info">
       </div>
+
+      <button mat-fab extended>
+        <mat-icon>home</mat-icon>
+        Register Information
+      </button>
+      
+      <button mat-fab extended style="float: right;" [routerLink]="['/admin-dashboard/user']">
+        <mat-icon>arrow_back_ios</mat-icon>
+        User List
+      </button>
+      <br>
       <span id="status">{{status}}</span>
 
-      <button>Register Information</button>
-      <button class="btn btn-primary" [routerLink]="['/admin-dashboard/user']">User List</button>
       </form>
   </div>
