@@ -1,3 +1,37 @@
-<p> {{ecommerceWelcomeMessage}}, I am also using variables. </p>
+<head>
+  <title>Assembly Line Management System</title>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="../../assets/carousel/company-logo.png" alt="Company Logo">
+    </div>
+    <button class="login-button" [routerLink]="['/login']">Login</button>
+  </header>
+  
+    <h1>Welcome to the Assembly Line Management System</h1>
+  <div class="container">
+    
+    <div id="carousel">
+      <img src="../../assets/carousel/image1.jpg" alt="Industry Image 1">
+      <img src="../../assets/carousel/image2.jpg" alt="Industry Image 2">
+      <img src="../../assets/carousel/image3.jpg" alt="Industry Image 3">
+      <img src="../../assets/carousel/image4.jpg" alt="Industry Image 4">
+    </div>
+    <div class="company-info">
+      <h2>About Our Company</h2>
+      <p>Company information goes here...</p>
+    </div>
+  </div>
 
-<a routerLink="test">Goto Test Area</a>
+<div class="contact">
+    <h2>Contact Us</h2>
+    <p>Email: info@company.com</p>
+    <p>Phone: 123-456-7890</p>
+    <p>Address: 123 Street, City, Country</p>
+</div>
+
+  <footer class="copyright-footer">
+    <p>&copy; 2023 Company Name. All rights reserved.</p>
+  </footer>
+</body>

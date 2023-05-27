@@ -52,3 +52,8 @@ li {
     width: 34px;
     display: inline;
 }
+
+
+.mat-icon {
+    vertical-align: middle;
+}

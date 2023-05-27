@@ -25,11 +25,11 @@ export class PmDashboardComponent implements OnInit{
     this.haveAccess = JSON.stringify(this.accessControlService.getUser())!=JSON.stringify(new User());
     this.navbarServie.setNavItems(
       [
-        {itemName: "Profile", routerLink:"/pm-dashboard/profile"},
-        {itemName: "Start New Production", routerLink:"/pm-dashboard/production"}, // set production target
-        {itemName: "Resources", routerLink:"/pm-dashboard/resources"}, // Register Resource, Assembly line
-        {itemName: "Reports", routerLink:"/pm-dashboard/reports"},
-        {itemName: "Assembly Line", routerLink:"/viewer"}
+        {itemName: "Profile", routerLink:"/pm-dashboard/profile", icon:"home"},
+        {itemName: "Start New Production", routerLink:"/pm-dashboard/production", icon:"dashboard"}, // set production target
+        {itemName: "Resources", routerLink:"/pm-dashboard/resources", icon:"extension"}, // Register Resource, Assembly line
+        {itemName: "Reports", routerLink:"/pm-dashboard/reports", icon:"event"},
+        {itemName: "Assembly Line", routerLink:"/viewer", icon:"linked_camera"}
 
       ]
     );

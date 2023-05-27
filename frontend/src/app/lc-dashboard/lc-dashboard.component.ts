@@ -23,11 +23,11 @@ export class LcDashboardComponent implements OnInit{
     this.haveAccess = JSON.stringify(this.accessControlService.getUser())!=JSON.stringify(new User());
     this.navbarServie.setNavItems(
       [
-        {itemName: "Profile", routerLink:"/lc-dashboard/profile"},
-        {itemName: "Layout", routerLink:"/lc-dashboard/layout"},
-        {itemName: "Congestion", routerLink:"/lc-dashboard/congestion"},
-        {itemName: "Reports", routerLink:"/lc-dashboard/reports"},
-        {itemName: "Assembly Line", routerLink:"/assembly-line"}
+        {itemName: "Profile", routerLink:"/lc-dashboard/profile", icon:"home"},
+        {itemName: "Layout", routerLink:"/lc-dashboard/layout", icon:"important_devices"},
+        {itemName: "Congestion", routerLink:"/lc-dashboard/congestion", icon:"visibility"},
+        {itemName: "Reports", routerLink:"/lc-dashboard/reports", icon:"event"},
+        {itemName: "Assembly Line", routerLink:"/assembly-line", icon:"linked_camera"}
       ]
     );
   }

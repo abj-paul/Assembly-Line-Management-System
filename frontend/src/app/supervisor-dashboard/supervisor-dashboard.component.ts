@@ -23,10 +23,10 @@ export class SupervisorDashboardComponent  implements OnInit{
     this.haveAccess = JSON.stringify(this.accessControlService.getUser())!=JSON.stringify(new User());
     this.navbarServie.setNavItems(
       [
-        {itemName: "Profile", routerLink:"/supervisor-dashboard/profile"},
-        {itemName: "Reports", routerLink:"/supervisor-dashboard/reports"},
-        {itemName: "Mark Workstation", routerLink:"/supervisor-dashboard/mark-workstation"},
-        {itemName: "Assembly Line", routerLink:"/viewer"}
+        {itemName: "Profile", routerLink:"/supervisor-dashboard/profile", icon:"home"},
+        {itemName: "Reports", routerLink:"/supervisor-dashboard/reports", icon:"event"},
+        {itemName: "Mark Workstation", routerLink:"/supervisor-dashboard/mark-workstation", icon:"extension"},
+        {itemName: "Assembly Line", routerLink:"/viewer", icon:"linked_camera"}
       ]
     );
   }

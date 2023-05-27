@@ -1,13 +1,15 @@
 
 <div class="sidebar">
   <div class="sidebarLogo">
-    <img src="../../assets/alms-transparent.png" width="200px">
+    <a [routerLink]="['/home']">
+      <img src="../../assets/alms-transparent.png" width="200px">
+    </a>
   </div>
 
   <ul *ngFor="let navItem of navItems; let i = index" [attr.data-index]="i">
     <a [routerLink]="[navItem.routerLink]" class="nav-item nav-link">
       <li (click)="makeSelected(i)" class="sidebarItems">
-        <img src="../../favicon.ico" class="navImg">
+        <mat-icon>{{navItem.icon}}</mat-icon>
         {{navItem.itemName}}
       </li>
     </a>
@@ -15,7 +17,7 @@
 
   <div class="footer">
     <button class="btn btn-primary logoutBtn" (click)="logout()">
-      <img src="../../favicon.ico" class="navImg">
+      <mat-icon>exit_to_app</mat-icon> 
       Logout
     </button>
   </div>

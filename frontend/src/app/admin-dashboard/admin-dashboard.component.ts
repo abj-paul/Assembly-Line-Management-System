@@ -24,11 +24,11 @@ export class AdminDashboardComponent implements OnInit{
     this.haveAccess = JSON.stringify(this.accessControlService.getUser())!=JSON.stringify(new User());
     this.navbarServie.setNavItems(
       [
-        {itemName: "Profile", routerLink:"/admin-dashboard/profile"},
-        {itemName: "User", routerLink:"/admin-dashboard/user"},
-        {itemName: "System Data", routerLink:"/admin-dashboard/system-data"},
-        {itemName: "Assembly Line", routerLink:"/assembly-line"},
-        {itemName: "Viewer Information", routerLink:"/admin-dashboard/set-viewer-info"}
+        {itemName: "Profile", routerLink:"/admin-dashboard/profile", icon:"home"},
+        {itemName: "User", routerLink:"/admin-dashboard/user", icon:"supervised_user_circle"},
+        {itemName: "System Data", routerLink:"/admin-dashboard/system-data", icon:"settings_system_daydream"},
+        {itemName: "Assembly Line", routerLink:"/assembly-line", icon:"linked_camera"},
+        {itemName: "Viewer Information", routerLink:"/admin-dashboard/set-viewer-info", icon:"create"}
       ]
     );
   }
