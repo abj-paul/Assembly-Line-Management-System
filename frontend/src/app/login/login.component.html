@@ -1,5 +1,7 @@
   <div class="container loginBody">
-    <img src="../../assets/alms-profile.png" class="img">
+    <a [routerLink]="['/home']">
+      <img src="../../assets/alms-profile.png" class="img">
+    </a>
     <form>
       <div class="form-group">
         <input type="text" class="form-control" placeholder="Enter Username" name="username" [(ngModel)]="username">
