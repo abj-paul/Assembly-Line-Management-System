@@ -70,5 +70,37 @@ export class ReportsComponent implements OnInit {
     });
   }
 
+  generateMemoPDF(reportId: number){
+    const BASE_PDF_URL = 'http://localhost:1401/viewer/report/';
+
+    let url = this.constantsService.SERVER_IP_ADDRESS + "viewer";
+    let data = {
+        "operation": "generate-single-hourly-production-memo",
+        "reportId":reportId,
+        "userHash": this.accessControlService.getUser().userHash
+    };
+
+    fetch(url, {
+      method: "POST",
+      mode: "cors", 
+      cache: "no-cache", 
+      credentials: "same-origin", 
+      headers: {"Content-Type": "application/json",},
+      redirect: "follow", 
+      referrerPolicy: "no-referrer", 
+      body: JSON.stringify(data),
+  })
+  .then((resolve)=>{
+      console.log("Generate PDF Request has been resolved!");
+      return resolve.json()
+  })
+  .then((res)=>{
+    const pdfUrl = BASE_PDF_URL + res.GeneratedPdfFileName;
+    window.open(pdfUrl, '_blank');
+  })
+  .catch((err)=>{
+    console.log(err);
+  }); 
+  }
 
 }

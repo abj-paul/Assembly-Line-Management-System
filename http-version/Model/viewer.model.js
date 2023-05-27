@@ -85,23 +85,16 @@ getGeneralProductionInfo()
 */
 
 async function generate_production_report(){
-    productionData = await getGeneralProductionInfo();
+    let filename = "memo.pdf";
 
-    tableData = "Product Name  |  Production Target   |   Production Reached\n";
-
-    for (let i = 0; i < productionData.length; i++) {
-      tableData +=
-        productionData[i].productName.padEnd(30, ' ') +"|" +
-        productionData[i].productionTarget.toString().padEnd(30, ' ') +"|" +
-        productionData[i].productionReached.toString().padEnd(30, ' ') +
-        "\n";
-    }
-    
-
-    const outputPath = './data/pdf/production-report.pdf';
-    memoService.generatePDF(tableData, outputPath);
-    return "production-report.pdf";
-
+    const sql_query = "SELECT distinct productName, productionAmount, CONVERT(A.timeSent , CHAR) timeSent, comment FROM production, productionReport A where A.productionId = production.productionId";
+    await db_service.executeQuery(sql_query)
+    .then((productionData)=>{
+        console.log("DEBUG-> report generation");
+        console.log(productionData);
+        filename = memoService.generate_hourly_production_report(productionData);
+    })
+    return filename;
 }
 
 async function getQualityReports(){
@@ -109,6 +102,44 @@ async function getQualityReports(){
 
     const rows = await db_service.executeQuery(sql_query);
     return rows;
+}
+
+async function generate_quality_report(){
+    let filename = "memo.pdf";
+
+    const sql_query = "SELECT distinct productName, goodProductCount, defectedProductCount, CONVERT(A.timeSent , CHAR) timeSent, comment from production, qualityReport A where A.productionId = production.productionId;";
+
+    await db_service.executeQuery(sql_query)
+    .then((data)=>{
+        filename = memoService.generate__quality_report(data);
+    })
+    return filename;
+}
+
+async function generate_assembly_line_issues_report(){
+    let filename = "memo.pdf";
+
+    const sql_query = "SELECT DISTINCT productName, machineModel, comment, CONVERT(A.timeSent , CHAR) timeSent FROM machine, assemblyLineIssuesReport A, production WHERE A.machineId = machine.machineId AND production.productionId=A.productionId;";
+
+    await db_service.executeQuery(sql_query)
+    .then((data)=>{
+        filename = memoService.generate_assembly_line_issues_report(data);
+    })
+    return filename;
+}
+
+
+async function generate_single_hourly_production_report(reportId){
+    let filename = "memo.pdf";
+
+    const sql_query = "SELECT DISTINCT productName, productionAmount, comment, CONVERT(A.timeSent , CHAR) timeSent FROM production, productionReport A WHERE A.productionID = production.productionId AND A.reportId="+reportId;
+
+    await db_service.executeQuery(sql_query)
+    .then((data)=>{
+        filename = memoService.generate_single_hourly_production_report(data[0].productName, data[0].productionAmount, data[0].comment, data[0].timeSent);
+    })
+    return filename;
+    
 }
 
 function test_report(){
@@ -141,4 +172,4 @@ function generate_system_start_memo(){
     return "system-start-memo.pdf";
 }
 
-module.exports = {getGeneralProductionInfo, getLineLayout, getLineListForProduction, generate_production_report, generate_system_start_memo, getQualityReports, getCongestionIssuesReports}
+module.exports = {getGeneralProductionInfo, getLineLayout, getLineListForProduction, generate_production_report, generate_system_start_memo, getQualityReports, getCongestionIssuesReports, generate_quality_report, generate_assembly_line_issues_report, generate_single_hourly_production_report}

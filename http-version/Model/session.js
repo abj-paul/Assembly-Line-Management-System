@@ -73,6 +73,24 @@ async function __checkUserHashValidity(userHash, endpoint){
     
 }
 
+async function __checkEndpointIndependentSessionValidity(userHash){
+    return new Promise((resolve, reject)=>{
+        if(connection==null){
+            console.log("Connect to databse first!");
+            reject(false);
+        }
+        
+            const sql_query = "select * from session where userhash='"+userHash+"';"; 
+        
+            connection.query(sql_query, (err, results, fields)=>{
+                if(err) throw err;
+
+                if(results.length!=0) resolve(constants.VALID_USER_HASH);
+                else resolve(constants.INVALID_USER_HASH);
+            })
+    });
+}
+
 async function __deleteRowFromTable(userHash, endpoint){
     return new Promise((resolve, reject)=>{
         if(connection==null){
@@ -92,4 +110,4 @@ async function __deleteRowFromTable(userHash, endpoint){
     
 }
 
-module.exports = {__insertDataIntoSessionTable, __checkUserHashValidity, __createSessionTable, __deleteRowFromTable}
+module.exports = {__insertDataIntoSessionTable, __checkUserHashValidity, __createSessionTable, __deleteRowFromTable, __checkEndpointIndependentSessionValidity}

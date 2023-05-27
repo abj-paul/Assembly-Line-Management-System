@@ -13,17 +13,17 @@ function handlePostRequestToViewer(req, res){
     const userHash = body.userHash;
     const operationType = body.operation;
 
-    /*
+    
     if(operationType!=constants.LOGIN){
-       session.__checkUserHashValidity(userHash, constants.SUPERVISOR_ENDPOINT)
+       session.__checkEndpointIndependentSessionValidity(userHash)
         .then((data)=>{
-            //console.log("Access Control - "+data);
+            console.log("Access Control - "+data);
             if(data==constants.VALID_USER_HASH) __serveRequest(req,res);
             else res.send({"Authentication":constants.INVALID_USER_HASH});
         })
     }
 
-    else*/ __serveRequest(req, res);
+    else __serveRequest(req, res);
 }
 
 
@@ -82,6 +82,22 @@ function __serveRequest(req, res){
         viewer.getCongestionIssuesReports()
         .then((data)=>{
             res.send({"CongestionIssues":data});
+        })
+    }else if(operationType == constants.GENERATE_QUALITY_REPORT){
+        viewer.generate_quality_report()
+        .then((data)=>{
+            res.status(200).send({"GeneratedPdfFileName":data});
+        })
+    }else if(operationType == constants.GENERATE_ISSUES_REPORT){
+        viewer.generate_assembly_line_issues_report()
+        .then((data)=>{
+            res.status(200).send({"GeneratedPdfFileName":data});
+        })
+    }else if(operationType == constants.GENERATE_SINGLE_HOURLY_PRODUCTION_MEMO){
+        const reportId = body.reportId;
+        viewer.generate_single_hourly_production_report(reportId)
+        .then((data)=>{
+            res.status(200).send({"GeneratedPdfFileName":data});
         })
     }
 }

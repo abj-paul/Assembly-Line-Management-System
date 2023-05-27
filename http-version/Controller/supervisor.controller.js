@@ -113,8 +113,9 @@ function __serveRequest(req, res){
         const defectedProductCount = body.DefectedProductCount;
         const goodProductCount = body.TotalProductCount - defectedProductCount;
         const comment = body.comment;
+        const productionId= body.productionId;
         
-        qualityService.__insertQualityReportData(userid, unit, defectedProductCount, goodProductCount, comment)
+        qualityService.__insertQualityReportData(userid,productionId, unit, defectedProductCount, goodProductCount, comment)
         .then((data)=>{
             res.send({"Status":data.insertId});
         })

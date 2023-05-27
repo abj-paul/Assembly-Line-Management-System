@@ -51,9 +51,9 @@ async function __createQualityReportTable(){
     
 }
 
-async function __insertQualityReportData(userid, unit, defectedProductCount,goodProductCount, comment){
+async function __insertQualityReportData(userid,productionId, unit, defectedProductCount,goodProductCount, comment){
     return new Promise((resolve, reject)=>{
-        const sql_query = "INSERT into qualityReport(userid, unit, defectedProductCount,goodProductCount, comment) values("+userid+", '"+unit+"',"+defectedProductCount+","+goodProductCount+",'"+comment+"');";
+        const sql_query = "INSERT into qualityReport(userid,productionId, unit, defectedProductCount,goodProductCount, comment) values("+userid+", "+productionId+", '"+unit+"',"+defectedProductCount+","+goodProductCount+",'"+comment+"');";
         connection.query(sql_query, (err, results, fields)=>{
             if(err) {
                 reject(err);

@@ -10,6 +10,7 @@
                     <th> Production Amount </th>
                     <th> Unit </th>
                     <th> Comment </th>
+                    <th>Download Memo</th>
                 </tr>
             </thead>
             
@@ -20,6 +21,7 @@
                     <td>{{report[2]}}</td>
                     <td>{{report[3]}}</td>
                     <td>{{report[4]}}</td>
+                    <td><button (click)="generateMemoPDF(report[0])">Download Memo</button></td>
                 </tr>
             </tbody>
         </table>
