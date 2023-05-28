@@ -150,6 +150,8 @@ async function normal_start_database(){
     await quality.__createQualityReportTable();
     await assemblyLineIssues.create_assembly_line_issues_report_table();
 
+    await congestion.initializeCongestionStatusForMachines();
+
     notification.__notify(1, "Assembly Line Management System has started!")
   .then((data)=>{});
 

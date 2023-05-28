@@ -210,7 +210,7 @@ export class SetLineLayoutComponent implements OnInit{
   loadMachinesFromBackend(){
     let data = {
         "operation":"guml",
-        "userHash": 249335157 // this.accessControlService.getUser().userHash
+        "userHash": this.accessControlService.getUser().userHash
     }
     let url = this.constantsService.SERVER_IP_ADDRESS + "productionManager";
 

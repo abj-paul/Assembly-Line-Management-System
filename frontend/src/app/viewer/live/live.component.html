@@ -28,12 +28,12 @@
         <tr *ngFor="let machine of lineLayout" [ngStyle]="{'border': machine.congestionStatus == 'true' ? '4px groove red' : '1px solid black'}">
             <td>{{machine.machineModel}}</td>
             <td>{{machine.machineType}}</td>
-            <td>{{machine.hourlyProduction}}</td>
+            <td>{{machine.perHourProduction}}</td>
             <td><button (click)="showCongestionImage('http://localhost:1401/congestion/image' + machine.imageFileUrl)"> View Congestion Status</button></td>
             <td *ngIf="machine.markedStatus==1"> Marked </td>
             <td *ngIf="machine.markedStatus!=1"> No </td>
-            <td *ngIf="machine.camera_link!=null"><button (click)="openCamera(machine.camera_link)">Open Camera</button></td>
-            <td *ngIf="machine.camera_link==null"> No Camera </td>
+            <td *ngIf="machine.camera_link"><button (click)="openCamera(machine.camera_link)">Open Camera</button></td>
+            <td *ngIf="!machine.camera_link"> No Camera </td>
 
         </tr>
     </tbody>

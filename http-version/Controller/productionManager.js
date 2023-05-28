@@ -100,8 +100,8 @@ function __serveRequest(req, res){
         .then((data)=>{
             res.status(200).send({"ProductionId": data.insertId});
             console.log("Started production for "+productName);
-
-            production.updateProductionIdFromLineList(data.insertId, assemblyLineIdList);
+            let productionId = data.insertId ?? 1; // Bug fixing!!!
+            production.updateProductionIdFromLineList(productionId, assemblyLineIdList);
 
             //floor.register_new_production(floorNumber, data.insertId);
         })

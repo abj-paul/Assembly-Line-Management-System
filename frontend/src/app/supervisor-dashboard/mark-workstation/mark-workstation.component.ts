@@ -25,11 +25,12 @@ export class MarkWorkstationComponent {
   ngOnInit(): void {
     this.loadAssignedLineId(this.accessControlService.getUser().userid);
     
+    /*
     const congestionStatusReloadTimeInSeconds = 10;
     setInterval(() => {
       this.loadAssignedLineId(this.accessControlService.getUser().userid);
       //this.loadCongestionStatus();
-    }, congestionStatusReloadTimeInSeconds * 1000);
+    }, congestionStatusReloadTimeInSeconds * 1000);*/
     
     /*
     const lineLayoutReloadTimeInSeconds = 100;

@@ -58,7 +58,7 @@ export class CongestionComponent implements OnInit{
         return resolve.json()
     })
     .then((data)=>{
-        console.log("DEBUG: assigned Line -");
+        console.log("DEBUG: assigned Line -"+this.accessControlService.getUser().role);
         this.assignedLineId = data.AssignedAssemblyLineId;
         console.log(this.assignedLineId);
 

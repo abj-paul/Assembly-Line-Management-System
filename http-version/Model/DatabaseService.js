@@ -47,7 +47,7 @@ async function insertData(sql_query){
 }
 
 async function executeQuery(sql_query){
-    await __connect();
+    //await __connect();
     return new Promise((resolve, reject)=>{
         connection.query(sql_query, (err, results, fields)=>{
             if(err) {

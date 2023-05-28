@@ -27,7 +27,12 @@ export class LiveComponent implements OnInit {
 
     const congestionStatusReloadTimeInSeconds = 10;
     setInterval(() => {
-      this.loadLineLayout(this.ACTIVE_LINE_ID);
+      if(this.accessControlService.getUser().role=="lineChief" ||
+      this.accessControlService.getUser().role=="productionManager" ||
+      this.accessControlService.getUser().role=="viewer" ||
+      this.accessControlService.getUser().role=="admin" ||
+      this.accessControlService.getUser().role=="supervisor")
+        this.loadLineLayout(this.ACTIVE_LINE_ID);
     }, congestionStatusReloadTimeInSeconds * 1000);
   }
 

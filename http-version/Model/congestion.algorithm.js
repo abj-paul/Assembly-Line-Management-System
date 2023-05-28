@@ -9,7 +9,7 @@ const ip_addr = "http://127.0.0.1:8000/";
 async function getCongestionStatusForWorkstations(assemblyLineId){
     let connection = await databaseService.getDBConnection();
 
-    assemblyLineId = (typeof assemblyLineId === 'undefined') ? 1 : assemblyLineId;
+    //assemblyLineId = (typeof assemblyLineId === 'undefined') ? 1 : assemblyLineId;
 
     return new Promise((resolve, reject)=>{
         if(connection==null){
