@@ -12,7 +12,7 @@
         <label>Assign Supervisor</label>
         <select class="form-control" name="floor" [(ngModel)]="supervisorId">
             <option value="1">Assign Supervisor to Line:</option>
-            <option *ngFor="let supervisor of availableSupervisorList" [ngValue]="supervisor.userId">{{supervisor.username}}</option>
+            <option *ngFor="let supervisor of availableSupervisorList" [ngValue]="supervisor.userid">{{supervisor.username}}</option>
         </select>
     </div>
 

@@ -17,8 +17,8 @@
             <td><button (click)="showCongestionImage('http://localhost:1401/congestion/image' + congestionStatus[i].imageFileUrl)"> View Congestion Status</button></td>
             <td *ngIf="congestionStatus[i].markedStatus==1"> Marked </td>
             <td *ngIf="congestionStatus[i].markedStatus!=1"> No </td>
-            <td *ngIf="machine.otherInfo!=null"><button (click)="openCamera(machine.otherInfo)">Open Camera</button></td>
-            <td *ngIf="machine.otherInfo==null"> No Camera </td>
+            <td *ngIf="machine.otherInfo"><button (click)="openCamera(machine.otherInfo)">Open Camera</button></td>
+            <td *ngIf="!machine.otherInfo"> No Camera </td>
 
         </tr>
     </tbody>

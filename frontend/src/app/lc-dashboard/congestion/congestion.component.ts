@@ -96,21 +96,7 @@ export class CongestionComponent implements OnInit{
         console.log("DEBUG: Line Layout-");
         console.log(data.Layout);
 
-        let tempLayout = data.Layout;
-        this.machineListInLayout = [];
-        for(let i=0 ;i<tempLayout.length; i++){
-          this.machineListInLayout.push(
-            {
-              assemblyLineId: tempLayout[i].assemblyLineId,
-              assemblyLineName: tempLayout[i].name,
-              machineId: tempLayout[i].machineId,
-              machineModel : tempLayout[i].machineModel,
-              machineType : tempLayout[i].machineType,
-              perHourProduction : tempLayout[i].perHourProduction,
-              otherInfo : tempLayout[i].otherInfo
-            }
-          );
-        }
+        this.machineListInLayout = data.Layout;
     })
     .catch((err)=>{
       console.log(err);
@@ -154,6 +140,8 @@ export class CongestionComponent implements OnInit{
     window.open(imageUrl, '_blank');
   }
   openCamera(camera_link:string):void{
+    console.log("CAmera lnk:");
+    console.log(camera_link);
     window.open(camera_link, '_blank');
   }
  

@@ -20,6 +20,25 @@
             </tr>
         </tbody>
     </table>
+
+    <p class="header">Free Supervisors & Their Lines</p>
+    <table class="table table-primary table-striped bg-light">
+        <thead>
+            <tr>
+                <th>User Id</th>
+                <th>Supervisor Name</th>
+                <th>General Info</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <tr *ngFor="let x of availableSupervisorList">
+                <td>{{x.userid}}</td>
+                <td>{{x.username}}</td>
+                <td>{{x.general_info}}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
 <button class="btn btn-primary registerButton" [routerLink]="['/pm-dashboard/resources/assign']"> Assign Supervisor </button>

@@ -10,10 +10,12 @@ import { ConstantsService } from 'src/app/services/constants.service';
 })
 export class EmployeeListComponent  implements OnInit{
   lineChiefAndLines : LCANDLINES[] = [];
+  availableSupervisorList : any;
   constructor(private accessControlService: AccessControlService, private constantsService: ConstantsService){}
 
   ngOnInit(): void {
     this.loadLinesAndLineChiefsFromBackend();
+    this.loadAvailableSupevisorList();
   }
 
   
@@ -60,4 +62,37 @@ export class EmployeeListComponent  implements OnInit{
       console.log(err);
     })
   }
+
+  loadAvailableSupevisorList():void{
+    let data = {
+      "operation":"gasl",
+      "userid": this.accessControlService.getUser().userid,
+      "userHash": this.accessControlService.getUser().userHash
+  }
+  let url = this.constantsService.SERVER_IP_ADDRESS + "productionManager";
+
+
+  fetch(url, {
+      method: "POST", 
+      mode: "cors", 
+      cache: "no-cache", 
+      credentials: "same-origin", 
+      headers: { "Content-Type": "application/json",},
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+      body: JSON.stringify(data),
+  })
+  .then((resolve)=>{
+          console.log("Get available supervisor list Request has been resolved!");
+          return resolve.json()
+    })
+  .then((data)=>{
+      this.availableSupervisorList = data.AvailableSupervisorList;
+    }
+  )
+  .catch((err)=>{
+    console.log(err);
+  })
+  }
 }
+

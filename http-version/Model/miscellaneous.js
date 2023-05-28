@@ -71,7 +71,7 @@ async function assignSupervisorToLine(userId, assemblyLineId){
         assemblyLineId int,
         userId int,
         comments varchar(300),
-        CONSTRAINT fk_user_relationship_userId FOREIGN KEY (userid) REFERENCES user(userid),
+        CONSTRAINT fk_user_relationship_userId FOREIGN KEY (comments) REFERENCES user(userid),
         CONSTRAINT fk_assemblyLine_relationship_assemblyLineId FOREIGN KEY (assemblyLineId) REFERENCES assemblyLine(assemblyLineId)
         ON DELETE CASCADE
     )`;
