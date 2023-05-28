@@ -38,11 +38,13 @@ export class QualityReportComponent implements OnInit{
       body: JSON.stringify(data),
   })
   .then((resolve)=>{
-      console.log("Generate PDF Request has been resolved!");
+      console.log("Get QUALITY REPORTS has been resolved!");
       return resolve.json()
   })
   .then((res)=>{
+    console.log("Quality Reports: ");
     this.qualityReports = res.QualityReports;
+    console.log(this.qualityReports);
   })
   .catch((err)=>{
     console.log(err);

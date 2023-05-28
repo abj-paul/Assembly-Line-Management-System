@@ -101,7 +101,7 @@ async function generate_production_report(){
 }
 
 async function getQualityReports(){
-    const sql_query = "SELECT distinct * from assemblyLineIssuesReport, production where production.productionId=assemblyLineIssuesReport.productionId;";
+    const sql_query = "SELECT distinct * from qualityReport, production where production.productionId=qualityReport.productionId;";
 
     const rows = await db_service.executeQuery(sql_query);
     return rows;
