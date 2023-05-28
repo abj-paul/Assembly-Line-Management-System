@@ -4,7 +4,7 @@
         <div *ngFor="let machine of machineListInLayout; index as i;" class="row">
             <div [ngStyle]="{'background-color':congestionStatus[i].congestionStatus=='true' ? 'yellow' : 'cyan' }">
             <div class="stats col-sm-12" [ngStyle]="{'border': congestionStatus[i].markedStatus==1 ? '4px groove red' : '1px solid black'}" [ngStyle]="{'border': congestionStatus[i].markedStatus==1 ? '4px groove red' : '1px solid black'}">
-                <button *ngIf="congestionStatus[i].markedStatus==0" (click)="markWorkstation(machine.machineId,1)">Mark Workstation</button>
+                <button *ngIf="!congestionStatus[i].markedStatus" (click)="markWorkstation(machine.machineId,1)">Mark Workstation</button>
                 <button *ngIf="congestionStatus[i].markedStatus==1" (click)="markWorkstation(machine.machineId,0)">Unmark Workstation</button>
 
                 
