@@ -40,16 +40,22 @@ def line_congestion_status_with_image(lineRequest:LineRequest):
 
             arr.append({
                 "imageFileUrl": img_path.split("congestion-dataset")[1],
-                "congestionStatus": getCongestionStatusForImage(img_path),
+                "congestionStatus": wrap_response(getCongestionStatusForImage(img_path)),
                 "machineId": machineId
                 })
-            return arr
+            print("DEBUG RESPONSE RANDOM:"+str(arr))
         else:
             img_path_list = getImagesFromCamera(machineId, lineRequest.camera_list[index])
 
             arr.append({
                 "imageFileUrl": img_path_list[0].split("congestion-dataset")[1],
-                "congestionStatus": getCongestionStatusFromImageList(img_path_list),
+                "congestionStatus": wrap_response(getCongestionStatusFromImageList(img_path_list)),
                 "machineId": machineId
                 })
-            return arr
+            print("DEBUG RESPONSE CAMERA:"+str(arr))
+    return arr
+
+
+def wrap_response(prediction):
+    if prediction == 2: return False 
+    return True

@@ -88,11 +88,11 @@ function testAdmin(){
     admin.viewNotifications(1);
 }
 
-/*
+
 setInterval(function() {
   fastAPIConnection.updateCongestionStatusForWorkstations()
-}, 30 * 1000); // 10 * 10000 milsec = 10s
-*/
+}, 10 * 1000); // 10 * 10000 milsec = 10s
+
 
 
 function wait(ms){

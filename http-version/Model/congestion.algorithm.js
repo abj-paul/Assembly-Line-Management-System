@@ -30,9 +30,8 @@ async function getCongestionStatusForWorkstations(assemblyLineId){
 async function updateCongestionStatusForSingleWorkstation(assemblyLineId){
 
     // Get workstation list from assembly line layout
-    await databaseService.getDBConnection();
     const sql_query = "select distinct machine.machineId, assemblyLineId, machine.otherInfo camera_link from assemblyLineLayout, machine where machine.machineId=assemblyLineLayout.machineId AND assemblyLineId="+assemblyLineId;
-    const rows = await databaseService.getData(sql_query);
+    const rows = await databaseService.executeQuery(sql_query);
     const machine_list = []
     for(let i=0; i<rows.length; i++) machine_list.push(rows[i].machineId);
     const camera_list = []
@@ -65,7 +64,8 @@ async function updateCongestionStatusForSingleWorkstation(assemblyLineId){
     })
     .then((resData)=>{
         //congestion_statuses = resData;
-        console.log("DEBUG: reply from fastapi: "+resData);
+        console.log("DEBUG: reply from fastapi: ----------------------------------------------");
+        console.log(resData);
         // Save in Congestion database
         for(let i=0; i<resData.length; i++){
             congestion.updateCongestionStatusForMachine(machine_list[i], resData[i].congestionStatus, resData[i].imageFileUrl);
@@ -77,14 +77,13 @@ async function updateCongestionStatusForSingleWorkstation(assemblyLineId){
 }
 
 async function updateCongestionStatusForWorkstations(){
-    await databaseService.getDBConnection();
     const sql_query = "select distinct * from assemblyLine;";
-    const rows = await databaseService.getData(sql_query);
+    const rows = await databaseService.executeQuery(sql_query);
     console.log("DEBUG Congestion: ");
     console.log(rows);
     const assemblyLineList = []
     for(let i=0; i<rows.length; i++) assemblyLineList.push(rows[i].assemblyLineId);
-
+    console.log(assemblyLineList);
     // Get congestion status for the assembly line and save it in db
     for(let i=0; i<assemblyLineList.length; i++) updateCongestionStatusForSingleWorkstation(assemblyLineList[i]);
 }

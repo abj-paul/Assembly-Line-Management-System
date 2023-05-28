@@ -10,7 +10,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let machine of machineListInLayout; index as i;" [ngStyle]="{'border': congestionStatus[i].congestionStatus == true ? '4px groove red' : '1px solid black'}">
+        <tr *ngFor="let machine of machineListInLayout; index as i;" [ngStyle]="{'border': congestionStatus[i].congestionStatus == 'true' ? '4px groove red' : '1px solid black'}">
             <td>{{machine.machineModel}}</td>
             <td>{{machine.machineType}}</td>
             <td>{{machine.perHourProduction}}</td>

@@ -18,11 +18,17 @@ export class LiveComponent implements OnInit {
   lineLayout: any = [];
   BASE_PDF_URL : string = 'http://localhost:1401/viewer/report/';
 
+  ACTIVE_LINE_ID = 1;
 
   constructor(private accessControlService: AccessControlService, private constantsService: ConstantsService, private http:HttpClient, private router : Router){}
 
   ngOnInit(): void {
     this.getGeneralProductionInfo();
+
+    const congestionStatusReloadTimeInSeconds = 10;
+    setInterval(() => {
+      this.loadLineLayout(this.ACTIVE_LINE_ID);
+    }, congestionStatusReloadTimeInSeconds * 1000);
   }
 
   getGeneralProductionInfo():void{
@@ -110,6 +116,7 @@ export class LiveComponent implements OnInit {
  }
 
   loadLineLayout(lineId:number){
+    this.ACTIVE_LINE_ID = lineId;
     let url = this.constantsService.SERVER_IP_ADDRESS + "viewer";
     let data = {
         "operation":"glfgl",

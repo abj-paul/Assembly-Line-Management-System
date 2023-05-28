@@ -18,18 +18,20 @@ export class MarkWorkstationComponent {
   machineListInLayout: Machine[] =  []; //    {"assemblyLineId": 0, "assemblyLineName":"Default", "machineId":0, "machineModel": "default model", "machineType": "default type", "otherInfo":"Default info", "perHourProduction":2}
  
   assignedLineId : number = 0;
-  congestionStatus : CongestionStatus [] = [];
+  congestionStatus : any = [];
 
   constructor(private accessControlService: AccessControlService, private constantsService: ConstantsService, private sharedService : SharedStuffsService, private router : Router, private http: HttpClient){}
 
   ngOnInit(): void {
     this.loadAssignedLineId(this.accessControlService.getUser().userid);
-    /*
+    
     const congestionStatusReloadTimeInSeconds = 10;
     setInterval(() => {
-      this.loadCongestionStatus();
+      this.loadAssignedLineId(this.accessControlService.getUser().userid);
+      //this.loadCongestionStatus();
     }, congestionStatusReloadTimeInSeconds * 1000);
     
+    /*
     const lineLayoutReloadTimeInSeconds = 100;
     setInterval(() => {
       this.loadLineLayout();

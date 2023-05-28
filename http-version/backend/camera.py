@@ -2,7 +2,9 @@ import os
 import random
 import cv2
 
-imageSource = "/home/abhijit/rmg_images/"
+#imageSource = "/home/abhijit/rmg_images/"
+imageSource = "/home/abhijit/clothstack/"
+
 
 def createFolderForWorkstation(workstationId):
     try:
@@ -10,10 +12,24 @@ def createFolderForWorkstation(workstationId):
     except:
         print("Failed to create folder for workstation "+str(workstationId))
 
+def get_image_list():
+  files = os.listdir(imageSource)
+  images = []
+
+  for file in files:
+      # make sure file is an image
+      if file.endswith(('.jpg', '.png', 'jpeg')):
+          images.append(file)
+  #print(images)
+  return images
+
+image_list = get_image_list()
+
 def getLatestImageForWorkstation(workstationId):
     # move photo from a directory to this "machine"+str(workstationId)
-    randNum = random.randint(0,200)
-    img_name = "frame"+str(randNum)+".jpg"
+    randNum = random.randint(0,len(image_list))
+    #img_name = "frame"+str(randNum)+".jpg"
+    img_name = image_list[randNum]
 
     src = imageSource+img_name
     dest = "../congestion-dataset/machine"+str(workstationId)

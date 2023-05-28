@@ -59,7 +59,7 @@ async function getLineListForProduction(productionId){
 }
 
 async function getLineLayout(lineId){
-    const sql_query = "select distinct A.machineId, machineModel, machineType, perHourProduction, position, congestionStatus, markedStatus, machine.otherInfo camera_link from machine, assemblyLineLayout A, congestion B where machine.machineId=A.machineId and A.machineId=B.machineId and assemblyLineId="+lineId;
+    const sql_query = "select distinct A.machineId, machineModel, machineType, perHourProduction, position, congestionStatus, markedStatus, machine.otherInfo camera_link, imageFileUrl from machine, assemblyLineLayout A, congestion B where machine.machineId=A.machineId and A.machineId=B.machineId and assemblyLineId="+lineId;
 
     const lineLayout = await db_service.executeQuery(sql_query);
     return lineLayout;

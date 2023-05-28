@@ -17,12 +17,18 @@ export class CongestionComponent implements OnInit{
   machineListInLayout: Machine[] =  []; //    {"assemblyLineId": 0, "assemblyLineName":"Default", "machineId":0, "machineModel": "default model", "machineType": "default type", "otherInfo":"Default info", "perHourProduction":2}
  
   assignedLineId : number = 0;
-  congestionStatus : CongestionStatus [] = [];
+  congestionStatus : any = [];
 
   constructor(private accessControlService: AccessControlService, private constantsService: ConstantsService, private sharedService : SharedStuffsService, private router : Router){}
 
   ngOnInit(): void {
     this.loadAssignedLineId(this.accessControlService.getUser().userid);
+
+    const congestionStatusReloadTimeInSeconds = 10;
+    setInterval(() => {
+      if(this.accessControlService.getUser().role=="lineChief")
+        this.loadAssignedLineId(this.accessControlService.getUser().userid);
+    }, congestionStatusReloadTimeInSeconds * 1000);
   }
 
   gotoLayoutEdit(){
