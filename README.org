@@ -3,7 +3,6 @@
 A government-funded project on the *Remittance Garments Industry*, conducted under *Dr. Md. Shoyaib* in collaboration with *Versatile Garments Ltd.*  
 This project integrates *requirement-driven software engineering* with *machine learning pipelines* to optimize factory workflows, automate reporting, and detect congestion in garment assembly lines.
 
----
 
 * Overview
 - Conducted *on-site requirement collection*, including one month’s assembly line logs at Versatile Garments Ltd.  
@@ -11,7 +10,6 @@ This project integrates *requirement-driven software engineering* with *machine 
 - Developed a full-stack system using *NodeJS, TypeScript, Angular, FastAPI, and MySQL*.  
 - Designed to be lightweight: capable of running *20 real-time detection pipelines on a 4GB RAM, Core i3 CPU*.  
 
----
 
 * Core Features
 - ⚡ Automatic Congestion Detection – Live monitoring using NMF with β-divergence.  
@@ -20,7 +18,6 @@ This project integrates *requirement-driven software engineering* with *machine 
 - 📊 Automated Report Generation – Quality reports, congestion logs, and line efficiency.  
 - 👥 User Interaction Module – Supervisor dashboards, workstation marking, and access control.  
 
----
 
 * Research & Experimentation
 - Applied *Non-negative Matrix Factorization (NMF)* for congestion detection, with focus on:
@@ -29,25 +26,17 @@ This project integrates *requirement-driven software engineering* with *machine 
   - Global geometry preservation  
 - Chosen algorithm: *NMF with β-divergence* for robust performance under noisy factory data.  
 
----
 
 * Documentation
 - [[./Software Requirements Specification - Assembly Line Management System for Versatile Garments Ltd..pdf][Software Requirements Specification (SRS) – 131 pages]]  
 - [[./Report.org][Software Design Document (SDD) – 88 pages]]  
 - [[./Bugs.org][Congestion Detection with NMF + β-divergence Notes]]  
-- *ER Models*:
-  - [[./implemented-er.png][Implemented ER]]  
-  - [[./er-Page-1.drawio.png][Draw.io ER]]  
-  - [[./er-spl-v2.png][Specialized ER]]  
 
----
 
 * Development & Planning
 - Phase 1 – Requirement collection, login system, initial assembly line layout.  
 - Phase 2 – Core feature development (detection, balancing, reporting).  
 - Phase 3 – Frontend integration with Angular, access control, and supervisor tools.  
-
----
 
 * Impact
 This system demonstrates how *AI-assisted monitoring* and *automated assembly line design* can improve efficiency, reduce bottlenecks, and enhance workforce productivity in Bangladesh’s *garments sector* — a cornerstone of the country’s remittance economy.
